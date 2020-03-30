@@ -14,6 +14,7 @@
     </div>
     <UserNameInput />
     <JoinGame />
+    <StartGame />
   </div>
 </template>
 
@@ -21,12 +22,14 @@
 // @ is an alias to /src
 import UserNameInput from "@/components/UserNameInput.vue";
 import JoinGame from "@/components/JoinGame.vue";
+import StartGame from "@/components/StartGame.vue";
 
 export default {
   name: "Home",
   components: {
     UserNameInput,
-    JoinGame
+    JoinGame,
+    StartGame
   }
 };
 </script>
