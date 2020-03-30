@@ -1,5 +1,12 @@
 <template>
-  <div class="about">
-    <h1>This will be the game view</h1>
-  </div>
+  <Lobby />
 </template>
+<script>
+import Lobby from "@/components/Lobby.vue";
+export default {
+  name: "Game",
+  components: {
+    Lobby
+  }
+};
+</script>
