@@ -2,27 +2,24 @@
   <!-- Userlist -->
   <div class="row">
     <div class="col">
-      <div class="row">
-        <div class="col-2">
-          <i class="fas fa-user-tie"></i>
-        </div>
-        <div class="col-10">
-          <p>Mirjam</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-2">
-          <i class="fas fa-user-tie"></i>
-        </div>
-        <div class="col-10">
-          <p>John</p>
-        </div>
-      </div>
+      <User v-for="(user, index) in users" :user="user" :key="index" />
     </div>
   </div>
 </template>
 <script>
+import User from "@/components/User.vue";
 export default {
-  name: "UserList"
+  name: "UserList",
+  components: {
+    User
+  },
+  data: function() {
+    return {
+      users: {
+        1: { name: "john" },
+        2: { name: "mirjam" }
+      }
+    };
+  }
 };
 </script>
