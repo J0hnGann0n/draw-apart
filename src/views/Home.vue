@@ -1,17 +1,32 @@
 <template>
-  <div class="home">
-    <HelloWorld msg="DrawApart"/>
+  <div class="container mt-3">
+    <!-- Instructions -->
+    <div class="row justify-content-end">
+      <div class="col-2 text-left align-content-end">
+        <i class="far fa-question-circle"></i>
+      </div>
+    </div>
+    <!-- titel -->
+    <div class="row">
+      <div class="col">
+        <h1>Welcome</h1>
+      </div>
+    </div>
+    <UserNameInput />
+    <JoinGame />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import UserNameInput from "@/components/UserNameInput.vue";
+import JoinGame from "@/components/JoinGame.vue";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
+    UserNameInput,
+    JoinGame
   }
-}
+};
 </script>
