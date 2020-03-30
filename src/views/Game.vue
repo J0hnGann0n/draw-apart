@@ -1,23 +1,12 @@
 <template>
-  <div class="about">
-    <Vote>This will be the game view</Vote>
-  </div>
+  <Lobby />
 </template>
-
 <script>
-import Vote from '@/components/Vote.vue'
+import Lobby from "@/components/Lobby.vue";
 export default {
-  name: 'Game',
-  props: {
-    msg: String
-  },
+  name: "Game",
   components: {
-    Vote
+    Lobby
   }
-}
+};
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-
-</style>

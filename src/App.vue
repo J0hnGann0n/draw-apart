@@ -1,12 +1,16 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">Home</router-link>|
       <router-link to="/game">Game</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
+
+<style scoped>
+@import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css";
+</style>
 
 <style lang="scss">
 #app {
