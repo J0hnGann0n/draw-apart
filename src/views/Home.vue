@@ -26,10 +26,22 @@ import CreateRoom from "@/components/CreateRoom.vue";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      game: {}
+    };
+  },
   components: {
     UserNameInput,
     JoinGame,
     CreateRoom
+  },
+  created() {
+    fetch("/api/game/abcd")
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+      });
   }
 };
 </script>

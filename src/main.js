@@ -7,6 +7,12 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import { makeServer } from "../server"
+
+// Run mirage js mock server if in development mode..
+if (process.env.NODE_ENV === "development") {
+  makeServer()
+}
 
 Vue.config.productionTip = false
 
