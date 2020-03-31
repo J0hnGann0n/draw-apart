@@ -8,6 +8,9 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import { makeServer } from "../server"
+import axios from 'axios'
+
+Vue.prototype.$http = axios
 
 // Run mirage js mock server if in development mode..
 if (process.env.NODE_ENV === "development") {

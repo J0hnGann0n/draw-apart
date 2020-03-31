@@ -19,7 +19,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import UserNameInput from "@/components/UserNameInput.vue";
 import JoinGame from "@/components/JoinGame.vue";
 import CreateRoom from "@/components/CreateRoom.vue";
@@ -37,11 +36,9 @@ export default {
     CreateRoom
   },
   created() {
-    fetch("/api/game/abcd")
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-      });
+    this.$http.get("/api/game/abcd").then(result => {
+      this.game = result.data.game;
+    });
   }
 };
 </script>
