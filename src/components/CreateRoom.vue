@@ -9,6 +9,9 @@
 export default {
   name: "CreateRoom",
   methods: {
+    /**
+     * Dispatch action to store to create a new game.
+     */
     createGame() {
       this.$store.dispatch("createGame", "Username");
       this.$router.push("/game");

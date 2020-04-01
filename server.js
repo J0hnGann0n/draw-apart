@@ -36,6 +36,7 @@ export function makeServer({ environment = "development" } = {}) {
         };
         game.players.push(request.requestBody)
         game.code = "hfge"
+        game.state = "lobby";
         return schema.games.create({ game })
       })
     },
