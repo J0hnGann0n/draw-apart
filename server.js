@@ -26,9 +26,11 @@ export function makeServer({ environment = "development" } = {}) {
 
       this.namespace = "api"
 
-      this.get("/game/:code", (schema, request) => {
+      this.post("/game/:code", (schema, request) => {
         let code = request.params.code
-        return schema.games.findBy({ code: code })
+        let game = schema.games.findBy({ code: code })
+        game.players.push(request.requestBody)
+        return game
       })
       this.post("/game/create", (schema, request) => {
         let game = {

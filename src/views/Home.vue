@@ -45,11 +45,6 @@ export default {
     JoinGame,
     CreateRoom
   },
-  created() {
-    this.$http.get("/api/game/abcd").then(result => {
-      this.game = result.data.game;
-    });
-  },
   watch: {
     playername() {
       this.$store.dispatch("addPlayerName", this.playername);

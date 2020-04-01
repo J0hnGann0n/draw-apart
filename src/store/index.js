@@ -12,7 +12,7 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    CREATE_GAME(state, payload) {
+    ADD_GAME(state, payload) {
       let newGame = payload;
       state.game = newGame;
     },
@@ -30,7 +30,13 @@ export default new Vuex.Store({
     createGame(context, payload) {
       axios.post("/api/game/create", payload).then(result => {
         let newGame = result.data.game.game;
-        context.commit('CREATE_GAME', newGame);
+        context.commit('ADD_GAME', newGame);
+      });
+    },
+    joinGame(context, payload) {
+      let gameCode = payload.gamecode;
+      axios.post("/api/game/" + gameCode, payload.playername).then(result => {
+        context.commit('ADD_GAME', result.data.game);
       });
     },
     addPlayerName(context, payload) {
