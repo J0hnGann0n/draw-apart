@@ -13,8 +13,12 @@ export default {
      * Dispatch action to store to create a new game.
      */
     createGame() {
-      this.$store.dispatch("createGame", "Username");
-      this.$router.push("/game");
+      if (this.$store.state.player.name) {
+        this.$store.dispatch("createGame", this.$store.state.player.name);
+        this.$router.push("/game");
+      } else {
+        //TODO:
+      }
     }
   }
 };
