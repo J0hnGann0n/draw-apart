@@ -12,8 +12,8 @@
         <h1>Share this code</h1>
       </div>
     </div>
-    <GameCode />
-    <UserList />
+    <GameCode :game="game" />
+    <UserList :game="game" />
     <StartGame />
   </div>
 </template>
@@ -25,6 +25,7 @@ import StartGame from "@/components/StartGame.vue";
 
 export default {
   name: "Lobby",
+  props: ["game"],
   components: {
     UserList,
     GameCode,

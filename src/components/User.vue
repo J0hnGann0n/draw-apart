@@ -4,13 +4,13 @@
       <i class="fas fa-user-tie"></i>
     </div>
     <div class="col-10">
-      <p>{{user.name}}</p>
+      <p>{{player}}</p>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: "User",
-  props: ["user"]
+  props: ["player"]
 };
 </script>

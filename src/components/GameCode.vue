@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-12">
       <p class="text-center display-4">
-        XYZV
+        {{game.code}}
         <i class="fas fa-share-alt"></i>
       </p>
     </div>
@@ -11,6 +11,7 @@
 </template>
 <script>
 export default {
-  name: "GameCode"
+  name: "GameCode",
+  props: ["game"]
 };
 </script>

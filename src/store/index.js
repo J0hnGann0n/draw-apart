@@ -17,10 +17,15 @@ export default new Vuex.Store({
   actions: {
     createGame(context, payload) {
       axios.post("/api/game/create", payload).then(result => {
-        context.commit('CREATE_GAME', result.data.game.game);
+        let newGame = result.data.game.game;
+        newGame.state = "lobby";
+        context.commit('CREATE_GAME', newGame);
       });
     }
   },
   modules: {
+  },
+  getters: {
+    getGame: state => state.game
   }
 })

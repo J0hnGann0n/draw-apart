@@ -2,7 +2,7 @@
   <!-- Userlist -->
   <div class="row">
     <div class="col">
-      <User v-for="(user, index) in users" :user="user" :key="index" />
+      <User v-for="(player, index) in game.players" :player="player" :key="index" />
     </div>
   </div>
 </template>
@@ -10,16 +10,9 @@
 import User from "@/components/User.vue";
 export default {
   name: "UserList",
+  props: ["game"],
   components: {
     User
-  },
-  data: function() {
-    return {
-      users: {
-        1: { name: "john" },
-        2: { name: "mirjam" }
-      }
-    };
   }
 };
 </script>

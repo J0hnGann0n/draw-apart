@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Lobby v-if="gameState == 'lobby'" />
-    <Vote v-if="gameState == 'vote'" />
-    <Play v-if="gameState == 'play'" />
+    <Lobby v-if="game.state == 'lobby'" :game="game" />
+    <Vote v-if="game.state == 'vote'" />
+    <Play v-if="game.state == 'play'" />
   </div>
 </template>
 <script>
@@ -21,6 +21,11 @@ export default {
     return {
       gameState: "play"
     };
+  },
+  computed: {
+    game() {
+      return this.$store.getters.getGame;
+    }
   }
 };
 </script>

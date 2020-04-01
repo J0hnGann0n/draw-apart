@@ -10,7 +10,8 @@ export default {
   name: "CreateRoom",
   methods: {
     createGame() {
-      this.$store.dispatch('createGame', "Username")
+      this.$store.dispatch("createGame", "Username");
+      this.$router.push("/game");
     }
   }
 };
