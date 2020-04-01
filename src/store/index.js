@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
+import firebase from "../services/firebase"
 
 Vue.use(Vuex)
 
@@ -41,7 +42,11 @@ export default new Vuex.Store({
     },
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);
-    }
+      firebase.database().ref('/games/').once('value').then(function (snapshot) {
+        console.log("snapshot")
+        console.log(snapshot)
+      });
+    },
   },
   modules: {
   },
