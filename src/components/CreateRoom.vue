@@ -1,12 +1,17 @@
 <template>
   <div class="row">
     <div class="col">
-      <a type="button" class="btn btn-primary" href="lobby.html">Create a game</a>
+      <button type="button" class="btn btn-primary" @click="createGame()">Create a game</button>
     </div>
   </div>
 </template>
 <script>
 export default {
-  name: "CreateRoom"
+  name: "CreateRoom",
+  methods: {
+    createGame() {
+      this.$store.dispatch('createGame', "Username")
+    }
+  }
 };
 </script>

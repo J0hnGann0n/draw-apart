@@ -1,25 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    game: {
-      users: {},
-      code: ''
-    }
+    game: {}
   },
   mutations: {
-    ADD_USER(state, payload) {
-      let newUser = payload;
-      state.game.users.push(newUser);
-
+    CREATE_GAME(state, payload) {
+      let newGame = payload;
+      state.game = newGame;
     }
   },
   actions: {
-    addUser(context, payload) {
-      context.commit('ADD_USER', payload);
+    createGame(context, payload) {
+      axios.post("/api/game/create", payload).then(result => {
+        context.commit('CREATE_GAME', result.data.game.game);
+      });
     }
   },
   modules: {

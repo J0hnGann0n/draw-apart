@@ -30,6 +30,14 @@ export function makeServer({ environment = "development" } = {}) {
         let code = request.params.code
         return schema.games.findBy({ code: code })
       })
+      this.post("/game/create", (schema, request) => {
+        let game = {
+          players: []
+        };
+        game.players.push(request.requestBody)
+        game.code = "hfge"
+        return schema.games.create({ game })
+      })
     },
   })
 
