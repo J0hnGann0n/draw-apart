@@ -7,7 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    game: {},
+    game: {
+      code: "abcd",
+      state: "play",
+      players: ["john", "tom"],
+      drawings: [],
+      combinations: []
+    },
     player: {
       name: ""
     }
@@ -20,6 +26,10 @@ export default new Vuex.Store({
     ADD_PLAYERNAME(state, payload) {
       let newName = payload;
       state.player.name = newName;
+    },
+    ADD_DRAWING(state, payload) {
+      let drawing = payload;
+      state.game.drawings.push(drawing)
     }
   },
   actions: {
@@ -52,6 +62,10 @@ export default new Vuex.Store({
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);
     },
+    submitDrawing(context, payload) {
+      // TODO: Send post request to firebase with drawing
+      context.commit('ADD_DRAWING', payload);
+    }
   },
   modules: {
   },
