@@ -39,10 +39,14 @@ export default new Vuex.Store({
       }
       game.players.push(payload);
       gameRef.push().set(game)
-      axios.post("/api/game/create", payload).then(result => {
-        let newGame = result.data.game.game;
-        context.commit('ADD_GAME', newGame);
+
+      axios.post("https://us-central1-drawapart-84b66.cloudfunctions.net/createGame", payload).then(result => {
+        console.log(result)
       });
+      //axios.post("/api/game/create", payload).then(result => {
+      //let newGame = result.data.game.game;
+      //context.commit('ADD_GAME', newGame);
+      //});
     },
     joinGame(context, payload) {
       let gameCode = payload.gamecode;
@@ -52,9 +56,6 @@ export default new Vuex.Store({
     },
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);
-      //firebase.database().ref('/games/').once('value').then(function (snapshot) {
-      //console.log(snapshot)
-      //s});
     },
   },
   modules: {
