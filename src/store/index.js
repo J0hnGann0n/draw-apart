@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
-import firebase from "../services/firebase"
-
-//store firebase to database
-let database = firebase.database();
-let gameRef = database.ref('/games/');
 
 
 Vue.use(Vuex)
@@ -34,13 +29,13 @@ export default new Vuex.Store({
      * @param {*} payload 
      */
     createGame(context, payload) {
-      let game = {
-        players: []
-      }
-      game.players.push(payload);
-      gameRef.push().set(game)
+      let player = { name: payload }
 
-      axios.post("https://us-central1-drawapart-84b66.cloudfunctions.net/createGame", payload).then(result => {
+      axios({
+        method: 'post',
+        url: 'https://us-central1-drawapart-84b66.cloudfunctions.net/createGame',
+        data: player
+      }).then(result => {
         console.log(result)
       });
       //axios.post("/api/game/create", payload).then(result => {

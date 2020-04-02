@@ -8,7 +8,12 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.createGame = functions.https.onRequest((request, response) => {
-  console.log("Test Request");
   response.set('Access-Control-Allow-Origin', '*');
-  response.send("figg di hert")
+  let game = {
+    players: []
+  }
+  console.log(request)
+  game.players.push(request.body.name)
+  admin.database().ref('/games/').push(game)
+  response.send(`Hello from Firebase! ${JSON.stringify(request.body)}`);
 })
