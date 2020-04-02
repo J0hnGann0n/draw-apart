@@ -7,13 +7,6 @@
           <p>40</p>
         </div>
       </div>
-
-      <!-- titel -->
-      <div class="row">
-        <div class="col">
-          <h1>Draw the leg part</h1>
-        </div>
-      </div>
       <DrawingPanel v-if="drawing" />
     </div>
 
