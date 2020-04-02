@@ -3,6 +3,11 @@ import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase"
 
+//store firebase to database
+let database = firebase.database();
+let gameRef = database.ref('/games/');
+
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -29,6 +34,11 @@ export default new Vuex.Store({
      * @param {*} payload 
      */
     createGame(context, payload) {
+      let game = {
+        players: []
+      }
+      game.players.push(payload);
+      gameRef.push().set(game)
       axios.post("/api/game/create", payload).then(result => {
         let newGame = result.data.game.game;
         context.commit('ADD_GAME', newGame);
@@ -42,10 +52,9 @@ export default new Vuex.Store({
     },
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);
-      firebase.database().ref('/games/').once('value').then(function (snapshot) {
-        console.log("snapshot")
-        console.log(snapshot)
-      });
+      //firebase.database().ref('/games/').once('value').then(function (snapshot) {
+      //console.log(snapshot)
+      //s});
     },
   },
   modules: {
