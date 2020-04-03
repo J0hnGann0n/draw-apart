@@ -18,7 +18,10 @@ exports.createGame = functions.https.onRequest((request, response) => {
     }
     return result;
   }
-
+  /**
+   * Checks if Code is unique
+   * @param {*} code 
+   */
   function isCodeUniqe(code) {
     let ref = admin.database().ref('/');
     ref.child('games').orderByChild('code').equalTo(code).once('value').then(snapshot => {
