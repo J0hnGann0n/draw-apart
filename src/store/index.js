@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
+import firebase from "../services/firebase";
 
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    gameKey: '',
     game: {},
     player: {
       name: ""
@@ -16,6 +18,10 @@ export default new Vuex.Store({
     ADD_GAME(state, payload) {
       let newGame = payload;
       state.game = newGame;
+    },
+    ADD_GAMEKEY(state, payload) {
+      let newGameKey = payload;
+      state.gameKey = newGameKey;
     },
     ADD_PLAYERNAME(state, payload) {
       let newName = payload;
@@ -34,14 +40,17 @@ export default new Vuex.Store({
      */
     createGame(context, payload) {
       let player = { name: payload }
-
       axios({
         method: 'post',
         url: 'https://us-central1-drawapart-84b66.cloudfunctions.net/createGame',
         data: player
       }).then(result => {
-        let newGame = result.data;
-        context.commit('ADD_GAME', newGame);
+        //Store game key in firebase db
+        let gameKey = result.data;
+        context.commit('ADD_GAMEKEY', gameKey);
+        firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
+          context.commit('ADD_GAME', snapshot.val());
+        })
       });
     },
     joinGame(context, payload) {

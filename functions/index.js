@@ -65,9 +65,9 @@ exports.createGame = functions.https.onRequest((request, response) => {
       //add provided playername to game object
       game.players.push(request.body.name)
       //push game object to games in db
-      admin.database().ref('/games/').push(game)
+      let createGameInDB = admin.database().ref('/games/').push(game)
       //return game object
-      response.send(game);
+      response.send(createGameInDB.key);
     }
 
   });
