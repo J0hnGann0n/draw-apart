@@ -7,7 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    game: {},
+    game: {
+      code: "abcd",
+      state: "play",
+      players: ["john"],
+      drawings: [],
+      combinations: []
+    },
     player: {
       name: ""
     }

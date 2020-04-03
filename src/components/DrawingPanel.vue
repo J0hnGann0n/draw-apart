@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import testImage from "../../test_image";
-
 export default {
   name: "DrawingPanel",
   props: {
@@ -73,8 +71,10 @@ export default {
      * Get canvas image as base64 and send drawing object to store to be submitted.
      */
     submitDrawing(bodyPart) {
+      var c = document.getElementById("canvas");
+      let image = c.toDataURL();
       let drawing = {
-        imageData: testImage,
+        imageData: image,
         player: "john",
         bodyPart: bodyPart
       };
