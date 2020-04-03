@@ -5,16 +5,67 @@ const cors = require('cors')({ origin: true });
 admin.initializeApp();
 
 exports.createGame = functions.https.onRequest((request, response) => {
+  /**
+   * Generates the game code with the definied characters
+   * @param {*} length 
+   */
+  function generateCode(length) {
+    let result = '';
+    let characters = 'abcdefghijklmnopqrstuvwxyz';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  function isCodeUniqe(code) {
+    let ref = admin.database().ref('/');
+    ref.child('games').orderByChild('code').equalTo(code).once('value').then(snapshot => {
+      if (snapshot.exists()) {
+        return true;
+      } else {
+        return false;
+      }
+    }).catch(error => {
+      response.send("Etwas ist schief gelaufen")
+    })
+  }
+  /**
+   * Wrap response in cors header
+   */
   cors(request, response, () => {
     let game = {
-      code: "abcd",
+      code: "",
       state: "lobby",
       players: [],
       drawings: [],
       combinations: []
     }
-    game.players.push(request.body.name)
-    admin.database().ref('/games/').push(game)
-    response.send(game);
+    let uniqeGameCode = false;
+    let gameCode = "";
+
+    //Generate game code
+
+    gameCode = generateCode(4);
+    while (uniqeGameCode === false) {
+      if (isCodeUniqe(gameCode)) {
+        gameCode = generateCode(4)
+      } else {
+        uniqeGameCode = true;
+      }
+    }
+
+    if (uniqeGameCode) {
+      //add game code
+      game.code = gameCode
+      //add provided playername to game object
+      game.players.push(request.body.name)
+      //push game object to games in db
+      admin.database().ref('/games/').push(game)
+      //return game object
+      response.send(game);
+    }
+
   });
 })
