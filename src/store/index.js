@@ -7,13 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    game: {
-      code: "abcd",
-      state: "play",
-      players: ["john", "tom"],
-      drawings: [],
-      combinations: []
-    },
+    game: {},
     player: {
       name: ""
     }
@@ -46,12 +40,9 @@ export default new Vuex.Store({
         url: 'https://us-central1-drawapart-84b66.cloudfunctions.net/createGame',
         data: player
       }).then(result => {
-        console.log(result)
+        let newGame = result.data;
+        context.commit('ADD_GAME', newGame);
       });
-      //axios.post("/api/game/create", payload).then(result => {
-      //let newGame = result.data.game.game;
-      //context.commit('ADD_GAME', newGame);
-      //});
     },
     joinGame(context, payload) {
       let gameCode = payload.gamecode;

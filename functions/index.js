@@ -7,11 +7,14 @@ admin.initializeApp();
 exports.createGame = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     let game = {
-      players: []
+      code: "abcd",
+      state: "lobby",
+      players: [],
+      drawings: [],
+      combinations: []
     }
-    console.log(request)
     game.players.push(request.body.name)
     admin.database().ref('/games/').push(game)
-    response.send(`Hello from Firebase! ${JSON.stringify(request.body)}`);
+    response.send(game);
   });
 })
