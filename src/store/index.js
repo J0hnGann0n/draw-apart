@@ -41,6 +41,7 @@ export default new Vuex.Store({
         data: player
       }).then(result => {
         let newGame = result.data;
+        newGame.state = "play"
         context.commit('ADD_GAME', newGame);
       });
     },

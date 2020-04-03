@@ -24,7 +24,15 @@ export default {
   },
   computed: {
     game() {
-      return this.$store.getters.getGame;
+      let game = {
+        code: "abcd",
+        state: "play",
+        players: ["john"],
+        drawings: [],
+        combinations: []
+      };
+      return game;
+      // return this.$store.getters.getGame;
     }
   }
 };

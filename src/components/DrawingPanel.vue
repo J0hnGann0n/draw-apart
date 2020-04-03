@@ -12,8 +12,12 @@
           v-on:mousedown="handleMouseDown"
           v-on:mouseup="handleMouseUp"
           v-on:mousemove="handleMouseMove"
-          width="800px"
-          height="800px"
+          v-touch:start="handleMouseDown"
+          v-touch:end="handleMouseUp"
+          v-touch:moving="handleMouseMove"
+          width="300px"
+          height="400px"
+          style="border-color: black;"
         ></canvas>
       </div>
     </div>
@@ -78,7 +82,6 @@ export default {
       this.drawingCount++;
     },
     draw: function() {
-      // requestAnimationFrame(this.draw);
       if (this.mouse.down) {
         var c = document.getElementById("canvas");
 
@@ -94,11 +97,12 @@ export default {
     },
     handleMouseDown: function(event) {
       this.mouse.down = true;
+      let pageX = event.touches ? event.touches[0].pageX : event.pageX;
+      let pageY = event.touches ? event.touches[0].pageY : event.pageY;
       this.mouse.current = {
-        x: event.pageX,
-        y: event.pageY
+        x: pageX,
+        y: pageY
       };
-
       var c = document.getElementById("canvas");
       var ctx = c.getContext("2d");
 
@@ -108,9 +112,11 @@ export default {
       this.mouse.down = false;
     },
     handleMouseMove: function(event) {
+      let pageX = event.touches ? event.touches[0].pageX : event.pageX;
+      let pageY = event.touches ? event.touches[0].pageY : event.pageY;
       this.mouse.current = {
-        x: event.pageX,
-        y: event.pageY
+        x: pageX,
+        y: pageY
       };
 
       this.draw(event);
@@ -121,7 +127,6 @@ export default {
     var ctx = c.getContext("2d");
     ctx.translate(0.5, 0.5);
     ctx.imageSmoothingEnabled = false;
-    // this.draw();
   }
 };
 </script>
