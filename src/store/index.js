@@ -33,6 +33,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
+
     /**
      * Send request to server to create a new game with the given player name.
      * @param {} context 
@@ -47,17 +48,35 @@ export default new Vuex.Store({
       }).then(result => {
         //Store game key in firebase db
         let gameKey = result.data;
+        //Add game object reference from firebase db to store
         context.commit('ADD_GAMEKEY', gameKey);
+        //get gamedata from firebase
         firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
           context.commit('ADD_GAME', snapshot.val());
         })
       });
     },
+
+    /**
+     * 
+     * @param {*} context 
+     * @param {*} payload 
+     */
     joinGame(context, payload) {
-      let gameCode = payload.gamecode;
-      axios.post("/api/game/" + gameCode, payload.playername).then(result => {
-        context.commit('ADD_GAME', result.data.game);
-      });
+      axios({
+        method: 'post',
+        url: 'https://us-central1-drawapart-84b66.cloudfunctions.net/joinGame',
+        data: payload
+      }).then(result => {
+        console.log(result)
+        let gameKey = Object.keys(result.data)[0];
+        //Add game object reference from firebase db to store
+        context.commit('ADD_GAMEKEY', gameKey);
+        //get gamedata from firebase
+        firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
+          context.commit('ADD_GAME', snapshot.val());
+        })
+      })
     },
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);

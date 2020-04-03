@@ -4,6 +4,8 @@ const admin = require('firebase-admin');
 const cors = require('cors')({ origin: true });
 admin.initializeApp();
 
+let ref = admin.database().ref('/');
+
 exports.createGame = functions.https.onRequest((request, response) => {
   /**
    * Generates the game code with the definied characters
@@ -23,7 +25,6 @@ exports.createGame = functions.https.onRequest((request, response) => {
    * @param {*} code 
    */
   function isCodeUniqe(code) {
-    let ref = admin.database().ref('/');
     ref.child('games').orderByChild('code').equalTo(code).once('value').then(snapshot => {
       if (snapshot.exists()) {
         return true;
@@ -71,4 +72,24 @@ exports.createGame = functions.https.onRequest((request, response) => {
     }
 
   });
+})
+
+exports.joinGame = functions.https.onRequest((request, response) => {
+  /**
+   * Wrap response in cors header
+   */
+  cors(request, response, () => {
+    let gameCode = request.body.gamecode
+    ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(snapshot => {
+      if (snapshot.exists()) {
+        response.send(snapshot.val())
+        return true;
+      } else {
+        response.send("error")
+        return false;
+      }
+    }).catch(error => {
+      response.send("Etwas ist schief gelaufen")
+    })
+  })
 })
