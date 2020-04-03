@@ -6,7 +6,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col">
+      <ColorPicker @select-color="setColor" />
+      <div class="col-11 d-flex p-0">
         <canvas
           id="canvas"
           v-on:mousedown="handleMouseDown"
@@ -15,9 +16,6 @@
           v-touch:start="handleMouseDown"
           v-touch:end="handleMouseUp"
           v-touch:moving="handleMouseMove"
-          width="300px"
-          height="400px"
-          style="border-color: black;"
         ></canvas>
       </div>
     </div>
@@ -25,10 +23,7 @@
       <p>{{ drawingCount }}</p>
     </div>
     <div class="col-12 d-flex">
-      <button type="button" class="btn btn-scondary" @click="submitDrawing()">
-        <i class="fas fa-hamburger"></i>
-      </button>
-      <button type="button" class="btn btn-scondary" @click="clearCanvas()">
+      <button type="button" class="btn btn-secondary" @click="clearCanvas()">
         <i class="fas fa-trash"></i>
       </button>
       <button
@@ -43,14 +38,21 @@
 </template>
 
 <script>
+import ColorPicker from "./ColorPicker";
+
 export default {
   name: "DrawingPanel",
   props: {
     msg: String
   },
+  components: {
+    ColorPicker
+  },
   data: function() {
     return {
       vueCanvas: null,
+      canvasWidth: 0,
+      canvasHeight: 0,
       drawingCount: 0,
       bodyPart: ["head", "body", "legs", "feet"],
       mouse: {
@@ -93,16 +95,19 @@ export default {
       this.drawingCount++;
       this.clearCanvas();
     },
+    /**
+     * Clears or deletes everything on the canvas
+     */
     clearCanvas() {
-      this.vueCanvas.clearRect(0, 0, 300, 400);
+      this.vueCanvas.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
       this.vueCanvas.beginPath();
+    },
+    setColor(color) {
+      this.vueCanvas.strokeStyle = color;
     },
     draw: function() {
       if (this.mouse.down) {
-        this.vueCanvas.clearRect(0, 0, 800, 800);
-
         this.vueCanvas.lineTo(this.currentMouse.x, this.currentMouse.y);
-        this.vueCanvas.strokeStyle = "#F63E02";
         this.vueCanvas.lineWidth = 2;
         this.vueCanvas.stroke();
       }
@@ -115,7 +120,7 @@ export default {
         x: pageX,
         y: pageY
       };
-
+      this.vueCanvas.beginPath();
       this.vueCanvas.moveTo(this.currentMouse.x, this.currentMouse.y);
     },
     handleMouseUp: function() {
@@ -132,18 +137,24 @@ export default {
       this.draw(event);
     }
   },
-  ready: function() {
-    this.vueCanvas.translate(0.5, 0.5);
-    this.vueCanvas.imageSmoothingEnabled = false;
-  },
   mounted() {
     var canvas = document.getElementById("canvas");
+    let heightRatio = 1.2;
+    canvas.height = canvas.width * heightRatio;
+    this.canvasWidth = canvas.width;
+    this.canvasHeight = canvas.height;
     var ctx = canvas.getContext("2d");
     this.vueCanvas = ctx;
+    this.vueCanvas.strokeStyle = "#F63E02";
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+#canvas {
+  border: 1px solid blue;
+  width: 100%;
+  height: 90%;
+}
 </style>
