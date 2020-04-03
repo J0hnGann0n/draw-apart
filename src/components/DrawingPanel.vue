@@ -23,6 +23,9 @@
       <p>{{ drawingCount }}</p>
     </div>
     <div class="col-12 d-flex">
+      <button type="button" class="btn btn-secondary" @click="undo()">
+        <i class="fas fa-undo"></i>
+      </button>
       <button type="button" class="btn btn-secondary" @click="clearCanvas()">
         <i class="fas fa-trash"></i>
       </button>
@@ -51,6 +54,7 @@ export default {
   data: function() {
     return {
       vueCanvas: null,
+      canvasHistory: [],
       canvasWidth: 0,
       canvasHeight: 0,
       drawingCount: 0,
@@ -105,6 +109,15 @@ export default {
     setColor(color) {
       this.vueCanvas.strokeStyle = color;
     },
+    undo() {
+      if (this.canvasHistory.length > 1) {
+        var reloadData = this.canvasHistory[this.canvasHistory.length - 2];
+        this.vueCanvas.putImageData(reloadData, 0, 0);
+      } else {
+        this.clearCanvas();
+      }
+      this.canvasHistory.pop();
+    },
     draw: function() {
       if (this.mouse.down) {
         this.vueCanvas.lineTo(this.currentMouse.x, this.currentMouse.y);
@@ -125,6 +138,14 @@ export default {
     },
     handleMouseUp: function() {
       this.mouse.down = false;
+      let data = this.vueCanvas.getImageData(
+        0,
+        0,
+        this.canvasWidth,
+        this.canvasHeight
+      );
+
+      this.canvasHistory.push(data);
     },
     handleMouseMove: function(event) {
       let pageX = event.touches ? event.touches[0].pageX : event.pageX;
@@ -145,7 +166,7 @@ export default {
     this.canvasHeight = canvas.height;
     var ctx = canvas.getContext("2d");
     this.vueCanvas = ctx;
-    this.vueCanvas.strokeStyle = "#F63E02";
+    this.vueCanvas.strokeStyle = "#FFFF00";
   }
 };
 </script>
