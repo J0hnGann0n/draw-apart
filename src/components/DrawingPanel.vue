@@ -24,8 +24,18 @@
     <div class="col-10">
       <p>{{ drawingCount }}</p>
     </div>
-    <div class="col-2">
-      <button type="button" class="btn btn-primary" @click="submitDrawing()">
+    <div class="col-12 d-flex">
+      <button type="button" class="btn btn-scondary" @click="submitDrawing()">
+        <i class="fas fa-hamburger"></i>
+      </button>
+      <button type="button" class="btn btn-scondary" @click="clearCanvas()">
+        <i class="fas fa-trash"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary ml-auto"
+        @click="submitDrawing(bodyPart[drawingCount])"
+      >
         <i class="fas fa-check"></i>
       </button>
     </div>
@@ -40,6 +50,7 @@ export default {
   },
   data: function() {
     return {
+      vueCanvas: null,
       drawingCount: 0,
       bodyPart: ["head", "body", "legs", "feet"],
       mouse: {
@@ -71,8 +82,8 @@ export default {
      * Get canvas image as base64 and send drawing object to store to be submitted.
      */
     submitDrawing(bodyPart) {
-      var c = document.getElementById("canvas");
-      let image = c.toDataURL();
+      let canvasDOM = document.getElementById("canvas");
+      let image = canvasDOM.toDataURL();
       let drawing = {
         imageData: image,
         player: "john",
@@ -80,19 +91,20 @@ export default {
       };
       this.$store.dispatch("submitDrawing", drawing);
       this.drawingCount++;
+      this.clearCanvas();
+    },
+    clearCanvas() {
+      this.vueCanvas.clearRect(0, 0, 300, 400);
+      this.vueCanvas.beginPath();
     },
     draw: function() {
       if (this.mouse.down) {
-        var c = document.getElementById("canvas");
+        this.vueCanvas.clearRect(0, 0, 800, 800);
 
-        var ctx = c.getContext("2d");
-
-        ctx.clearRect(0, 0, 800, 800);
-
-        ctx.lineTo(this.currentMouse.x, this.currentMouse.y);
-        ctx.strokeStyle = "#F63E02";
-        ctx.lineWidth = 2;
-        ctx.stroke();
+        this.vueCanvas.lineTo(this.currentMouse.x, this.currentMouse.y);
+        this.vueCanvas.strokeStyle = "#F63E02";
+        this.vueCanvas.lineWidth = 2;
+        this.vueCanvas.stroke();
       }
     },
     handleMouseDown: function(event) {
@@ -103,10 +115,8 @@ export default {
         x: pageX,
         y: pageY
       };
-      var c = document.getElementById("canvas");
-      var ctx = c.getContext("2d");
 
-      ctx.moveTo(this.currentMouse.x, this.currentMouse.y);
+      this.vueCanvas.moveTo(this.currentMouse.x, this.currentMouse.y);
     },
     handleMouseUp: function() {
       this.mouse.down = false;
@@ -123,10 +133,13 @@ export default {
     }
   },
   ready: function() {
-    var c = document.getElementById("canvas");
-    var ctx = c.getContext("2d");
-    ctx.translate(0.5, 0.5);
-    ctx.imageSmoothingEnabled = false;
+    this.vueCanvas.translate(0.5, 0.5);
+    this.vueCanvas.imageSmoothingEnabled = false;
+  },
+  mounted() {
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    this.vueCanvas = ctx;
   }
 };
 </script>
