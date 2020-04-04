@@ -2,55 +2,17 @@
   <!-- drawing combination -->
   <div class="row">
     <div class="col-12">
-      <div class="row justify-content-around align-items-center">
-        <div class="col-2">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-        <div class="col-6">
-          <img src="https://via.placeholder.com/100" />
-        </div>
-        <div class="col-2">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </div>
-      <div class="row justify-content-around align-items-center">
-        <div class="col-2">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-        <div class="col-6">
-          <img src="https://via.placeholder.com/100" />
-        </div>
-        <div class="col-2">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </div>
-      <div class="row justify-content-around align-items-center">
-        <div class="col-2">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-        <div class="col-6">
-          <img src="https://via.placeholder.com/100" />
-        </div>
-        <div class="col-2">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </div>
-      <div class="row justify-content-around align-items-center">
-        <div class="col-2">
-          <i class="fas fa-arrow-left"></i>
-        </div>
-        <div class="col-6">
-          <img src="https://via.placeholder.com/100" />
-        </div>
-        <div class="col-2">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </div>
+      <Slider />
+      <Slider />
+      <Slider />
+      <Slider />
     </div>
   </div>
 </template>
 
 <script>
+import Slider from "@/components/Slider.vue";
+
 export default {
   name: "CombinationPickerSlider",
   props: {
@@ -59,7 +21,17 @@ export default {
   data: function() {
     return {};
   },
-  components: {}
+  components: {
+    Slider
+  },
+  computed: {
+    game() {
+      return this.$store.getters.getGame;
+    },
+    headDrawings() {
+      return this.game.drawings.filter(drawing => drawing.bodyPart == "head");
+    }
+  }
 };
 </script>
 

@@ -27,7 +27,7 @@ export default {
   },
   data: function() {
     return {
-      drawing: true,
+      drawing: false,
       combinationPicked: false
     };
   },
