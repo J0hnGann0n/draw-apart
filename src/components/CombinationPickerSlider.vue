@@ -2,10 +2,10 @@
   <!-- drawing combination -->
   <div class="row">
     <div class="col-12">
-      <Slider />
-      <Slider />
-      <Slider />
-      <Slider />
+      <Slider :images="headDrawings" />
+      <Slider :images="bodyDrawings" />
+      <Slider :images="legsDrawings" />
+      <Slider :images="feetDrawings" />
     </div>
   </div>
 </template>
@@ -30,6 +30,15 @@ export default {
     },
     headDrawings() {
       return this.game.drawings.filter(drawing => drawing.bodyPart == "head");
+    },
+    bodyDrawings() {
+      return this.game.drawings.filter(drawing => drawing.bodyPart == "body");
+    },
+    legsDrawings() {
+      return this.game.drawings.filter(drawing => drawing.bodyPart == "legs");
+    },
+    feetDrawings() {
+      return this.game.drawings.filter(drawing => drawing.bodyPart == "feet");
     }
   }
 };
