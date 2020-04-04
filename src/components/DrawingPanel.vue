@@ -106,9 +106,15 @@ export default {
       this.vueCanvas.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
       this.vueCanvas.beginPath();
     },
+    /**
+     * Set the stroke color to the selected color
+     */
     setColor(color) {
       this.vueCanvas.strokeStyle = color;
     },
+    /**
+     * Reload the canvas to the previous state stored in the canvas history
+     */
     undo() {
       if (this.canvasHistory.length > 1) {
         var reloadData = this.canvasHistory[this.canvasHistory.length - 2];
@@ -118,6 +124,9 @@ export default {
       }
       this.canvasHistory.pop();
     },
+    /**
+     * Draw a line from the point at which mouse down was pressed to the current position.
+     */
     draw: function() {
       if (this.mouse.down) {
         this.vueCanvas.lineTo(this.currentMouse.x, this.currentMouse.y);
@@ -125,6 +134,10 @@ export default {
         this.vueCanvas.stroke();
       }
     },
+    /**
+     * Set mouse.down to true (start drawing), move the canvas poiter to the current location and
+     * store the current location.
+     */
     handleMouseDown: function(event) {
       this.mouse.down = true;
       let pageX = event.touches ? event.touches[0].pageX : event.pageX;
@@ -136,6 +149,9 @@ export default {
       this.vueCanvas.beginPath();
       this.vueCanvas.moveTo(this.currentMouse.x, this.currentMouse.y);
     },
+    /**
+     * Set mouse.down to false (stop drawing) and store the current canvas to the canvas history.
+     */
     handleMouseUp: function() {
       this.mouse.down = false;
       let data = this.vueCanvas.getImageData(
@@ -145,8 +161,11 @@ export default {
         this.canvasHeight
       );
 
-      this.canvasHistory.push(data);
+      this.canvasHistory.push(data); // Store state of canvas to history.
     },
+    /**
+     * Update the current pointer location and draw.
+     */
     handleMouseMove: function(event) {
       let pageX = event.touches ? event.touches[0].pageX : event.pageX;
       let pageY = event.touches ? event.touches[0].pageY : event.pageY;
@@ -159,12 +178,12 @@ export default {
     }
   },
   mounted() {
-    var canvas = document.getElementById("canvas");
-    let heightRatio = 1.2;
+    let canvas = document.getElementById("canvas");
+    let ctx = canvas.getContext("2d");
+    let heightRatio = 1.2; // Adjust this to change height of canvas
     canvas.height = canvas.width * heightRatio;
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
-    var ctx = canvas.getContext("2d");
     this.vueCanvas = ctx;
     this.vueCanvas.strokeStyle = "#FFFF00";
   }
