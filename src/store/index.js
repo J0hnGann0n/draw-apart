@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
-
+import test_image from "../../test_image"
 
 Vue.use(Vuex)
 
@@ -12,7 +12,48 @@ export default new Vuex.Store({
       code: "abcd",
       state: "play",
       players: ["john"],
-      drawings: [],
+      drawings: [
+        {
+          imageData: test_image,
+          player: "bob",
+          bodyPart: "head"
+        },
+        {
+          imageData: test_image,
+          player: "johmirjamn",
+          bodyPart: "body"
+        },
+        {
+          imageData: test_image,
+          player: "paul",
+          bodyPart: "legs"
+        },
+        {
+          imageData: test_image,
+          player: "mary",
+          bodyPart: "feet"
+        },
+        {
+          imageData: test_image,
+          player: "frank",
+          bodyPart: "head"
+        },
+        {
+          imageData: test_image,
+          player: "jim",
+          bodyPart: "body"
+        },
+        {
+          imageData: test_image,
+          player: "john",
+          bodyPart: "legs"
+        },
+        {
+          imageData: test_image,
+          player: "Jim",
+          bodyPart: "feet"
+        },
+      ],
       combinations: []
     },
     gameKey: '',
