@@ -69,7 +69,7 @@ export default new Vuex.Store({
         data: payload
       }).then(result => {
         console.log(result)
-        let gameKey = Object.keys(result.data)[0];
+        let gameKey = result.data;
         //Add game object reference from firebase db to store
         context.commit('ADD_GAMEKEY', gameKey);
         //get gamedata from firebase

@@ -6,35 +6,38 @@ admin.initializeApp();
 
 let ref = admin.database().ref('/');
 
-exports.createGame = functions.https.onRequest((request, response) => {
-  /**
+/**
    * Generates the game code with the definied characters
    * @param {*} length 
    */
-  function generateCode(length) {
-    let result = '';
-    let characters = 'abcdefghijklmnopqrstuvwxyz';
-    let charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+function generateCode(length) {
+  let result = '';
+  let characters = 'abcdefghijklmnopqrstuvwxyz';
+  let charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+/**
+ * Checks if Code is unique
+ * @param {*} code 
+ */
+async function isCodeUniqe(code) {
+  let checkDB = await ref.child('games').orderByChild('code').equalTo(code).once('value').then(snapshot => {
+    if (snapshot.exists()) {
+      return snapshot.val();
+    } else {
+      return false;
     }
-    return result;
-  }
-  /**
-   * Checks if Code is unique
-   * @param {*} code 
-   */
-  function isCodeUniqe(code) {
-    ref.child('games').orderByChild('code').equalTo(code).once('value').then(snapshot => {
-      if (snapshot.exists()) {
-        return true;
-      } else {
-        return false;
-      }
-    }).catch(error => {
-      response.send("Etwas ist schief gelaufen")
-    })
-  }
+  }).catch(error => {
+    response.send("Etwas ist schief gelaufen")
+    return error
+  })
+  return checkDB;
+}
+
+exports.createGame = functions.https.onRequest((request, response) => {
   /**
    * Wrap response in cors header
    */
@@ -42,7 +45,7 @@ exports.createGame = functions.https.onRequest((request, response) => {
     let game = {
       code: "",
       state: "lobby",
-      players: [],
+      players: {},
       drawings: [],
       combinations: []
     }
@@ -64,7 +67,7 @@ exports.createGame = functions.https.onRequest((request, response) => {
       //add game code
       game.code = gameCode
       //add provided playername to game object
-      game.players.push(request.body.name)
+      game.players[request.body.name] = true;
       //push game object to games in db
       let createGameInDB = admin.database().ref('/games/').push(game)
       //return game object
@@ -80,16 +83,16 @@ exports.joinGame = functions.https.onRequest((request, response) => {
    */
   cors(request, response, () => {
     let gameCode = request.body.gamecode
-    ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(snapshot => {
-      if (snapshot.exists()) {
-        response.send(snapshot.val())
-        return true;
-      } else {
-        response.send("error")
-        return false;
-      }
+    let player = request.body.player
+
+    isCodeUniqe(gameCode).then(res => {
+      let gameKey = Object.keys(res)[0]
+      //ref.child('games/' + gameKey + '/players').child(player).setValue(true);
+      response.send(gameKey)
+      return true
     }).catch(error => {
-      response.send("Etwas ist schief gelaufen")
+      response.send(error)
+      return error
     })
   })
 })

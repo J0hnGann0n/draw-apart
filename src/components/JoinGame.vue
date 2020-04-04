@@ -28,7 +28,7 @@ export default {
       if (this.gamecode && this.$store.state.player.name) {
         let payload = {
           gamecode: this.gamecode,
-          playername: this.$store.state.player.name
+          player: this.$store.state.player.name
         };
         this.$store.dispatch("joinGame", payload);
         this.$router.push("/game");
