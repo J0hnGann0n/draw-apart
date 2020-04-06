@@ -47,12 +47,18 @@ export default {
     };
   },
   methods: {
+    /**
+     * update combination object with active image when sliding forward
+     */
     slideForward(bodyPart) {
       let currentChoosen = this.combination[bodyPart];
       if (currentChoosen < this.game.drawings[bodyPart].length) {
         this.combination[bodyPart] = currentChoosen + 1;
       }
     },
+    /**
+     * update combination object with active image when sliding back
+     */
     slideBack(bodyPart) {
       let currentChoosen = this.combination[bodyPart];
       if (currentChoosen > 0) {
