@@ -11,7 +11,11 @@
           <i class="fas fa-arrow-left"></i>
         </div>
         <div class="col-6">
-          <img :src="game.drawings[bodyPart][combination[bodyPart]]" width="100px" height="100px" />
+          <img
+            :src="game.drawings[bodyPart][combination[bodyPart]].imageData"
+            width="100px"
+            height="100px"
+          />
         </div>
         <div
           @click="slideForward(bodyPart)"
