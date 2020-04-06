@@ -19,7 +19,7 @@
         </div>
         <div
           @click="slideForward(bodyPart)"
-          v-show="combination[bodyPart] < game.drawings[bodyPart].length"
+          v-show="combination[bodyPart] < game.drawings[bodyPart].length - 1"
           class="col-2"
         >
           <i class="fas fa-arrow-right"></i>
