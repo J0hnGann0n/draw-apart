@@ -39,9 +39,9 @@
     <!-- finish combination -->
     <div class="row justify-content-end">
       <div class="col-2">
-        <a type="button" class="btn btn-primary" href="nameCombination.html">
+        <button @click="submitCombination()" type="button" class="btn btn-primary">
           <i class="fas fa-check"></i>
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -82,6 +82,9 @@ export default {
       if (currentChoosen > 0) {
         this.combination[bodyPart] = currentChoosen - 1;
       }
+    },
+    submitCombination() {
+      this.$store.dispatch("submitCombination", this.combination);
     }
   },
   computed: {

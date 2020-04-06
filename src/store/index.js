@@ -78,6 +78,10 @@ export default new Vuex.Store({
       let newGameKey = payload;
       state.gameKey = newGameKey;
     },
+    ADD_COMBINATION(state, payload) {
+      let newCombination = payload;
+      state.game.combinations = newCombination;
+    },
     ADD_PLAYERNAME(state, payload) {
       let newName = payload;
       state.player.name = newName;
@@ -139,6 +143,10 @@ export default new Vuex.Store({
     submitDrawing(context, payload) {
       // TODO: Send post request to firebase with drawing
       context.commit('ADD_DRAWING', payload);
+    },
+    submitCombination(context, payload) {
+      // TODO: Send post request to firebase with combination
+      context.commit('ADD_COMBINATION', payload)
     }
   },
   modules: {
