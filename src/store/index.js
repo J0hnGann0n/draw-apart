@@ -12,48 +12,56 @@ export default new Vuex.Store({
       code: "abcd",
       state: "play",
       players: ["john"],
-      drawings: [
-        {
-          imageData: test_image,
-          player: "john",
-          bodyPart: "head"
-        },
-        {
-          imageData: test_image,
-          player: "mary",
-          bodyPart: "body"
-        },
-        {
-          imageData: test_image,
-          player: "mark",
-          bodyPart: "legs"
-        },
-        {
-          imageData: test_image,
-          player: "paul",
-          bodyPart: "feet"
-        },
-        {
-          imageData: test_image,
-          player: "phillip",
-          bodyPart: "head"
-        },
-        {
-          imageData: test_image,
-          player: "bill",
-          bodyPart: "body"
-        },
-        {
-          imageData: test_image,
-          player: "bob",
-          bodyPart: "legs"
-        },
-        {
-          imageData: test_image,
-          player: "tim",
-          bodyPart: "feet"
-        },
-      ],
+      drawings: {
+        head: [
+          {
+            imageData: test_image,
+            player: "john",
+            bodyPart: "head"
+          },
+          {
+            imageData: test_image,
+            player: "phillip",
+            bodyPart: "head"
+          },
+        ],
+        body: [
+          {
+            imageData: test_image,
+            player: "mary",
+            bodyPart: "body"
+          },
+          {
+            imageData: test_image,
+            player: "bill",
+            bodyPart: "body"
+          },
+        ],
+        legs: [
+          {
+            imageData: test_image,
+            player: "mark",
+            bodyPart: "legs"
+          },
+          {
+            imageData: test_image,
+            player: "bob",
+            bodyPart: "legs"
+          },
+        ],
+        feet: [
+          {
+            imageData: test_image,
+            player: "paul",
+            bodyPart: "feet"
+          },
+          {
+            imageData: test_image,
+            player: "tim",
+            bodyPart: "feet"
+          },
+        ]
+      },
       combinations: []
     },
     gameKey: '',
