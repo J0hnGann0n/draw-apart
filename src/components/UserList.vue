@@ -2,7 +2,7 @@
   <!-- Userlist -->
   <div class="row">
     <div class="col">
-      <User v-for="(player, index) in game.players" :player="player" :key="index" />
+      <User v-for="(player, index) in Object.keys(game.players)" :player="player" :key="index" />
     </div>
   </div>
 </template>
