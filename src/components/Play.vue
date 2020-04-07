@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     combinationPicked() {
-      if (this.$store.state.combination) {
+      if (this.$store.state.combination.image) {
         return true;
       } else {
         return false;
