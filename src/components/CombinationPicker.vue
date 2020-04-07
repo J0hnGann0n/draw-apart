@@ -85,10 +85,13 @@ export default {
       }
     },
     submitCombination() {
+      //get canvas
       let canvas = document.getElementById("canvas");
+      //get context object to draw images
       let context = canvas.getContext("2d");
       let images = [];
 
+      //for each bodypart get the choosen image and push it into images array
       this.bodyParts.forEach(bodypart => {
         let img = new Image();
         img.src = this.game.drawings[bodypart][
@@ -97,14 +100,19 @@ export default {
         images.push(img);
       });
 
+      //set widt and height of canvas
       canvas.width = 100;
       canvas.height = this.bodyParts.length * 100;
 
+      //draw each image
       for (const [i, v] of images.entries()) {
         context.drawImage(v, 0, i * 100, 100, 100);
       }
 
-      this.$store.dispatch("submitCombination", this.combination);
+      //Save canvas as base64
+      let combinationImage = canvas.toDataURL();
+
+      this.$store.dispatch("submitCombination", combinationImage);
     }
   },
   computed: {

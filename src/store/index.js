@@ -61,12 +61,15 @@ export default new Vuex.Store({
             bodyPart: "feet"
           },
         ]
-      },
-      combinations: []
+      }
     },
     gameKey: '',
     player: {
       name: ""
+    },
+    combination: {
+      player: '',
+      image: ''
     }
   },
   mutations: {
@@ -80,7 +83,7 @@ export default new Vuex.Store({
     },
     ADD_COMBINATION(state, payload) {
       let newCombination = payload;
-      state.game.combinations = newCombination;
+      state.combination = newCombination;
     },
     ADD_PLAYERNAME(state, payload) {
       let newName = payload;
@@ -145,8 +148,12 @@ export default new Vuex.Store({
       context.commit('ADD_DRAWING', payload);
     },
     submitCombination(context, payload) {
+      let combinationObject = {
+        player: this.state.player,
+        image: payload
+      }
       // TODO: Send post request to firebase with combination
-      context.commit('ADD_COMBINATION', payload)
+      context.commit('ADD_COMBINATION', combinationObject)
     }
   },
   modules: {
