@@ -75,7 +75,7 @@ exports.joinGame = functions.https.onRequest((request, response) => {
 
     codeExists(gameCode).then(res => {
       let gameKey = Object.keys(res)[0]
-      //ref.child('games/' + gameKey + '/players').child(player).setValue(true);
+      ref.child('games/' + gameKey + '/players').child(player).set(true);
       response.send(gameKey)
       return true
     }).catch(error => {
