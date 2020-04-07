@@ -10,13 +10,14 @@
     <!-- show combination -->
     <div class="row">
       <div class="col-12">
-        <img src="https://via.placeholder.com/300" />
+        <img :src="combinationImage" />
       </div>
       <div class="input-group mb-3 col">
         <input
           type="text"
           class="form-control mt-2"
           id="nameit"
+          v-model="name"
           placeholder="Choose a Name"
           aria-describedby="chooseAName"
         />
@@ -26,9 +27,9 @@
     <!-- finish naming -->
     <div class="row justify-content-end">
       <div class="col-2">
-        <a type="button" class="btn btn-primary" href="vote.html">
+        <button type="button" @click="submitCombination()" class="btn btn-primary">
           <i class="fas fa-check"></i>
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -37,8 +38,20 @@
 <script>
 export default {
   name: "CombinationNameInput",
-  props: {
-    msg: String
+  data() {
+    return {
+      name: ""
+    };
+  },
+  computed: {
+    combinationImage() {
+      return this.$store.state.combination.image;
+    }
+  },
+  methods: {
+    submitCombination() {
+      this.$store.dispatch("submitCombination", this.name);
+    }
   }
 };
 </script>

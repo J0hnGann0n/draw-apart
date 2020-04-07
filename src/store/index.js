@@ -163,16 +163,22 @@ export default new Vuex.Store({
       firebase.database().ref('/games/' + this.state.gameKey + "/drawings/" + bodyPart).push(drawing)
       context.commit('ADD_DRAWING', payload);
     },
-    submitCombination(context, payload) {
+    addCombination(context, payload) {
       let combinationObject = {
         player: this.state.player,
         image: payload
       }
-      // TODO: Send post request to firebase with combination
       context.commit('ADD_COMBINATION', combinationObject)
     },
     updatePlayerState(context, payload) {
       context.commit("UPDATE_PLAYER_STATE", payload)
+    },
+    submitCombination(context, payload) {
+      let combinationObject = this.state.combination;
+      combinationObject.name = payload;
+      context.commit('ADD_COMBINATION', combinationObject);
+
+      // TODO: Write combination into combinations in firebase
     }
   },
   modules: {
