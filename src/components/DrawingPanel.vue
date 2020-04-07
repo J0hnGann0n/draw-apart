@@ -97,6 +97,9 @@ export default {
       };
       this.$store.dispatch("submitDrawing", drawing);
       this.drawingCount++;
+      if (this.drawingCount > 3) {
+        this.$store.dispatch("updatePlayerState", "combination");
+      }
       this.clearCanvas();
     },
     /**

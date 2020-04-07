@@ -7,10 +7,9 @@
           <p>40</p>
         </div>
       </div>
-      <DrawingPanel v-if="drawing" />
+      <DrawingPanel v-if="player.state == 'drawing'" />
     </div>
-
-    <CombinationPicker v-if="!drawing && ! combinationPicked" />
+    <CombinationPicker v-if="player.state != 'drawing' && !combinationPicked" />
     <CombinationNameInput v-if="combinationPicked" />
   </div>
 </template>
@@ -25,11 +24,6 @@ export default {
   props: {
     msg: String
   },
-  data: function() {
-    return {
-      drawing: false
-    };
-  },
   components: {
     DrawingPanel,
     CombinationPicker,
@@ -42,6 +36,9 @@ export default {
       } else {
         return false;
       }
+    },
+    player() {
+      return this.$store.getters.getPlayer;
     }
   }
 };

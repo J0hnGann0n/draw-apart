@@ -65,16 +65,19 @@ export default new Vuex.Store({
     },
     gameKey: '',
     player: {
-      name: ""
+      name: "",
+      state: "drawing"
     },
     combination: {
       player: '',
       image: ''
-    }
+    },
+    drawings: []
   },
   mutations: {
     ADD_GAME(state, payload) {
       let newGame = payload;
+      newGame.state = "play"
       state.game = newGame;
     },
     ADD_GAMEKEY(state, payload) {
@@ -91,7 +94,13 @@ export default new Vuex.Store({
     },
     ADD_DRAWING(state, payload) {
       let drawing = payload;
-      state.game.drawings.push(drawing)
+      state.drawings.push(drawing)
+    },
+    START_GAME(state) {
+      state.game.state = "play"
+    },
+    UPDATE_PLAYER_STATE(state, payload) {
+      state.player.state = payload
     }
   },
   actions: {
@@ -118,10 +127,12 @@ export default new Vuex.Store({
         })
       });
     },
-
+    startGame(context) {
+      context.commit('START_GAME');
+    },
     /**
      * 
-     * @param {*} context 
+     * @param {*} context snapshot.val()
      * @param {*} payload 
      */
     joinGame(context, payload) {
@@ -144,7 +155,12 @@ export default new Vuex.Store({
       context.commit('ADD_PLAYERNAME', payload);
     },
     submitDrawing(context, payload) {
-      // TODO: Send post request to firebase with drawing
+      let bodyPart = payload.bodyPart
+      let drawing = {
+        imageData: payload.imageData,
+        player: payload.player
+      }
+      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/" + bodyPart).push(drawing)
       context.commit('ADD_DRAWING', payload);
     },
     submitCombination(context, payload) {
@@ -154,11 +170,15 @@ export default new Vuex.Store({
       }
       // TODO: Send post request to firebase with combination
       context.commit('ADD_COMBINATION', combinationObject)
+    },
+    updatePlayerState(context, payload) {
+      context.commit("UPDATE_PLAYER_STATE", payload)
     }
   },
   modules: {
   },
   getters: {
-    getGame: state => state.game
+    getGame: state => state.game,
+    getPlayer: state => state.player
   }
 })

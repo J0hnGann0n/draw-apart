@@ -45,7 +45,12 @@ exports.createGame = functions.https.onRequest((request, response) => {
       code: "",
       state: "lobby",
       players: {},
-      drawings: [],
+      drawings: {
+        head: [],
+        body: [],
+        legs: [],
+        feet: [],
+      },
       combinations: []
     }
     //Generate game code
