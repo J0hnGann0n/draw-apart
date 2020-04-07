@@ -35,6 +35,7 @@
         </div>
       </div>
     </div>
+    <canvas id="canvas"></canvas>
 
     <!-- finish combination -->
     <div class="row justify-content-end">
@@ -84,6 +85,28 @@ export default {
       }
     },
     submitCombination() {
+      var canvas = document.getElementById("canvas");
+      var context = canvas.getContext("2d");
+
+      var img1 = new Image();
+      var img2 = new Image();
+
+      img1.width = 100;
+      img1.height = 100;
+      img2.width = 100;
+      img2.height = 100;
+
+      img1.src = this.game.drawings["head"][this.combination["head"]].imageData;
+      img2.src = this.game.drawings["feet"][this.combination["feet"]].imageData;
+
+      canvas.width = img1.width;
+      canvas.height = img1.height + img2.height;
+
+      context.globalAlpha = 1.0;
+      context.drawImage(img1, 0, 0);
+      context.globalAlpha = 0.5; //Remove if pngs have alpha
+      context.drawImage(img2, 0, 100);
+
       this.$store.dispatch("submitCombination", this.combination);
     }
   },
