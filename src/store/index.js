@@ -69,7 +69,8 @@ export default new Vuex.Store({
     },
     combination: {
       player: '',
-      image: ''
+      image: '',
+      name: ''
     }
   },
   mutations: {

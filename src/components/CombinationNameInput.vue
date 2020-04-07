@@ -10,7 +10,7 @@
     <!-- show combination -->
     <div class="row">
       <div class="col-12">
-        <img src="https://via.placeholder.com/300" />
+        <img :src="combinationImage" />
       </div>
       <div class="input-group mb-3 col">
         <input
@@ -37,8 +37,10 @@
 <script>
 export default {
   name: "CombinationNameInput",
-  props: {
-    msg: String
+  computed: {
+    combinationImage() {
+      return this.$store.state.combination.image;
+    }
   }
 };
 </script>
