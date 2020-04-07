@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" class="d-none"></canvas>
 
     <!-- finish combination -->
     <div class="row justify-content-end">
