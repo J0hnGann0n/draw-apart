@@ -22,9 +22,9 @@
     </div>
     <div class="row">
       <div class="col-2">
-        <a type="button" class="btn btn-primary" href="winner.html">
+        <button @click="submitVote()" type="button" class="btn btn-primary">
           <i class="fas fa-check"></i>
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -67,6 +67,10 @@ export default {
       if (this.currentChoosen > 0) {
         this.currentChoosen--;
       }
+    },
+    submitVote() {
+      let winnerID = Object.keys(this.game.combinations)[this.currentChoosen];
+      this.$store.dispatch("submitVote", winnerID);
     }
   }
 };

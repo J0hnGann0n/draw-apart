@@ -32,14 +32,22 @@ export default {
   },
   data: function() {
     return {
-      voting: false,
-      voteSubmitted: false
+      voting: false
     };
   },
   components: {
     DrawingPicker,
     ShowWinner,
     Waiting
+  },
+  computed: {
+    voteSubmitted() {
+      if (this.$store.vote) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 </script>

@@ -72,7 +72,8 @@ export default new Vuex.Store({
       player: '',
       image: ''
     },
-    drawings: []
+    drawings: [],
+    vote: ''
   },
   mutations: {
     ADD_GAME(state, payload) {
@@ -101,6 +102,9 @@ export default new Vuex.Store({
     },
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
+    },
+    ADD_VOTE(state, payload) {
+      state.vote = payload;
     }
   },
   actions: {
@@ -193,6 +197,12 @@ export default new Vuex.Store({
 
       // JUST FOR DEV
       this.state.game.state = 'vote'
+    },
+    submitVote(context, payload) {
+      context.commit('ADD_VOTE', payload);
+
+      //write vote into firebase
+      firebase.database().ref('/games/' + this.state.gameKey + "/votes/").push(payload)
     }
   },
   modules: {
