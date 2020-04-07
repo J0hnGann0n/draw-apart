@@ -3,14 +3,18 @@
     <div class="row">
       <div class="col-12">
         <div class="row justify-content-around align-items-center">
-          <div @click="slideBack()" class="col-2">
+          <div @click="slideBack()" v-show="currentChoosen > 0" class="col-2">
             <i class="fas fa-arrow-left"></i>
           </div>
           <div class="col-6">
             <img :src="imageSrc" />
             <p>{{imageName}}</p>
           </div>
-          <div @click="slideForward()" class="col-2">
+          <div
+            @click="slideForward()"
+            v-show="currentChoosen < game.combinations.length - 1"
+            class="col-2"
+          >
             <i class="fas fa-arrow-right"></i>
           </div>
         </div>
