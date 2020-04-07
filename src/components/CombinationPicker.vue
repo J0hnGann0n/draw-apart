@@ -19,11 +19,7 @@
             <i class="fas fa-arrow-left"></i>
           </div>
           <div class="col-6">
-            <img
-              :src="game.drawings[bodyPart][combination[bodyPart]].imageData"
-              width="100px"
-              height="100px"
-            />
+            <img :src="getImageData(bodyPart)" width="100px" height="100px" />
           </div>
           <div
             @click="slideForward(bodyPart)"
@@ -94,9 +90,9 @@ export default {
       //for each bodypart get the choosen image and push it into images array
       this.bodyParts.forEach(bodypart => {
         let img = new Image();
-        img.src = this.game.drawings[bodypart][
-          this.combination[bodypart]
-        ].imageData;
+        let drawings = this.game.drawings[bodypart];
+        let key = Object.keys(drawings)[this.combination[bodypart]];
+        img.src = drawings[key].imageData;
         images.push(img);
       });
 
@@ -112,6 +108,14 @@ export default {
       //Save canvas as base64
       let combinationImage = canvas.toDataURL();
       this.$store.dispatch("addCombination", combinationImage);
+    },
+    /**
+     * Gets the Image based on current choosen state
+     */
+    getImageData(bodyPart) {
+      let drawings = this.game.drawings[bodyPart];
+      let key = Object.keys(drawings)[this.combination[bodyPart]];
+      return drawings[key].imageData;
     }
   },
   computed: {
