@@ -85,27 +85,24 @@ export default {
       }
     },
     submitCombination() {
-      var canvas = document.getElementById("canvas");
-      var context = canvas.getContext("2d");
+      let canvas = document.getElementById("canvas");
+      let context = canvas.getContext("2d");
+      let images = [];
 
-      var img1 = new Image();
-      var img2 = new Image();
+      this.bodyParts.forEach(bodypart => {
+        let img = new Image();
+        img.src = this.game.drawings[bodypart][
+          this.combination[bodypart]
+        ].imageData;
+        images.push(img);
+      });
 
-      img1.width = 100;
-      img1.height = 100;
-      img2.width = 100;
-      img2.height = 100;
+      canvas.width = 100;
+      canvas.height = this.bodyParts.length * 100;
 
-      img1.src = this.game.drawings["head"][this.combination["head"]].imageData;
-      img2.src = this.game.drawings["feet"][this.combination["feet"]].imageData;
-
-      canvas.width = img1.width;
-      canvas.height = img1.height + img2.height;
-
-      context.globalAlpha = 1.0;
-      context.drawImage(img1, 0, 0);
-      context.globalAlpha = 0.5; //Remove if pngs have alpha
-      context.drawImage(img2, 0, 100);
+      for (const [i, v] of images.entries()) {
+        context.drawImage(v, 0, i * 100, 100, 100);
+      }
 
       this.$store.dispatch("submitCombination", this.combination);
     }
