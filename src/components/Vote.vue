@@ -33,7 +33,7 @@ export default {
   data: function() {
     return {
       voting: false,
-      voteSubmitted: true
+      voteSubmitted: false
     };
   },
   components: {

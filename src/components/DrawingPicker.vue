@@ -3,13 +3,14 @@
     <div class="row">
       <div class="col-12">
         <div class="row justify-content-around align-items-center">
-          <div class="col-2">
+          <div @click="slideBack()" class="col-2">
             <i class="fas fa-arrow-left"></i>
           </div>
           <div class="col-6">
-            <img src="https://via.placeholder.com/200" />
+            <img :src="imageSrc" />
+            <p>{{imageName}}</p>
           </div>
-          <div class="col-2">
+          <div @click="slideForward()" class="col-2">
             <i class="fas fa-arrow-right"></i>
           </div>
         </div>
@@ -28,8 +29,41 @@
 <script>
 export default {
   name: "DrawingPicker",
-  props: {
-    msg: String
+  data() {
+    return {
+      currentChoosen: 0
+    };
+  },
+  computed: {
+    game() {
+      return this.$store.getters.getGame;
+    },
+    imageSrc() {
+      let key = Object.keys(this.game.combinations)[this.currentChoosen];
+      return this.game.combinations[key].image;
+    },
+    imageName() {
+      let key = Object.keys(this.game.combinations)[this.currentChoosen];
+      return this.game.combinations[key].name;
+    }
+  },
+  methods: {
+    /**
+     * update combination object with active image when sliding forward
+     */
+    slideForward() {
+      if (this.currentChoosen < this.game.combinations.length) {
+        this.currentChoosen++;
+      }
+    },
+    /**
+     * update combination object with active image when sliding back
+     */
+    slideBack() {
+      if (this.currentChoosen > 0) {
+        this.currentChoosen--;
+      }
+    }
   }
 };
 </script>
