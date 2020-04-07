@@ -27,14 +27,22 @@ export default {
   },
   data: function() {
     return {
-      drawing: false,
-      combinationPicked: false
+      drawing: false
     };
   },
   components: {
     DrawingPanel,
     CombinationPicker,
     CombinationNameInput
+  },
+  computed: {
+    combinationPicked() {
+      if (this.$store.state.combination) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 </script>
