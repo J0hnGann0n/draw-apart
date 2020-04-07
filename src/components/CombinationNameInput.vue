@@ -17,6 +17,7 @@
           type="text"
           class="form-control mt-2"
           id="nameit"
+          v-model="name"
           placeholder="Choose a Name"
           aria-describedby="chooseAName"
         />
@@ -26,9 +27,9 @@
     <!-- finish naming -->
     <div class="row justify-content-end">
       <div class="col-2">
-        <a type="button" class="btn btn-primary" href="vote.html">
+        <button type="button" @click="submitCombination()" class="btn btn-primary">
           <i class="fas fa-check"></i>
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -37,9 +38,19 @@
 <script>
 export default {
   name: "CombinationNameInput",
+  data() {
+    return {
+      name: ""
+    };
+  },
   computed: {
     combinationImage() {
       return this.$store.state.combination.image;
+    }
+  },
+  methods: {
+    submitCombination() {
+      this.$store.dispatch("submitCombination", this.name);
     }
   }
 };
