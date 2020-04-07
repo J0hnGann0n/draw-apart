@@ -111,7 +111,7 @@ export default {
 
       //Save canvas as base64
       let combinationImage = canvas.toDataURL();
-      this.$store.dispatch("submitCombination", combinationImage);
+      this.$store.dispatch("addCombination", combinationImage);
     }
   },
   computed: {
