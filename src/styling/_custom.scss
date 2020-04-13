@@ -1,10 +1,16 @@
-$primary:       #F4E87C;
-$secondary:     #CBBF7A;
+//Colors
+$primary:       #82204A;
+$secondary:     #558C8C;
 $light:         #EBF38B;
 $dark:          #584D3D;
 
+//Font
 $font-family-sans-serif: 'Architects Daughter',"Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 
-body {
-    background-color: red;
-}
+//Settings
+$border-radius: 0;
+$border-width: 2px;
+$border-color: $primary;
+
+//Input
+$input-border-color: $primary;
