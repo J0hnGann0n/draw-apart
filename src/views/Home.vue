@@ -8,10 +8,11 @@
     </div>
     <!-- titel -->
     <div class="row">
-      <div class="col">
+      <div class="col-12">
         <h1>Welcome</h1>
       </div>
     </div>
+    
     <div class="row">
       <div class="input-group mb-3 col">
         <input
