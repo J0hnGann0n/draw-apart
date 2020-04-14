@@ -90,6 +90,7 @@ exports.setState = functions.database.ref('/games/{gameKey}')
     .onUpdate((snapshot, context) => {
       // Grab the current value of what was written to the Realtime Database.
       let game = snapshot.after.val()
+      let gameKey = context.params.gameKey
       const playersFinishedDrawing = Object.keys(game.drawings).length
       const players = Object.keys(game.players).length
       if (players === playersFinishedDrawing) {
