@@ -11,6 +11,7 @@ export default {
   name: "StartGame",
   methods: {
     startGame() {
+      this.$store.dispatch("updatePlayerState", "drawing");
       this.$store.dispatch("startGame");
     }
   }

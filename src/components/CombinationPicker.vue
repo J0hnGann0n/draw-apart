@@ -1,5 +1,6 @@
 <template>
-  <div class="container mt-3">
+<div>
+  <div class="container mt-3" v-if="!combinationPicked">
     <!-- titel -->
     <div class="row">
       <div class="col">
@@ -42,13 +43,16 @@
       </div>
     </div>
   </div>
+  <CombinationNameInput v-if="combinationPicked"/>
+  </div>
 </template>
 
 <script>
+import CombinationNameInput from "@/components/CombinationNameInput.vue";
 export default {
   name: "CombinationPicker",
-  props: {
-    msg: String
+  components: {
+    CombinationNameInput
   },
   data: function() {
     return {
@@ -90,7 +94,8 @@ export default {
       //for each bodypart get the choosen image and push it into images array
       this.bodyParts.forEach(bodypart => {
         let img = new Image();
-        let drawings = this.game.drawings[bodypart];
+        let drawings = this.drawings[bodypart];
+        console.log()
         let key = Object.keys(drawings)[this.combination[bodypart]];
         img.src = drawings[key].imageData;
         images.push(img);
@@ -124,7 +129,14 @@ export default {
     },
     drawings() {
       return this.$store.getters.getDrawingsByBodyPart;
-    }
+    },
+    combinationPicked() {
+      if (this.$store.state.combination.image) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   }
 };
 </script>

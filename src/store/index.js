@@ -66,7 +66,7 @@ export default new Vuex.Store({
     gameKey: '',
     player: {
       name: "",
-      state: "drawing"
+      state: "combination"
     },
     combination: {
       player: '',
@@ -97,10 +97,11 @@ export default new Vuex.Store({
       state.drawings.push(drawing)
     },
     START_GAME(state) {
-      state.game.state = "play"
+      state.game.state = "drawing"
     },
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
+      state.game.state = payload
     },
     ADD_VOTE(state, payload) {
       state.vote = payload;
