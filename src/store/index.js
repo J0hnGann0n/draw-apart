@@ -78,7 +78,7 @@ export default new Vuex.Store({
   mutations: {
     ADD_GAME(state, payload) {
       let newGame = payload;
-      // newGame.state = "play" // HACK: force game state to play
+      newGame.state = "play" // HACK: force game state to play
       state.game = newGame;
     },
     ADD_GAMEKEY(state, payload) {
@@ -93,7 +93,7 @@ export default new Vuex.Store({
       let newName = payload;
       state.player.name = newName;
     },
-    ADD_DRAWING(state, payload) {
+    ADD_DRAWINGS(state, payload) {
       let drawing = payload;
       state.drawings.push(drawing)
     },
@@ -158,14 +158,9 @@ export default new Vuex.Store({
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);
     },
-    submitDrawing(context, payload) {
-      let bodyPart = payload.bodyPart
-      let drawing = {
-        imageData: payload.imageData,
-        player: payload.player
-      }
-      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/" + bodyPart).push(drawing)
-      context.commit('ADD_DRAWING', payload);
+    submitDrawings(context, payload) {
+      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload)
+      context.commit('ADD_DRAWINGS', payload);
     },
     /**
      * action adds combination to store
