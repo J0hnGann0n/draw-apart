@@ -10,7 +10,7 @@ export default new Vuex.Store({
   state: {
     game: {
       code: "abcd",
-      state: "play",
+      state: "lobby",
       players: ["john"],
       drawings: {
         head: [
@@ -78,7 +78,6 @@ export default new Vuex.Store({
   mutations: {
     ADD_GAME(state, payload) {
       let newGame = payload;
-      newGame.state = "play" // HACK: force game state to play
       state.game = newGame;
     },
     ADD_GAMEKEY(state, payload) {
@@ -132,7 +131,13 @@ export default new Vuex.Store({
       });
     },
     startGame(context) {
-      context.commit('START_GAME');
+      firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("play", function(error) {
+        if (error) {
+          // The write failed...
+        } else {
+          context.commit('START_GAME');
+        }
+      })
     },
     /**
      * 
@@ -159,8 +164,13 @@ export default new Vuex.Store({
       context.commit('ADD_PLAYERNAME', payload);
     },
     submitDrawings(context, payload) {
-      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload)
-      context.commit('ADD_DRAWINGS', payload);
+      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload, function(error) {
+        if (error) {
+          // The write failed...
+        } else {
+          context.commit('ADD_DRAWINGS', payload);
+        }
+      })
     },
     /**
      * action adds combination to store
