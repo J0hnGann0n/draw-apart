@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
-import test_image from "../../test_image"
 
 Vue.use(Vuex)
 
@@ -10,63 +9,14 @@ export default new Vuex.Store({
   state: {
     game: {
       code: "abcd",
-      state: "play",
+      state: "lobby",
       players: ["john"],
-      drawings: {
-        head: [
-          {
-            imageData: test_image,
-            player: "john",
-            bodyPart: "head"
-          },
-          {
-            imageData: test_image,
-            player: "phillip",
-            bodyPart: "head"
-          },
-        ],
-        body: [
-          {
-            imageData: test_image,
-            player: "mary",
-            bodyPart: "body"
-          },
-          {
-            imageData: test_image,
-            player: "bill",
-            bodyPart: "body"
-          },
-        ],
-        legs: [
-          {
-            imageData: test_image,
-            player: "mark",
-            bodyPart: "legs"
-          },
-          {
-            imageData: test_image,
-            player: "bob",
-            bodyPart: "legs"
-          },
-        ],
-        feet: [
-          {
-            imageData: test_image,
-            player: "paul",
-            bodyPart: "feet"
-          },
-          {
-            imageData: test_image,
-            player: "tim",
-            bodyPart: "feet"
-          },
-        ]
-      }
+      drawings: {}
     },
     gameKey: '',
     player: {
       name: "",
-      state: "drawing"
+      state: "combination"
     },
     combination: {
       player: '',
@@ -78,7 +28,6 @@ export default new Vuex.Store({
   mutations: {
     ADD_GAME(state, payload) {
       let newGame = payload;
-      newGame.state = "play" // HACK: force game state to play
       state.game = newGame;
     },
     ADD_GAMEKEY(state, payload) {
@@ -98,7 +47,7 @@ export default new Vuex.Store({
       state.drawings.push(drawing)
     },
     START_GAME(state) {
-      state.game.state = "play"
+      state.game.state = "drawing"
     },
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
@@ -132,7 +81,13 @@ export default new Vuex.Store({
       });
     },
     startGame(context) {
-      context.commit('START_GAME');
+      firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("drawing", function(error) {
+        if (error) {
+          // The write failed...
+        } else {
+          context.commit('START_GAME');
+        }
+      })
     },
     /**
      * 
@@ -159,8 +114,13 @@ export default new Vuex.Store({
       context.commit('ADD_PLAYERNAME', payload);
     },
     submitDrawings(context, payload) {
-      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload)
-      context.commit('ADD_DRAWINGS', payload);
+      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload, function(error) {
+        if (error) {
+          // The write failed...
+        } else {
+          context.commit('ADD_DRAWINGS', payload);
+        }
+      })
     },
     /**
      * action adds combination to store
