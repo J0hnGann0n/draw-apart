@@ -12,8 +12,7 @@ export default {
   name: "Countdown",
   data() {
     return {
-      finished: false,
-      timeleft: 60
+      timeleft: 0
     };
   },
   props: {
@@ -29,6 +28,15 @@ export default {
           this.timeleft -= 1;
           this.countDownTimer();
         }, 1000);
+      }
+    }
+  },
+  computed: {
+    finished() {
+      if (this.timeleft == 0) {
+        return true;
+      } else {
+        return false;
       }
     }
   },
