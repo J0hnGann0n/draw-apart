@@ -2,7 +2,7 @@
   <!-- Countdown -->
   <div class="row justify-content-end">
     <div class="col-2 text-left align-content-end">
-      <p>{{timeleft}}</p>
+      <p>{{countdown.timeleft}}</p>
     </div>
   </div>
 </template>
@@ -10,39 +10,27 @@
 <script>
 export default {
   name: "Countdown",
-  data() {
-    return {
-      timeleft: 0
-    };
-  },
-  props: {
-    time: {
-      type: Number,
-      default: 0
-    }
-  },
   methods: {
     countDownTimer() {
-      if (this.timeleft > 0) {
+      if (this.countdown.timeleft > 0) {
+        if (!this.countdown.started) this.$store.dispatch("startCountdown");
         setTimeout(() => {
-          this.timeleft -= 1;
+          this.$store.dispatch("updateTimeCountdown");
           this.countDownTimer();
         }, 1000);
+      } else {
+        this.$store.dispatch("stopCountdown");
       }
     }
   },
   computed: {
-    finished() {
-      if (this.timeleft == 0) {
-        this.$store.dispatch("updateCountdownState");
-        return true;
-      } else {
-        return false;
-      }
+    countdown() {
+      return this.$store.getters.getCountdown;
     }
   },
-  mounted() {
-    this.timeleft = this.time;
+
+  created() {
+    this.$store.dispatch("updateTimeCountdown", this.time);
     this.countDownTimer();
   }
 };

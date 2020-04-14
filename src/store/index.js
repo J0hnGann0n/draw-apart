@@ -11,15 +11,16 @@ export default new Vuex.Store({
       code: "abcd",
       state: "lobby",
       players: ["john"],
-      countdown: {
-        finished: false
-      },
       drawings: {}
     },
     gameKey: '',
     player: {
       name: "",
       state: "combination"
+    },
+    countdown: {
+      timeleft: 60,
+      started: false
     },
     combination: {
       player: '',
@@ -55,8 +56,15 @@ export default new Vuex.Store({
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
     },
-    UPDATE_COUNTDOWN_STATE(state) {
-      state.countdown.finished = true;
+    UPDATE_TIME_COUNTDOWN(state) {
+      state.countdown.timeleft -= 1;
+    },
+    START_COUNTDOWN(state) {
+      state.countdown.started = true;
+    },
+    STOP_COUNTDOWN(state) {
+      state.countdown.timeleft = 60;
+      state.countdown.started = false;
     },
     ADD_VOTE(state, payload) {
       state.vote = payload;
@@ -88,6 +96,15 @@ export default new Vuex.Store({
     },
     updateCountdownState(context) {
       context.commit('UPDATE_COUNTDOWN_STATE');
+    },
+    startCountdown(context) {
+      context.commit('START_COUNTDOWN');
+    },
+    stopCountdown(context) {
+      context.commit('STOP_COUNTDOWN');
+    },
+    updateTimeCountdown(context) {
+      context.commit('UPDATE_TIME_COUNTDOWN')
     },
     startGame(context) {
       firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("drawing", function (error) {
@@ -174,6 +191,7 @@ export default new Vuex.Store({
   getters: {
     getGame: state => state.game,
     getPlayer: state => state.player,
+    getCountdown: state => state.countdown,
     getDrawingsByBodyPart: state => {
       let drawings = {
         head: [],

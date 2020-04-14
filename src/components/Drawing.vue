@@ -2,7 +2,7 @@
   <div>
     <div class="container mt-3">
       <!-- Countdown -->
-      <Countdown :time="60" />
+      <Countdown />
       <DrawingPanel />
     </div>
   </div>
