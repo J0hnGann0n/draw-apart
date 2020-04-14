@@ -4,6 +4,7 @@
     <Vote v-if="game.state == 'vote' && !waiting" />
     <Drawing v-if="game.state == 'drawing' && !waiting" :game="game" />
     <CombinationPicker v-if="game.state == 'combination' && !waiting" :game="game" />
+    <Waiting v-if="waiting" />
   </div>
 </template>
 <script>
@@ -11,6 +12,7 @@ import Lobby from "@/components/Lobby.vue";
 import Vote from "@/components/Vote.vue";
 import Drawing from "@/components/Drawing.vue";
 import CombinationPicker from "@/components/CombinationPicker.vue";
+import Waiting from "@/components/Waiting.vue";
 
 export default {
   name: "Game",
@@ -18,7 +20,8 @@ export default {
     Lobby,
     Vote,
     CombinationPicker,
-    Drawing
+    Drawing,
+    Waiting
   },
   data: function() {
     return {
