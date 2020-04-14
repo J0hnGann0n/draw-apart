@@ -10,7 +10,7 @@ export default new Vuex.Store({
   state: {
     game: {
       code: "abcd",
-      state: "play",
+      state: "drawing",
       players: ["john"],
       drawings: {
         head: [
