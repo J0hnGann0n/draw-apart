@@ -2,7 +2,7 @@
   <div>
     <Lobby v-if="game.state == 'lobby'" :game="game" />
     <Vote v-if="game.state == 'vote'" />
-    <Drawing v-if="game.state == 'play'" :game="game" />
+    <Drawing v-if="game.state == 'drawing'" :game="game" />
     <CombinationPicker v-if="game.state == 'combination'" :game="game" />
   </div>
 </template>
