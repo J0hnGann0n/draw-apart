@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="container mt-3">
-      <!-- Countdown -->
       <Countdown />
       <DrawingPanel />
     </div>
