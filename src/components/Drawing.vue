@@ -2,11 +2,7 @@
   <div>
     <div class="container mt-3">
       <!-- Countdown -->
-      <div class="row justify-content-end">
-        <div class="col-2 text-left align-content-end">
-          <p>40</p>
-        </div>
-      </div>
+      <Countdown :time="60" />
       <DrawingPanel />
     </div>
   </div>
@@ -14,6 +10,7 @@
 
 <script>
 import DrawingPanel from "@/components/DrawingPanel.vue";
+import Countdown from "@/components/Countdown.vue";
 
 export default {
   name: "Drawing",
@@ -21,7 +18,8 @@ export default {
     msg: String
   },
   components: {
-    DrawingPanel
+    DrawingPanel,
+    Countdown
   }
 };
 </script>
