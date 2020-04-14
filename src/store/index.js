@@ -102,6 +102,7 @@ export default new Vuex.Store({
     },
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
+      state.game.state = payload
     },
     ADD_VOTE(state, payload) {
       state.vote = payload;
