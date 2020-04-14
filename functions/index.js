@@ -84,3 +84,20 @@ exports.joinGame = functions.https.onRequest((request, response) => {
     })
   })
 })
+
+
+exports.setState = functions.database.ref('/games/{gameKey}')
+    .onUpdate((snapshot, context) => {
+      // Grab the current value of what was written to the Realtime Database.
+      let game = snapshot.after.val()
+      const playersFinishedDrawing = Object.keys(game.drawings).length
+      const players = Object.keys(game.players).length
+      if (players === playersFinishedDrawing) {
+        ref.child('games/' + gameKey).child("state").set("combination");
+      }
+      // You must return a Promise when performing asynchronous tasks inside a Functions such as
+      // writing to the Firebase Realtime Database.
+      // Setting an "uppercase" sibling in the Realtime Database returns a Promise.
+      // return snapshot.ref.parent.child('uppercase').set(uppercase);
+      return true
+    });
