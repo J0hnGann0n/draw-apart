@@ -116,9 +116,6 @@ export default {
       let drawings = this.drawings[bodyPart];
       let key = Object.keys(drawings)[this.combination[bodyPart]];
       return drawings[key].imageData;
-    },
-    parseDrawings() {
-
     }
   },
   computed: {
