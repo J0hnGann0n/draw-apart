@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
-import test_image from "../../test_image"
 
 Vue.use(Vuex)
 
@@ -12,56 +11,7 @@ export default new Vuex.Store({
       code: "abcd",
       state: "lobby",
       players: ["john"],
-      drawings: {
-        head: [
-          {
-            imageData: test_image,
-            player: "john",
-            bodyPart: "head"
-          },
-          {
-            imageData: test_image,
-            player: "phillip",
-            bodyPart: "head"
-          },
-        ],
-        body: [
-          {
-            imageData: test_image,
-            player: "mary",
-            bodyPart: "body"
-          },
-          {
-            imageData: test_image,
-            player: "bill",
-            bodyPart: "body"
-          },
-        ],
-        legs: [
-          {
-            imageData: test_image,
-            player: "mark",
-            bodyPart: "legs"
-          },
-          {
-            imageData: test_image,
-            player: "bob",
-            bodyPart: "legs"
-          },
-        ],
-        feet: [
-          {
-            imageData: test_image,
-            player: "paul",
-            bodyPart: "feet"
-          },
-          {
-            imageData: test_image,
-            player: "tim",
-            bodyPart: "feet"
-          },
-        ]
-      }
+      drawings: {}
     },
     gameKey: '',
     player: {
@@ -101,7 +51,6 @@ export default new Vuex.Store({
     },
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
-      state.game.state = payload
     },
     ADD_VOTE(state, payload) {
       state.vote = payload;
@@ -132,7 +81,7 @@ export default new Vuex.Store({
       });
     },
     startGame(context) {
-      firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("play", function(error) {
+      firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("drawing", function(error) {
         if (error) {
           // The write failed...
         } else {
