@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
-import test_image from "../../test_image"
 
 Vue.use(Vuex)
 
@@ -10,61 +9,12 @@ export default new Vuex.Store({
   state: {
     game: {
       code: "abcd",
-      state: "drawing",
+      state: "lobby",
       players: ["john"],
       countdown: {
         finished: false
       },
-      drawings: {
-        head: [
-          {
-            imageData: test_image,
-            player: "john",
-            bodyPart: "head"
-          },
-          {
-            imageData: test_image,
-            player: "phillip",
-            bodyPart: "head"
-          },
-        ],
-        body: [
-          {
-            imageData: test_image,
-            player: "mary",
-            bodyPart: "body"
-          },
-          {
-            imageData: test_image,
-            player: "bill",
-            bodyPart: "body"
-          },
-        ],
-        legs: [
-          {
-            imageData: test_image,
-            player: "mark",
-            bodyPart: "legs"
-          },
-          {
-            imageData: test_image,
-            player: "bob",
-            bodyPart: "legs"
-          },
-        ],
-        feet: [
-          {
-            imageData: test_image,
-            player: "paul",
-            bodyPart: "feet"
-          },
-          {
-            imageData: test_image,
-            player: "tim",
-            bodyPart: "feet"
-          },
-        ]
-      }
+      drawings: {}
     },
     gameKey: '',
     player: {
@@ -81,7 +31,6 @@ export default new Vuex.Store({
   mutations: {
     ADD_GAME(state, payload) {
       let newGame = payload;
-      //newGame.state = "combination" // HACK: force game state to play
       state.game = newGame;
     },
     ADD_GAMEKEY(state, payload) {
@@ -96,7 +45,7 @@ export default new Vuex.Store({
       let newName = payload;
       state.player.name = newName;
     },
-    ADD_DRAWING(state, payload) {
+    ADD_DRAWINGS(state, payload) {
       let drawing = payload;
       state.drawings.push(drawing)
     },
@@ -105,7 +54,6 @@ export default new Vuex.Store({
     },
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
-      state.game.state = payload
     },
     UPDATE_COUNTDOWN_STATE(state) {
       state.countdown.finished = true;
@@ -142,7 +90,13 @@ export default new Vuex.Store({
       context.commit('UPDATE_COUNTDOWN_STATE');
     },
     startGame(context) {
-      context.commit('START_GAME');
+      firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("drawing", function (error) {
+        if (error) {
+          // The write failed...
+        } else {
+          context.commit('START_GAME');
+        }
+      })
     },
     /**
      * 
@@ -168,14 +122,14 @@ export default new Vuex.Store({
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);
     },
-    submitDrawing(context, payload) {
-      let bodyPart = payload.bodyPart
-      let drawing = {
-        imageData: payload.imageData,
-        player: payload.player
-      }
-      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/" + bodyPart).push(drawing)
-      context.commit('ADD_DRAWING', payload);
+    submitDrawings(context, payload) {
+      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload, function (error) {
+        if (error) {
+          // The write failed...
+        } else {
+          context.commit('ADD_DRAWINGS', payload);
+        }
+      })
     },
     /**
      * action adds combination to store
@@ -219,6 +173,20 @@ export default new Vuex.Store({
   },
   getters: {
     getGame: state => state.game,
-    getPlayer: state => state.player
+    getPlayer: state => state.player,
+    getDrawingsByBodyPart: state => {
+      let drawings = {
+        head: [],
+        body: [],
+        legs: [],
+        feet: [],
+      }
+      for (let playerDrawings of Object.values(state.game.drawings)) {
+        for (let drawing of Object.values(playerDrawings)) {
+          drawings[drawing.bodyPart].push(drawing)
+        }
+      }
+      return drawings
+    }
   }
 })

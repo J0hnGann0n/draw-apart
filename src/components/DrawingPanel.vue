@@ -58,6 +58,7 @@ export default {
       canvasWidth: 0,
       canvasHeight: 0,
       drawingCount: 0,
+      drawings: [],
       bodyPart: ["head", "body", "legs", "feet"],
       mouse: {
         current: {
@@ -92,12 +93,12 @@ export default {
       let image = canvasDOM.toDataURL();
       let drawing = {
         imageData: image,
-        player: "john",
         bodyPart: bodyPart
       };
-      this.$store.dispatch("submitDrawing", drawing);
+      this.drawings.push(drawing)
       this.drawingCount++;
       if (this.drawingCount > 3) {
+        this.$store.dispatch("submitDrawings", this.drawings);
         this.$store.dispatch("updatePlayerState", "combination");
       }
       this.clearCanvas();

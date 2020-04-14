@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     submitCombination() {
-      this.$store.dispatch("updatePlayerState", "vote");
+      this.$store.dispatch("updatePlayerState", "voting");
       this.$store.dispatch("submitCombination", this.name);
     }
   }
