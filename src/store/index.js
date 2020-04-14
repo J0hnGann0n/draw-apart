@@ -12,6 +12,9 @@ export default new Vuex.Store({
       code: "abcd",
       state: "drawing",
       players: ["john"],
+      countdown: {
+        finished: false
+      },
       drawings: {
         head: [
           {
@@ -104,6 +107,9 @@ export default new Vuex.Store({
       state.player.state = payload
       state.game.state = payload
     },
+    UPDATE_COUNTDOWN_STATE(state) {
+      state.countdown.finished = true;
+    },
     ADD_VOTE(state, payload) {
       state.vote = payload;
     }
@@ -131,6 +137,9 @@ export default new Vuex.Store({
           context.commit('ADD_GAME', snapshot.val());
         })
       });
+    },
+    updateCountdownState(context) {
+      context.commit('UPDATE_COUNTDOWN_STATE');
     },
     startGame(context) {
       context.commit('START_GAME');

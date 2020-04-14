@@ -34,6 +34,7 @@ export default {
   computed: {
     finished() {
       if (this.timeleft == 0) {
+        this.$store.dispatch("updateCountdownState");
         return true;
       } else {
         return false;
