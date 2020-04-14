@@ -66,7 +66,7 @@ export default new Vuex.Store({
     gameKey: '',
     player: {
       name: "",
-      state: "drawing"
+      state: "combination"
     },
     combination: {
       player: '',
@@ -78,7 +78,7 @@ export default new Vuex.Store({
   mutations: {
     ADD_GAME(state, payload) {
       let newGame = payload;
-      // newGame.state = "play" // HACK: force game state to play
+      //newGame.state = "combination" // HACK: force game state to play
       state.game = newGame;
     },
     ADD_GAMEKEY(state, payload) {
@@ -98,7 +98,7 @@ export default new Vuex.Store({
       state.drawings.push(drawing)
     },
     START_GAME(state) {
-      state.game.state = "play"
+      state.game.state = "drawing"
     },
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload

@@ -1,5 +1,6 @@
 <template>
-  <div class="container mt-3">
+<div>
+  <div class="container mt-3" v-if="!combinationPicked">
     <!-- titel -->
     <div class="row">
       <div class="col">
@@ -42,14 +43,20 @@
       </div>
     </div>
   </div>
+  <CombinationNameInput v-if="combinationPicked"/>
+  </div>
 </template>
 
 <script>
+import CombinationNameInput from "@/components/CombinationNameInput.vue";
 export default {
   name: "CombinationPicker",
   props: {
     msg: String,
     game: {}
+  },
+  components: {
+    CombinationNameInput
   },
   data: function() {
     return {
