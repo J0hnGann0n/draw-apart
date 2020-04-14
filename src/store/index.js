@@ -204,6 +204,20 @@ export default new Vuex.Store({
   },
   getters: {
     getGame: state => state.game,
-    getPlayer: state => state.player
+    getPlayer: state => state.player,
+    getDrawingsByBodyPart: state => {
+      let drawings = {
+        head: [],
+        body: [],
+        legs: [],
+        feet: [],
+      }
+      for (let playerDrawings of Object.values(state.game.drawings)) {
+        for (let drawing of Object.values(playerDrawings)) {
+          drawings[drawing.bodyPart].push(drawing)
+        }
+      }
+      return drawings
+    }
   }
 })

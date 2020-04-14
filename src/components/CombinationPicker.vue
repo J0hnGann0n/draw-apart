@@ -23,7 +23,7 @@
           </div>
           <div
             @click="slideForward(bodyPart)"
-            v-show="combination[bodyPart] < game.drawings[bodyPart].length - 1"
+            v-show="combination[bodyPart] < drawings[bodyPart].length - 1"
             class="col-2"
           >
             <i class="fas fa-arrow-right"></i>
@@ -67,7 +67,7 @@ export default {
      */
     slideForward(bodyPart) {
       let currentChoosen = this.combination[bodyPart];
-      if (currentChoosen < this.game.drawings[bodyPart].length) {
+      if (currentChoosen < this.drawings[bodyPart].length) {
         this.combination[bodyPart] = currentChoosen + 1;
       }
     },
@@ -113,14 +113,20 @@ export default {
      * Gets the Image based on current choosen state
      */
     getImageData(bodyPart) {
-      let drawings = this.game.drawings[bodyPart];
+      let drawings = this.drawings[bodyPart];
       let key = Object.keys(drawings)[this.combination[bodyPart]];
       return drawings[key].imageData;
+    },
+    parseDrawings() {
+
     }
   },
   computed: {
     game() {
       return this.$store.getters.getGame;
+    },
+    drawings() {
+      return this.$store.getters.getDrawingsByBodyPart;
     }
   }
 };
