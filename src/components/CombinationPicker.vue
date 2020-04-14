@@ -48,7 +48,8 @@
 export default {
   name: "CombinationPicker",
   props: {
-    msg: String
+    msg: String,
+    game: {}
   },
   data: function() {
     return {
@@ -119,9 +120,13 @@ export default {
     }
   },
   computed: {
-    game() {
-      return this.$store.getters.getGame;
-    }
+    combinationPicked() {
+      if (this.$store.state.combination.image) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   }
 };
 </script>
