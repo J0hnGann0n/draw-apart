@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Lobby v-if="game.state == 'lobby' && !waiting" :game="game" />
+    <Lobby v-if="game.state == 'lobby'" :game="game" />
     <Vote v-if="game.state == 'vote' && !waiting" />
     <Drawing v-if="game.state == 'drawing' && !waiting" :game="game" />
     <CombinationPicker v-if="game.state == 'combination' && !waiting" :game="game" />
