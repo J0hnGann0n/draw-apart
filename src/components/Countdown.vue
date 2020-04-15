@@ -2,7 +2,7 @@
   <!-- Countdown -->
   <div class="row justify-content-end">
     <div class="col-2 text-left align-content-end">
-      <p>{{countdown.timeleft}}</p>
+      <p>{{timeleft}}</p>
     </div>
   </div>
 </template>
@@ -10,28 +10,28 @@
 <script>
 export default {
   name: "Countdown",
-  methods: {
-    countDownTimer() {
-      if (this.countdown.timeleft > 0) {
-        if (!this.countdown.started) this.$store.dispatch("startCountdown");
-        setTimeout(() => {
-          this.$store.dispatch("updateTimeCountdown");
-          this.countDownTimer();
-        }, 1000);
-      } else {
-        this.$store.dispatch("stopCountdown");
-      }
-    }
+  data() {
+    return {
+      timeleft: null
+    };
   },
   computed: {
-    countdown() {
-      return this.$store.getters.getCountdown;
+    game() {
+      return this.$store.getters.getGame;
     }
   },
-
   created() {
-    this.$store.dispatch("updateTimeCountdown", this.time);
-    this.countDownTimer();
+    this.timeleft = this.game.countDown[this.game.state];
+    setInterval(() => {
+      if (this.timeleft > 0) {
+        let now = +new Date();
+        let countdownTime = this.game.countDown[this.game.state];
+        let timePassed = now - this.game.countDown.startTime;
+        this.timeleft = Math.floor(countdownTime - timePassed / 1000);
+      } else {
+        console.log("time finished");
+      }
+    }, 1000);
   }
 };
 </script>

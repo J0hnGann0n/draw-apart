@@ -11,7 +11,8 @@ export default new Vuex.Store({
       code: "abcd",
       state: "lobby",
       players: ["john"],
-      drawings: {}
+      drawings: {},
+      countDown: {}
     },
     gameKey: '',
     player: {
@@ -191,7 +192,6 @@ export default new Vuex.Store({
   getters: {
     getGame: state => state.game,
     getPlayer: state => state.player,
-    getCountdown: state => state.countdown,
     getDrawingsByBodyPart: state => {
       let drawings = {
         head: [],
