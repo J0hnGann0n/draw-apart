@@ -14,14 +14,11 @@ export default new Vuex.Store({
       drawings: {},
       countDown: {}
     },
+    countDownFinished: false,
     gameKey: '',
     player: {
       name: "",
       state: "combination"
-    },
-    countdown: {
-      timeleft: 60,
-      started: false
     },
     combination: {
       player: '',
@@ -60,12 +57,11 @@ export default new Vuex.Store({
     UPDATE_TIME_COUNTDOWN(state) {
       state.countdown.timeleft -= 1;
     },
-    START_COUNTDOWN(state) {
-      state.countdown.started = true;
-    },
     STOP_COUNTDOWN(state) {
-      state.countdown.timeleft = 60;
-      state.countdown.started = false;
+      state.countDownFinished = true;
+    },
+    START_COUNTDOWN(state) {
+      state.countDownFinished = false;
     },
     ADD_VOTE(state, payload) {
       state.vote = payload;

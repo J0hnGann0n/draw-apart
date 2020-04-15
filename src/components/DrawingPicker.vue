@@ -71,6 +71,7 @@ export default {
     submitVote() {
       let winnerID = Object.keys(this.game.combinations)[this.currentChoosen];
       this.$store.dispatch("submitVote", winnerID);
+      this.$store.dispatch("updatePlayerState", "winner");
     }
   }
 };

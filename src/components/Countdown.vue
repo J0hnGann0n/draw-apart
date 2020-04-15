@@ -21,15 +21,17 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("startCountdown");
     this.timeleft = this.game.countDown[this.game.state];
-    setInterval(() => {
+    let countdownCalculation = setInterval(() => {
       if (this.timeleft > 0) {
         let now = +new Date();
         let countdownTime = this.game.countDown[this.game.state];
         let timePassed = now - this.game.countDown.startTime;
         this.timeleft = Math.floor(countdownTime - timePassed / 1000);
       } else {
-        console.log("time finished");
+        this.$store.dispatch("stopCountdown");
+        clearInterval(countdownCalculation);
       }
     }, 1000);
   }

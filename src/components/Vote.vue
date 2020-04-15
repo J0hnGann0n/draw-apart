@@ -14,16 +14,12 @@
       </div>
     </div>
 
-    <Waiting v-if="voteSubmitted && voting" />
-    <DrawingPicker v-if="!voteSubmitted" />
-    <ShowWinner v-if="!voting" />
+    <DrawingPicker />
   </div>
 </template>
 
 <script>
 import DrawingPicker from "@/components/DrawingPicker.vue";
-import ShowWinner from "@/components/ShowWinner.vue";
-import Waiting from "@/components/Waiting.vue";
 
 export default {
   name: "Vote",
@@ -36,18 +32,7 @@ export default {
     };
   },
   components: {
-    DrawingPicker,
-    ShowWinner,
-    Waiting
-  },
-  computed: {
-    voteSubmitted() {
-      if (this.$store.vote) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    DrawingPicker
   }
 };
 </script>
