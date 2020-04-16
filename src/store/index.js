@@ -185,7 +185,7 @@ export default new Vuex.Store({
       context.commit('ADD_VOTE', payload);
 
       //write vote into firebase
-      firebase.database().ref('/games/' + this.state.gameKey + "/votes/").push(payload)
+      firebase.database().ref('/games/' + this.state.gameKey + "/combinations/" + payload.id + "/votes/").push(payload.player)
     }
   },
   modules: {

@@ -42,6 +42,9 @@ export default {
     game() {
       return this.$store.getters.getGame;
     },
+    player() {
+      return this.$store.getters.getPlayer;
+    },
     imageSrc() {
       let key = Object.keys(this.game.combinations)[this.currentChoosen];
       return this.game.combinations[key].image;
@@ -69,8 +72,12 @@ export default {
       }
     },
     submitVote() {
-      let winnerID = Object.keys(this.game.combinations)[this.currentChoosen];
-      this.$store.dispatch("submitVote", winnerID);
+      let voteId = Object.keys(this.game.combinations)[this.currentChoosen];
+      let vote = {
+        id: voteId,
+        player: this.player.name
+      };
+      this.$store.dispatch("submitVote", vote);
       this.$store.dispatch("updatePlayerState", "winner");
     }
   }

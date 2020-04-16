@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-12">
         <div class="col-6">
-          <img :src="game.winner.image" />
+          <img :src="winner.image" />
         </div>
       </div>
       <div class="col-12">
-        <h2>{{game.winner.name}}</h2>
+        <h2>{{winner.name}}</h2>
       </div>
     </div>
 
@@ -16,7 +16,7 @@
         <i class="fas fa-share-alt"></i>
       </div>
       <div class="col-10">
-        <p>Combination von {{game.winner.player}}</p>
+        <p>Combination von {{winner.player}}</p>
       </div>
     </div>
   </div>
@@ -25,7 +25,12 @@
 <script>
 export default {
   name: "Play",
-  props: ["game"]
+  props: ["game"],
+  computed: {
+    winner() {
+      return this.$store.state.winner;
+    }
+  }
 };
 </script>
 
