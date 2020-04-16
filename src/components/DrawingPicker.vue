@@ -8,11 +8,11 @@
           </div>
           <div class="col-6">
             <img :src="imageSrc" />
-            <p>{{imageName}}</p>
+            <p>{{imageName }}</p>
           </div>
           <div
             @click="slideForward()"
-            v-show="currentChoosen < game.combinations.length - 1"
+            v-show="currentChoosen < numberOfCombinations - 1"
             class="col-2"
           >
             <i class="fas fa-arrow-right"></i>
@@ -52,6 +52,9 @@ export default {
     imageName() {
       let key = Object.keys(this.game.combinations)[this.currentChoosen];
       return this.game.combinations[key].name;
+    },
+    numberOfCombinations() {
+      return Object.keys(this.game.combinations).length;
     }
   },
   methods: {
@@ -59,7 +62,7 @@ export default {
      * update combination object with active image when sliding forward
      */
     slideForward() {
-      if (this.currentChoosen < this.game.combinations.length) {
+      if (this.currentChoosen < this.numberOfCombinations) {
         this.currentChoosen++;
       }
     },

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     gameKey: '',
     player: {
       name: "",
-      state: "combination"
+      state: "drawing",
+      host: false
     },
     combination: {
       player: '',
@@ -59,14 +61,14 @@ export default new Vuex.Store({
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
     },
-    UPDATE_TIME_COUNTDOWN(state) {
-      state.countdown.timeleft -= 1;
-    },
     STOP_COUNTDOWN(state) {
       state.countDownFinished = true;
     },
     START_COUNTDOWN(state) {
       state.countDownFinished = false;
+    },
+    SET_PLAYER_HOST(state) {
+      state.player.host = true
     },
     ADD_VOTE(state, payload) {
       state.vote = payload;
@@ -93,6 +95,8 @@ export default new Vuex.Store({
         //get gamedata from firebase
         firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
           context.commit('ADD_GAME', snapshot.val());
+          context.commit('SET_PLAYER_HOST');
+          router.push("/game");
         })
       });
     },
@@ -104,9 +108,6 @@ export default new Vuex.Store({
     },
     stopCountdown(context) {
       context.commit('STOP_COUNTDOWN');
-    },
-    updateTimeCountdown(context) {
-      context.commit('UPDATE_TIME_COUNTDOWN')
     },
     startGame(context) {
       firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("drawing", function (error) {

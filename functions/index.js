@@ -44,6 +44,12 @@ exports.createGame = functions.https.onRequest((request, response) => {
     let game = {
       code: "",
       state: "lobby",
+      countDown: {
+        drawing: 60,
+        combination: 60,
+        voting: 60,
+        startTime: ""
+      },
       players: {},
       drawings: {
         head: [],
@@ -56,7 +62,7 @@ exports.createGame = functions.https.onRequest((request, response) => {
     //Generate game code
     game.code = generateCode(4);
     //add provided playername to game object
-    game.players[request.body.name] = true;
+    game.players[request.body.name] = {host: true};
     //push game object to games in db
     let createGameInDB = admin.database().ref('/games/').push(game)
     //return game object
@@ -75,7 +81,7 @@ exports.joinGame = functions.https.onRequest((request, response) => {
 
     codeExists(gameCode).then(res => {
       let gameKey = Object.keys(res)[0]
-      ref.child('games/' + gameKey + '/players').child(player).set(true);
+      ref.child('games/' + gameKey + '/players').child(player).set({host: false});
       response.send(gameKey)
       return true
     }).catch(error => {
@@ -90,14 +96,25 @@ exports.setState = functions.database.ref('/games/{gameKey}')
     .onUpdate((snapshot, context) => {
       // Grab the current value of what was written to the Realtime Database.
       let game = snapshot.after.val()
+      let previousGameState = snapshot.before.val().state
       let gameKey = context.params.gameKey
-      const playersFinishedDrawing = Object.keys(game.drawings).length
+      const playersFinishedDrawing = game.drawings ? Object.keys(game.drawings).length : 0
       const playersFinishedCombination = game.combinations ? Object.keys(game.combinations).length : 0
+      const playersFinishedVoting = game.votes ? Object.keys(game.votes).length : 0
       const players = Object.keys(game.players).length
-      if (game.state === "drawing" && players === playersFinishedDrawing) {
+      let date = new Date();
+      let startTime = date.getTime();
+      if (game.state === "drawing" && previousGameState === "lobby") {
+        ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
+      } else if (game.state === "drawing" && players === playersFinishedDrawing) {
         ref.child('games/' + gameKey).child("state").set("combination");
+        ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
       } else if (game.state === "combination" && players === playersFinishedCombination) {
         ref.child('games/' + gameKey).child("state").set("voting");
+        ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
+      } else if (game.state === "voting" && players === playersFinishedVoting) {
+        ref.child('games/' + gameKey).child("state").set("winner");
+        ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
       }
 
       return true
