@@ -15,7 +15,6 @@ export default {
     createGame() {
       if (this.$store.state.player.name) {
         this.$store.dispatch("createGame", this.$store.state.player.name);
-        this.$router.push("/game");
       } else {
         //TODO:
       }
