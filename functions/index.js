@@ -62,7 +62,7 @@ exports.createGame = functions.https.onRequest((request, response) => {
     //Generate game code
     game.code = generateCode(4);
     //add provided playername to game object
-    game.players[request.body.name] = true;
+    game.players[request.body.name] = {host: true};
     //push game object to games in db
     let createGameInDB = admin.database().ref('/games/').push(game)
     //return game object
@@ -81,7 +81,7 @@ exports.joinGame = functions.https.onRequest((request, response) => {
 
     codeExists(gameCode).then(res => {
       let gameKey = Object.keys(res)[0]
-      ref.child('games/' + gameKey + '/players').child(player).set(true);
+      ref.child('games/' + gameKey + '/players').child(player).set({host: false});
       response.send(gameKey)
       return true
     }).catch(error => {

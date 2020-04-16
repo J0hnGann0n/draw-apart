@@ -17,7 +17,8 @@ export default new Vuex.Store({
     gameKey: '',
     player: {
       name: "",
-      state: "combination"
+      state: "combination",
+      host: false
     },
     combination: {
       player: '',
@@ -53,6 +54,9 @@ export default new Vuex.Store({
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
     },
+    SET_PLAYER_HOST(state) {
+      state.player.host = true
+    },
     ADD_VOTE(state, payload) {
       state.vote = payload;
     }
@@ -78,6 +82,7 @@ export default new Vuex.Store({
         //get gamedata from firebase
         firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
           context.commit('ADD_GAME', snapshot.val());
+          context.commit('SET_PLAYER_HOST');
           router.push("/game");
         })
       });
