@@ -3,7 +3,11 @@
     <div class="row">
       <div class="col-12">
         <div class="row justify-content-around align-items-center">
-          <div @click="slideBack()" v-show="currentChoosen > 0" class="col-2">
+          <div
+            @click="slideBack()"
+            :style="{visibility: currentChoosen > 0 ? 'visible' : 'hidden'}"
+            class="col-2"
+          >
             <i class="fas fa-arrow-left"></i>
           </div>
           <div class="col-6">
@@ -12,7 +16,7 @@
           </div>
           <div
             @click="slideForward()"
-            v-show="currentChoosen < numberOfCombinations - 1"
+            :style="{visibility: currentChoosen < numberOfCombinations - 1 ? 'visible' : 'hidden'}"
             class="col-2"
           >
             <i class="fas fa-arrow-right"></i>

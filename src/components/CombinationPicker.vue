@@ -17,7 +17,11 @@
             :key="index"
             class="row justify-content-around align-items-center"
           >
-            <div @click="slideBack(bodyPart)" v-show="combination[bodyPart] > 0" class="col-2">
+            <div
+              @click="slideBack(bodyPart)"
+              :style="{visibility: combination[bodyPart] > 0 ? 'visible' : 'hidden'}"
+              class="col-2"
+            >
               <i class="fas fa-arrow-left"></i>
             </div>
             <div class="col-6">
@@ -25,7 +29,7 @@
             </div>
             <div
               @click="slideForward(bodyPart)"
-              v-show="combination[bodyPart] < drawings[bodyPart].length - 1"
+              :style="{visibility: combination[bodyPart] < drawings[bodyPart].length - 1 ? 'visible' : 'hidden'}"
               class="col-2"
             >
               <i class="fas fa-arrow-right"></i>
