@@ -1,11 +1,7 @@
 <template>
   <div class="container mt-3">
     <!-- Countdown -->
-    <div class="row justify-content-end">
-      <div class="col-2 text-left align-content-end">
-        <p>40</p>
-      </div>
-    </div>
+    <Countdown />
 
     <!-- titel -->
     <div class="row">
@@ -20,19 +16,18 @@
 
 <script>
 import DrawingPicker from "@/components/DrawingPicker.vue";
+import Countdown from "@/components/Countdown.vue";
 
 export default {
   name: "Vote",
-  props: {
-    msg: String
-  },
   data: function() {
     return {
       voting: false
     };
   },
   components: {
-    DrawingPicker
+    DrawingPicker,
+    Countdown
   }
 };
 </script>
