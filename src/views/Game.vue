@@ -4,7 +4,7 @@
     <Vote v-if="game.state == 'voting' && !waiting" />
     <Drawing v-if="game.state == 'drawing' && !waiting" :game="game" />
     <CombinationPicker v-if="game.state == 'combination' && !waiting" :game="game" />
-    <ShowWinner v-if="game.state == 'winner' && !waiting" />
+    <ShowWinner v-if="game.state == 'winner' && !waiting" :game="game" />
     <Waiting v-if="waiting" />
   </div>
 </template>

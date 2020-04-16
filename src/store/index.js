@@ -14,6 +14,11 @@ export default new Vuex.Store({
       drawings: {},
       countDown: {}
     },
+    winner: {
+      image: '',
+      name: '',
+      player: ''
+    },
     countDownFinished: false,
     gameKey: '',
     player: {
