@@ -4,6 +4,7 @@
     <Vote v-if="game.state == 'voting' && !waiting" />
     <Drawing v-if="game.state == 'drawing' && !waiting" :game="game" />
     <CombinationPicker v-if="game.state == 'combination' && !waiting" :game="game" />
+    <ShowWinner v-if="game.state == 'winner' && !waiting" :game="game" />
     <Waiting v-if="waiting" />
   </div>
 </template>
@@ -12,6 +13,7 @@ import Lobby from "@/components/Lobby.vue";
 import Vote from "@/components/Vote.vue";
 import Drawing from "@/components/Drawing.vue";
 import CombinationPicker from "@/components/CombinationPicker.vue";
+import ShowWinner from "@/components/ShowWinner.vue";
 import Waiting from "@/components/Waiting.vue";
 
 export default {
@@ -21,7 +23,8 @@ export default {
     Vote,
     CombinationPicker,
     Drawing,
-    Waiting
+    Waiting,
+    ShowWinner
   },
   data: function() {
     return {
@@ -36,10 +39,10 @@ export default {
       return this.$store.getters.getPlayer;
     },
     waiting() {
-      if(this.game.state != this.player.state) {
-        return true
+      if (this.game.state != this.player.state) {
+        return true;
       } else {
-        return false
+        return false;
       }
     }
   }

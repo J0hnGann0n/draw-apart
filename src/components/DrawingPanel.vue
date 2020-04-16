@@ -82,6 +82,9 @@ export default {
         x: this.mouse.current.x - rect.left,
         y: this.mouse.current.y - rect.top
       };
+    },
+    countdown() {
+      return this.$store.getters.getCountdown();
     }
   },
   methods: {
@@ -95,7 +98,7 @@ export default {
         imageData: image,
         bodyPart: bodyPart
       };
-      this.drawings.push(drawing)
+      this.drawings.push(drawing);
       this.drawingCount++;
       if (this.drawingCount > 3) {
         this.$store.dispatch("submitDrawings", this.drawings);
