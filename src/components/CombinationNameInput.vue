@@ -28,7 +28,7 @@
     <div class="row justify-content-end">
       <div class="col-2">
         <button type="button" @click="submitCombination()" class="btn btn-primary">
-          <i class="fas fa-check"></i>
+          <font-awesome-icon icon="check" />
         </button>
       </div>
     </div>

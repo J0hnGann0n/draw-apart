@@ -4,7 +4,7 @@
       <div class="col-12">
         <div class="row justify-content-around align-items-center">
           <div @click="slideBack()" v-show="currentChoosen > 0" class="col-2">
-            <i class="fas fa-arrow-left"></i>
+            <font-awesome-icon icon="arrow-left" />
           </div>
           <div class="col-6">
             <img :src="imageSrc" />
@@ -15,7 +15,7 @@
             v-show="currentChoosen < game.combinations.length - 1"
             class="col-2"
           >
-            <i class="fas fa-arrow-right"></i>
+            <font-awesome-icon icon="arrow-right" />
           </div>
         </div>
       </div>
@@ -23,7 +23,7 @@
     <div class="row">
       <div class="col-2">
         <button @click="submitVote()" type="button" class="btn btn-primary">
-          <i class="fas fa-check"></i>
+          <font-awesome-icon icon="check" />
         </button>
       </div>
     </div>

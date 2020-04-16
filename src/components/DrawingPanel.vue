@@ -24,17 +24,17 @@
     </div>
     <div class="col-12 d-flex">
       <button type="button" class="btn btn-secondary" @click="undo()">
-        <i class="fas fa-undo"></i>
+        <font-awesome-icon icon="undo" />
       </button>
       <button type="button" class="btn btn-secondary" @click="clearCanvas()">
-        <i class="fas fa-trash"></i>
+        <font-awesome-icon icon="trash" />
       </button>
       <button
         type="button"
         class="btn btn-primary ml-auto"
         @click="submitDrawing(bodyPart[drawingCount])"
       >
-        <i class="fas fa-check"></i>
+        <font-awesome-icon icon="check" />
       </button>
     </div>
   </div>

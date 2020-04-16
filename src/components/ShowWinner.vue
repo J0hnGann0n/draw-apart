@@ -11,7 +11,7 @@
     
     <div class="row">
       <div class="col-2">
-        <i class="fas fa-share-alt"></i>
+        <font-awesome-icon icon="share-alt" />
       </div>
       <div class="col-10">
         <p>Combination von johnnyboy</p>

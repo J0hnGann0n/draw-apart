@@ -1,16 +1,17 @@
 <template>
   <div class="row">
     <div class="col-2">
-      <i class="fas" :class="{ 'fa-crown': player.host, 'fa-user-tie': !player.host }"></i>
+      <font-awesome-icon v-if="isHost" icon="crown" />
+      <font-awesome-icon v-else icon="user-tie" />
     </div>
     <div class="col-10">
-      <p>{{player}}</p>
+      <p>{{name}}</p>
     </div>
   </div>
 </template>
 <script>
 export default {
   name: "User",
-  props: ["player"]
+  props: ["name", "isHost"]
 };
 </script>
