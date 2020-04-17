@@ -24,11 +24,11 @@ export default {
   },
   methods: {
     startGame() {
-      console.log(Object.keys(this.game.players).length);
       if (Object.keys(this.game.players).length < 2) {
         this.error = true;
         this.errorMessage = "You need at least another player";
       } else {
+        this.error = false;
         this.$store.dispatch("updatePlayerState", "drawing");
         this.$store.dispatch("startGame");
       }
