@@ -12,7 +12,7 @@ axios.interceptors.response.use(
     if (error.response) {
       if (error.response.status == 500) { toast.error("The server just shat the bed!") }
       else if (error.response.status == 403) { toast.error("Thou shalt not pass!") }
-      else { toast.error(error.response.data.message) }
+      else { toast.error(error) }
     }
 
   }

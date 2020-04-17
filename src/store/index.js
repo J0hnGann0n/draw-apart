@@ -133,7 +133,6 @@ export default new Vuex.Store({
         url: 'https://us-central1-drawapart-84b66.cloudfunctions.net/joinGame',
         data: payload
       }).then(result => {
-        console.log(result)
         let gameKey = result.data;
         //Add game object reference from firebase db to store
         context.commit('ADD_GAMEKEY', gameKey);
