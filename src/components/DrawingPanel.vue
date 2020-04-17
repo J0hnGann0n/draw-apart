@@ -2,12 +2,12 @@
   <div>
     <div class="row">
       <div class="col">
-        <h1>Draw the {{ bodyPart[drawingCount] }}</h1>
+        <h5>Draw the {{ bodyPart[drawingCount] }}</h5>
       </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
       <ColorPicker @select-color="setColor" />
-      <div class="col-11 d-flex p-0">
+      <div class="col-10 d-flex p-0">
         <canvas
           id="canvas"
           v-on:mousedown="handleMouseDown"
@@ -200,7 +200,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 #canvas {
-  border: 1px solid blue;
+  border: 2px solid #136f63;
+  border-left: 0px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-radius: 10px;
   width: 100%;
   height: 90%;
 }

@@ -1,6 +1,6 @@
 <template>
   <!-- Userlist -->
-  <div class="row mt-3">
+  <div class="row mt-5">
     <div class="col-12">
       <h5>Players</h5>
     </div>

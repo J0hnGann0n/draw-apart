@@ -1,19 +1,16 @@
 <template>
-  <div class="container mt-3">
-    <Countdown />
+  <div class="container content">
     <DrawingPanel />
   </div>
 </template>
 
 <script>
 import DrawingPanel from "@/components/DrawingPanel.vue";
-import Countdown from "@/components/Countdown.vue";
 
 export default {
   name: "Drawing",
   components: {
-    DrawingPanel,
-    Countdown
+    DrawingPanel
   }
 };
 </script>

@@ -8,7 +8,7 @@
         class="btn btn-primary"
         v-if="this.player.host"
       >Start Game</button>
-      <h5>waiting for host...</h5>
+      <h5 v-if="!this.player.host">waiting for host...</h5>
     </div>
   </div>
 </template>
