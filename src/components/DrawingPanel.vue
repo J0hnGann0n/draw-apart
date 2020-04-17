@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col">
-        <h5>Draw the {{ bodyPart[drawingCount] }}</h5>
+        <h5>Draw the {{ bodyPartsList[drawingCount] }}</h5>
       </div>
     </div>
     <div class="row justify-content-center">
@@ -32,7 +32,7 @@
       <button
         type="button"
         class="btn btn-primary ml-auto"
-        @click="submitDrawing(bodyPart[drawingCount])"
+        @click="submitDrawing(bodyPartsList[drawingCount])"
       >
         <font-awesome-icon icon="check" />
       </button>
@@ -59,7 +59,24 @@ export default {
       canvasHeight: 0,
       drawingCount: 0,
       drawings: [],
-      bodyPart: ["head", "body", "legs", "feet"],
+      bodyParts: [
+        {
+          name: "head",
+          anchors: [ {side: "top", points: [100, 200, 175]}]
+        }, 
+        {
+          name: "body",
+          anchors: [ {side: "top", points: [100, 200, 175]}]
+        },
+        {
+          name: "legs",
+          anchors: [ {side: "top", points: [100, 200, 175]}]
+        }, 
+        {
+          name: "feet",
+          anchors: [ {side: "top", points: [100, 200, 175]}]
+        },
+      ],
       mouse: {
         current: {
           x: 0,
@@ -88,6 +105,9 @@ export default {
     },
     countdown() {
       return this.$store.getters.getCountdown();
+    },
+    bodyPartsList() {
+      return Object.keys(this.bodyParts)
     }
   },
   methods: {
@@ -185,6 +205,27 @@ export default {
       };
 
       this.draw(event);
+    },
+    drawAnchorPoints() {
+      let currentBodyPart = this.bodyPartsList[this.drawingCount]
+      let anchors = this.bodyParts[currentBodyPart].anchors
+      console.log(anchors)
+      for (let anchor in anchors) {
+        console.log(anchor)
+        for (let point in anchor.points) {
+          this.drawAnchorPoint(anchor.side, point)
+        }
+      }
+    },
+    drawAnchorPoint(side, anchorX) {
+      let anchorY = (side === "top") ? 0 : this.canvasHeight
+      this.vueCanvas.beginPath();
+      let anchorEndPoint = (side === "top") ? anchorY + 5 : anchorY - 5
+
+      this.vueCanvas.moveTo(anchorX, anchorY);
+      this.vueCanvas.lineTo(anchorX, anchorEndPoint );
+      this.vueCanvas.lineWidth = 3
+      this.vueCanvas.stroke();
     }
   },
   mounted() {
@@ -195,7 +236,8 @@ export default {
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.vueCanvas = ctx;
-    this.vueCanvas.strokeStyle = "#FFFF00";
+    this.vueCanvas.strokeStyle = "#FFFFFF";
+    this.drawAnchorPoints()
   }
 };
 </script>
