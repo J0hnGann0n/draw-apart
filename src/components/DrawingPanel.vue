@@ -205,9 +205,9 @@ export default {
 #canvas {
   border: 2px solid #136f63;
   border-left: 0px;
+  border-radius: 10px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-radius: 10px;
   width: 100%;
 }
 </style>

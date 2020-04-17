@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-toolbar col-1 p-0" role="toolbar" aria-label="Toolbar with button groups">
+  <div class="btn-toolbar col-auto p-0" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group-vertical" role="group" aria-label="First group">
       <button
         v-for="(color, index) in colors"
