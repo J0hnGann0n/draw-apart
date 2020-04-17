@@ -3,10 +3,14 @@ import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
 import router from '../router'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState({
+    storage: window.sessionStorage,
+  })],
   state: {
     game: {
       code: "abcd",

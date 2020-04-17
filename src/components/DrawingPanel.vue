@@ -77,10 +77,13 @@ export default {
     currentMouse: function() {
       var c = document.getElementById("canvas");
       var rect = c.getBoundingClientRect();
+      var sx = c.scrollWidth / c.width;
+      var sy = c.scrollHeight / c.height;
+
 
       return {
-        x: this.mouse.current.x - rect.left,
-        y: this.mouse.current.y - rect.top
+        x: (this.mouse.current.x - rect.left) / sx,
+        y: (this.mouse.current.y - rect.top) / sy
       };
     },
     countdown() {
