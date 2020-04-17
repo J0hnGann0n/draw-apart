@@ -1,58 +1,65 @@
 <template>
-<div>
-  <div class="container mt-3" v-if="!combinationPicked">
-    <!-- titel -->
-    <div class="row">
-      <div class="col">
-        <h1>Choose Combination</h1>
+  <div>
+    <Countdown />
+    <div class="container mt-3" v-if="!combinationPicked">
+      <!-- titel -->
+      <div class="row">
+        <div class="col">
+          <h1>Choose Combination</h1>
+        </div>
       </div>
-    </div>
 
-    <!-- drawing combination -->
-    <div class="row">
-      <div class="col-12">
-        <div
-          v-for="(bodyPart, index) in bodyParts"
-          :key="index"
-          class="row justify-content-around align-items-center"
-        >
-          <div @click="slideBack(bodyPart)" v-show="combination[bodyPart] > 0" class="col-2">
-            <font-awesome-icon icon="arrow-left" />
-          </div>
-          <div class="col-6">
-            <img :src="getImageData(bodyPart)" width="100px" height="100px" />
-          </div>
+      <!-- drawing combination -->
+      <div class="row">
+        <div class="col-12">
           <div
-            @click="slideForward(bodyPart)"
-            v-show="combination[bodyPart] < drawings[bodyPart].length - 1"
-            class="col-2"
+            v-for="(bodyPart, index) in bodyParts"
+            :key="index"
+            class="row justify-content-around align-items-center"
           >
-            <font-awesome-icon icon="arrow-right" />
+            <div
+              @click="slideBack(bodyPart)"
+              :style="{visibility: combination[bodyPart] > 0 ? 'visible' : 'hidden'}"
+              class="col-2"
+            >
+              <font-awesome-icon icon="arrow-left" />
+            </div>
+            <div class="col-6">
+              <img :src="getImageData(bodyPart)" width="100px" height="100px" />
+            </div>
+            <div
+              @click="slideForward(bodyPart)"
+              :style="{visibility: combination[bodyPart] < drawings[bodyPart].length - 1 ? 'visible' : 'hidden'}"
+              class="col-2"
+            >
+              <font-awesome-icon icon="arrow-right" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <canvas id="canvas" class="d-none"></canvas>
+      <canvas id="canvas" class="d-none"></canvas>
 
-    <!-- finish combination -->
-    <div class="row justify-content-end">
-      <div class="col-2">
-        <button @click="submitCombination()" type="button" class="btn btn-primary">
-          <font-awesome-icon icon="check" />
-        </button>
+      <!-- finish combination -->
+      <div class="row justify-content-end">
+        <div class="col-2">
+          <button @click="submitCombination()" type="button" class="btn btn-primary">
+            <i class="fas fa-check"></i>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <CombinationNameInput v-if="combinationPicked"/>
+    <CombinationNameInput v-if="combinationPicked" />
   </div>
 </template>
 
 <script>
 import CombinationNameInput from "@/components/CombinationNameInput.vue";
+import Countdown from "@/components/Countdown.vue";
 export default {
   name: "CombinationPicker",
   components: {
-    CombinationNameInput
+    CombinationNameInput,
+    Countdown
   },
   data: function() {
     return {
@@ -95,7 +102,7 @@ export default {
       this.bodyParts.forEach(bodypart => {
         let img = new Image();
         let drawings = this.drawings[bodypart];
-        console.log()
+        console.log();
         let key = Object.keys(drawings)[this.combination[bodypart]];
         img.src = drawings[key].imageData;
         images.push(img);
@@ -136,7 +143,7 @@ export default {
       } else {
         return false;
       }
-    },
+    }
   }
 };
 </script>

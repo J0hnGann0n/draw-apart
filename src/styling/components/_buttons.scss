@@ -1,0 +1,22 @@
+//Buttons
+.btn-primary {
+    border-color: $dark;
+    background-color: $primary;
+    color: $secondary;
+    &:hover {
+        background-color: $primary;
+        color: $white;
+        border-image-slice: 0;
+    }
+}
+.btn-outline-light {
+    border-color: $primary;
+}
+
+.btn-group-vertical > .btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: 0;
+}
+
+.btn-group-vertical > .btn:not(:first-child) {
+    border-bottom-right-radius: 0;
+}

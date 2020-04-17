@@ -12,29 +12,28 @@ export default {
   name: "Countdown",
   data() {
     return {
-      finished: false,
-      timeleft: 60
+      timeleft: null
     };
   },
-  props: {
-    time: {
-      type: Number,
-      default: 0
+  computed: {
+    game() {
+      return this.$store.getters.getGame;
     }
   },
-  methods: {
-    countDownTimer() {
+  created() {
+    this.$store.dispatch("startCountdown");
+    this.timeleft = this.game.countDown[this.game.state];
+    let countdownCalculation = setInterval(() => {
       if (this.timeleft > 0) {
-        setTimeout(() => {
-          this.timeleft -= 1;
-          this.countDownTimer();
-        }, 1000);
+        let now = +new Date();
+        let countdownTime = this.game.countDown[this.game.state];
+        let timePassed = now - this.game.countDown.startTime;
+        this.timeleft = Math.floor(countdownTime - timePassed / 1000);
+      } else {
+        this.$store.dispatch("stopCountdown");
+        clearInterval(countdownCalculation);
       }
-    }
-  },
-  mounted() {
-    this.timeleft = this.time;
-    this.countDownTimer();
+    }, 1000);
   }
 };
 </script>

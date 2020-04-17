@@ -1,18 +1,12 @@
 <template>
-  <div class="container mt-3">
-    <!-- Settings -->
-    <div class="row justify-content-end">
-      <div class="col-2 text-left align-content-end">
-        <font-awesome-icon icon="sliders-h" />
-      </div>
-    </div>
+  <div class="container content">
     <!-- titel -->
-    <div class="row">
-      <div class="col">
-        <h1>Share this code</h1>
+    <div class="row bg-dark text-secondary">
+      <div class="col-12 mt-3">
+        <h1 class="text-secondary text-center">Invite players</h1>
       </div>
+      <GameCode :game="game" />
     </div>
-    <GameCode :game="game" />
     <UserList :game="game" />
     <StartGame />
   </div>

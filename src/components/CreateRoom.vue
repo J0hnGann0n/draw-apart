@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row mt-2">
     <div class="col">
       <button type="button" class="btn btn-primary" @click="createGame()">Create a game</button>
     </div>

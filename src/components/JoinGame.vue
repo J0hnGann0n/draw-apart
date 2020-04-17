@@ -1,14 +1,8 @@
 <template>
-  <div class="row">
+  <div class="row mt-2">
+    <label class="col-12">Enter a code to join a game:</label>
     <div class="input-group mb-3 col">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Enter room code"
-        aria-label="Enter room code"
-        aria-describedby="basic-addon2"
-        v-model="gamecode"
-      />
+      <input type="text" class="form-control" aria-describedby="basic-addon2" v-model="gamecode" />
       <div class="input-group-append">
         <button @click="joinGame()" class="input-group-text" id="basic-addon2">Join</button>
       </div>

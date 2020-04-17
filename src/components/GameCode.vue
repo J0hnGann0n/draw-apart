@@ -1,8 +1,8 @@
 <template>
   <!-- Share code -->
-  <div class="row">
+  <div class="row w-100 justify-content-center game-code">
     <div class="col-12">
-      <p class="text-center display-4">
+      <p class="text-center">
         {{game.code}}
         <font-awesome-icon icon="share-alt" />
       </p>
@@ -15,3 +15,9 @@ export default {
   props: ["game"]
 };
 </script>
+
+<style lang="scss">
+.game-code {
+  font-size: 2rem;
+}
+</style>

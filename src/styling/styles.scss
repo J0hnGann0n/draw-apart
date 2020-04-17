@@ -1,1 +1,10 @@
+//Bootstrap
+@import 'fonts.scss';
+@import 'custom.scss';
 @import 'bootstrap/scss/bootstrap.scss';
+
+//Components
+@import 'components/buttons';
+
+//Typo
+@import 'typo';

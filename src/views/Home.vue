@@ -1,24 +1,19 @@
 <template>
-  <div class="container mt-3">
-    <!-- Instructions -->
-    <div class="row justify-content-end">
-      <div class="col-2 text-left align-content-end">
-        <font-awesome-icon icon="question-circle" />
-      </div>
-    </div>
+  <div class="container content">
     <!-- titel -->
     <div class="row">
-      <div class="col">
-        <h1>Welcome</h1>
+      <div class="col-12">
+        <h1>Lets Draw</h1>
       </div>
     </div>
-    <div class="row">
-      <div class="input-group mb-3 col">
+
+    <div class="row mt-2">
+      <label class="col-12" for="username">Choose your player name*:</label>
+      <div class="input-group mb-1 col-12">
         <input
           type="text"
           class="form-control"
           id="username"
-          placeholder="Choose your username"
           aria-describedby="emailHelp"
           v-model="playername"
         />
@@ -52,3 +47,6 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+</style>

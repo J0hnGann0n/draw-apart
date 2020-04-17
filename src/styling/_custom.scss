@@ -1,0 +1,29 @@
+//Colors
+$primary:       #136F63;
+$secondary:     #E0CA3C;
+$light:         #EBF38B;
+$dark:          #3E2F5B;
+$gray-900:      #707070;
+
+//Font
+$font-family-sans-serif: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+//Settings
+$border-radius: 10px;
+$border-width: 2px;
+$border-color: $dark;
+
+//Input
+$input-border-color: $dark;
+$input-group-addon-bg: $primary;
+$input-group-addon-color: $secondary;
+$input-font-family: $font-family-sans-serif;
+$input-bg: transparent;
+
+//Buttons
+$input-btn-font-family: 'Rock Salt';
+
+//Content
+.content {
+  margin-top: 30px;
+}

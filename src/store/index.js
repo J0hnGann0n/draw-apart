@@ -16,12 +16,19 @@ export default new Vuex.Store({
       code: "abcd",
       state: "lobby",
       players: ["john"],
-      drawings: {}
+      drawings: {},
+      countDown: {}
     },
+    winner: {
+      image: '',
+      name: '',
+      player: ''
+    },
+    countDownFinished: false,
     gameKey: '',
     player: {
       name: "",
-      state: "combination",
+      state: "drawing",
       host: false
     },
     combination: {
@@ -58,6 +65,12 @@ export default new Vuex.Store({
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
     },
+    STOP_COUNTDOWN(state) {
+      state.countDownFinished = true;
+    },
+    START_COUNTDOWN(state) {
+      state.countDownFinished = false;
+    },
     SET_PLAYER_HOST(state) {
       state.player.host = true
     },
@@ -91,8 +104,17 @@ export default new Vuex.Store({
         })
       });
     },
+    updateCountdownState(context) {
+      context.commit('UPDATE_COUNTDOWN_STATE');
+    },
+    startCountdown(context) {
+      context.commit('START_COUNTDOWN');
+    },
+    stopCountdown(context) {
+      context.commit('STOP_COUNTDOWN');
+    },
     startGame(context) {
-      firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("drawing", function(error) {
+      firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("drawing", function (error) {
         if (error) {
           // The write failed...
         } else {
@@ -125,7 +147,7 @@ export default new Vuex.Store({
       context.commit('ADD_PLAYERNAME', payload);
     },
     submitDrawings(context, payload) {
-      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload, function(error) {
+      firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload, function (error) {
         if (error) {
           // The write failed...
         } else {
@@ -168,7 +190,7 @@ export default new Vuex.Store({
       context.commit('ADD_VOTE', payload);
 
       //write vote into firebase
-      firebase.database().ref('/games/' + this.state.gameKey + "/votes/").push(payload)
+      firebase.database().ref('/games/' + this.state.gameKey + "/combinations/" + payload.id + "/votes/").push(payload.player)
     }
   },
   modules: {

@@ -3,16 +3,20 @@
     <div class="row">
       <div class="col-12">
         <div class="row justify-content-around align-items-center">
-          <div @click="slideBack()" v-show="currentChoosen > 0" class="col-2">
+          <div
+            @click="slideBack()"
+            :style="{visibility: currentChoosen > 0 ? 'visible' : 'hidden'}"
+            class="col-2"
+          >
             <font-awesome-icon icon="arrow-left" />
           </div>
           <div class="col-6">
             <img :src="imageSrc" />
-            <p>{{imageName}}</p>
+            <p>{{imageName }}</p>
           </div>
           <div
             @click="slideForward()"
-            v-show="currentChoosen < game.combinations.length - 1"
+            :style="{visibility: currentChoosen < numberOfCombinations - 1 ? 'visible' : 'hidden'}"
             class="col-2"
           >
             <font-awesome-icon icon="arrow-right" />
@@ -42,6 +46,9 @@ export default {
     game() {
       return this.$store.getters.getGame;
     },
+    player() {
+      return this.$store.getters.getPlayer;
+    },
     imageSrc() {
       let key = Object.keys(this.game.combinations)[this.currentChoosen];
       return this.game.combinations[key].image;
@@ -49,6 +56,9 @@ export default {
     imageName() {
       let key = Object.keys(this.game.combinations)[this.currentChoosen];
       return this.game.combinations[key].name;
+    },
+    numberOfCombinations() {
+      return Object.keys(this.game.combinations).length;
     }
   },
   methods: {
@@ -56,7 +66,7 @@ export default {
      * update combination object with active image when sliding forward
      */
     slideForward() {
-      if (this.currentChoosen < this.game.combinations.length) {
+      if (this.currentChoosen < this.numberOfCombinations) {
         this.currentChoosen++;
       }
     },
@@ -69,8 +79,13 @@ export default {
       }
     },
     submitVote() {
-      let winnerID = Object.keys(this.game.combinations)[this.currentChoosen];
-      this.$store.dispatch("submitVote", winnerID);
+      let voteId = Object.keys(this.game.combinations)[this.currentChoosen];
+      let vote = {
+        id: voteId,
+        player: this.player.name
+      };
+      this.$store.dispatch("submitVote", vote);
+      this.$store.dispatch("updatePlayerState", "winner");
     }
   }
 };
