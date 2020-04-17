@@ -13,9 +13,6 @@ import Countdown from "@/components/Countdown.vue";
 
 export default {
   name: "Drawing",
-  props: {
-    msg: String
-  },
   components: {
     DrawingPanel,
     Countdown
