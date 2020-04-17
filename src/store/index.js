@@ -128,19 +128,19 @@ export default new Vuex.Store({
      * @param {*} payload 
      */
     joinGame(context, payload) {
-      axios({
-        method: 'post',
-        url: 'https://us-central1-drawapart-84b66.cloudfunctions.net/joinGame',
-        data: payload
-      }).then(result => {
-        console.log(result)
+      axios.post('https://us-central1-drawapart-84b66.cloudfunctions.net/joinGame', payload)
+      .then(result => {
         let gameKey = result.data;
+
         //Add game object reference from firebase db to store
         context.commit('ADD_GAMEKEY', gameKey);
         //get gamedata from firebase
         firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
           context.commit('ADD_GAME', snapshot.val());
+          router.push('/game')
         })
+      }).catch(function() {
+        return false
       })
     },
     addPlayerName(context, payload) {
