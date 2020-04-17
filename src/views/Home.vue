@@ -1,25 +1,19 @@
 <template>
-  <div class="container mt-3">
-    <!-- Instructions -->
-    <div class="row justify-content-end">
-      <div class="col-2 text-left align-content-end">
-        <font-awesome-icon icon="question-circle" />
-      </div>
-    </div>
+  <div class="container my-auto">
     <!-- titel -->
     <div class="row">
       <div class="col-12">
-        <h1>Welcome</h1>
+        <h1>Lets Draw</h1>
       </div>
     </div>
-    
+
     <div class="row">
-      <div class="input-group mb-3 col">
+      <label class="col-12" for="username">Choose your player name*:</label>
+      <div class="input-group mb-3 col-12">
         <input
           type="text"
           class="form-control"
           id="username"
-          placeholder="Choose your username"
           aria-describedby="emailHelp"
           v-model="playername"
         />

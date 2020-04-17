@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <router-view />
+    <div class="contentContainer d-flex">
+      <router-view />
+    </div>
   </div>
 </template>
 <script>
@@ -17,7 +19,13 @@ export default {
 <style scoped></style>
 
 <style lang="scss">
-body {
+body,
+html,
+#app {
   background-color: #e0ca3c;
+  height: 100%;
+}
+.contentContainer {
+  height: calc(100% - 76.5px);
 }
 </style>

@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <div class="container mt-3">
-      <Countdown />
-      <DrawingPanel />
-    </div>
+  <div class="container mt-3">
+    <Countdown />
+    <DrawingPanel />
   </div>
 </template>
 
