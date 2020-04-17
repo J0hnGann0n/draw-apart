@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="container mt-3 content">
     <!-- titel -->
     <div class="row">
       <div class="col">
@@ -9,7 +9,7 @@
 
     <!-- show combination -->
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 d-flex">
         <img :src="combinationImage" />
       </div>
       <div class="input-group mb-3 col">
@@ -25,7 +25,7 @@
     </div>
 
     <!-- finish naming -->
-    <div class="row justify-content-end">
+    <div class="row justify-content-end pr-3">
       <div class="col-2">
         <button type="button" @click="submitCombination()" class="btn btn-primary">
           <font-awesome-icon icon="check" />
