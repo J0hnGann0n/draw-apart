@@ -1,7 +1,7 @@
 //Buttons
 .btn-primary {
-    border-color: $primary;
-    background-color: transparent;
+    border-color: $dark;
+    background-color: $primary;
     color: $secondary;
     &:hover {
         background-color: $primary;

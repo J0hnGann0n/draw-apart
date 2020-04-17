@@ -5,14 +5,18 @@ $light:         #EBF38B;
 $dark:          #3E2F5B;
 
 //Font
-$font-family-sans-serif: 'Architects Daughter',"Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 
 //Settings
-$border-radius: 0;
+$border-radius: 10px;
 $border-width: 2px;
-$border-color: $primary;
+$border-color: $dark;
 
 //Input
-$input-border-color: $primary;
-$input-group-addon-bg: transparent;
+$input-border-color: $dark;
+$input-group-addon-bg: $primary;
 $input-group-addon-color: $secondary;
+$input-font-family: $font-family-sans-serif;
+
+//Buttons
+$input-btn-font-family: 'Rock Salt';
