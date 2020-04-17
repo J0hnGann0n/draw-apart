@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="w-100">
     <Lobby v-if="game.state == 'lobby'" :game="game" />
     <Vote v-if="game.state == 'voting' && !waiting" />
     <Drawing v-if="game.state == 'drawing' && !waiting" :game="game" />

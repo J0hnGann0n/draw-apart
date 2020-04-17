@@ -2,22 +2,22 @@
 
 import '@/styling/styles.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { 
-  faUserTie, 
-  faCrown, 
-  faCheck, 
-  faArrowLeft, 
-  faArrowRight, 
-  faUndo, 
-  faTrash, 
-  faShareAlt, 
-  faSlidersH, 
-  faQuestionCircle 
+import {
+  faUser,
+  faCrown,
+  faCheck,
+  faArrowLeft,
+  faArrowRight,
+  faUndo,
+  faTrash,
+  faShareAlt,
+  faSlidersH,
+  faQuestionCircle
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(
-  faUserTie,
+  faUser,
   faCrown,
   faCheck,
   faArrowLeft,

@@ -1,9 +1,9 @@
 <template>
-  <div class="row justify-content-center">
+  <div class="row justify-content-start">
     <div class="col-auto">
       <p class="text-left">
-        <font-awesome-icon v-if="isHost" icon="crown" />
-        <font-awesome-icon v-else icon="user-tie" />
+        <font-awesome-icon v-if="isHost" icon="crown" class="text-dark" />
+        <font-awesome-icon v-else icon="user" class="text-dark" />
         {{name}}
       </p>
     </div>

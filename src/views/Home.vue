@@ -1,5 +1,5 @@
 <template>
-  <div class="container home-content">
+  <div class="container content">
     <!-- titel -->
     <div class="row">
       <div class="col-12">
@@ -49,7 +49,4 @@ export default {
 </script>
 
 <style lang="scss">
-.home-content {
-  margin-top: 30px;
-}
 </style>

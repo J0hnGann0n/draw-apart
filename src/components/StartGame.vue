@@ -2,7 +2,12 @@
   <!-- start game -->
   <div class="row">
     <div class="col">
-      <button @click="startGame()" type="button" class="btn btn-primary" :disabled="!this.player.host">{{ startGameText }}</button>
+      <button
+        @click="startGame()"
+        type="button"
+        class="btn btn-primary"
+        :disabled="!this.player.host"
+      >{{ startGameText }}</button>
     </div>
   </div>
 </template>
@@ -17,11 +22,11 @@ export default {
   },
   computed: {
     startGameText() {
-      return this.player.host ? "Start Game" : "Waiting for host"
+      return this.player.host ? "Start Game" : "Waiting for host";
     },
     player() {
       return this.$store.getters.getPlayer;
-    },
+    }
   }
 };
 </script>

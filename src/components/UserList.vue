@@ -1,12 +1,15 @@
 <template>
   <!-- Userlist -->
-  <div class="row">
+  <div class="row mt-3">
+    <div class="col-12">
+      <h5>Players</h5>
+    </div>
     <div class="col">
-      <User 
-        v-for="(player, index) in Object.entries(game.players)" 
-        :name="player[0]" 
-        :isHost="player[1].host" 
-        :key="index" 
+      <User
+        v-for="(player, index) in Object.entries(game.players)"
+        :name="player[0]"
+        :isHost="player[1].host"
+        :key="index"
       />
     </div>
   </div>
