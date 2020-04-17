@@ -209,5 +209,6 @@ export default {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   width: 100%;
+  height: 90%;
 }
 </style>
