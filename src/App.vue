@@ -19,13 +19,7 @@ export default {
 <style scoped></style>
 
 <style lang="scss">
-body,
-html,
-#app {
+body {
   background-color: #e0ca3c;
-  height: 100%;
-}
-.contentContainer {
-  height: calc(100% - 76.5px);
 }
 </style>

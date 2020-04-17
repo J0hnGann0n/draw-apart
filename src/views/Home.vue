@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-auto">
+  <div class="container home-content">
     <!-- titel -->
     <div class="row">
       <div class="col-12">
@@ -7,9 +7,9 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-2">
       <label class="col-12" for="username">Choose your player name*:</label>
-      <div class="input-group mb-3 col-12">
+      <div class="input-group mb-1 col-12">
         <input
           type="text"
           class="form-control"
@@ -47,3 +47,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.home-content {
+  margin-top: 30px;
+}
+</style>

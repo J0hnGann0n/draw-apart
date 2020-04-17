@@ -1,7 +1,16 @@
 h1 {
     color: $primary;
     font-family: 'Rock Salt', Roboto;
+    font-size: 1.5rem;
 }
 h4 {
+    font-family: 'Rock Salt', Roboto;
+}
+
+label {
+    color: $gray-900;
+}
+
+.input-group-text {
     font-family: 'Rock Salt', Roboto;
 }
