@@ -62,19 +62,27 @@ export default {
       bodyParts: [
         {
           name: "head",
-          anchors: [ {side: "top", points: [100, 200, 175]}]
+          anchors: [
+            {side: "bottom", points: [100, 175]}
+          ]
         }, 
         {
           name: "body",
-          anchors: [ {side: "top", points: [100, 200, 175]}]
+          anchors: [
+            {side: "top", points: [100, 175]},
+            {side: "bottom", points: [75, 200]}
+          ]
         },
         {
           name: "legs",
-          anchors: [ {side: "top", points: [100, 200, 175]}]
+          anchors: [
+            {side: "top", points: [75, 200]},
+            {side: "bottom", points: [50, 100, 175, 225]}
+          ]
         }, 
         {
           name: "feet",
-          anchors: [ {side: "top", points: [100, 200, 175]}]
+          anchors: [ {side: "top", points: [50, 100, 175, 225]}]
         },
       ],
       mouse: {
@@ -107,7 +115,9 @@ export default {
       return this.$store.getters.getCountdown();
     },
     bodyPartsList() {
-      return Object.keys(this.bodyParts)
+      let bodyPartsList = []
+      this.bodyParts.forEach(bodyPart => bodyPartsList.push(bodyPart.name));
+      return bodyPartsList
     }
   },
   methods: {
@@ -128,6 +138,7 @@ export default {
         this.$store.dispatch("updatePlayerState", "combination");
       }
       this.clearCanvas();
+      this.drawAnchorPoints()
     },
     /**
      * Clears or deletes everything on the canvas
@@ -206,22 +217,29 @@ export default {
 
       this.draw(event);
     },
+    /**
+     * Takes the anchor points for each bodypart and draws them on the canvas.
+     */
     drawAnchorPoints() {
       let currentBodyPart = this.bodyPartsList[this.drawingCount]
-      let anchors = this.bodyParts[currentBodyPart].anchors
-      console.log(anchors)
-      for (let anchor in anchors) {
-        console.log(anchor)
-        for (let point in anchor.points) {
-          this.drawAnchorPoint(anchor.side, point)
+      // Loop through each anchor point of each bodypart and draw them on the canvas
+      this.bodyParts.forEach(bodyPart => {
+        if (bodyPart.name === currentBodyPart) {
+          bodyPart.anchors.forEach(anchor => {
+            anchor.points.forEach(point => {
+              this.drawAnchorPoint(anchor.side, point)
+            })
+          })
         }
-      }
+      });
     },
+    /**
+     * Draw a 5 pixel vertical line from the given side to the given x co-ordinate.
+     */
     drawAnchorPoint(side, anchorX) {
       let anchorY = (side === "top") ? 0 : this.canvasHeight
       this.vueCanvas.beginPath();
       let anchorEndPoint = (side === "top") ? anchorY + 5 : anchorY - 5
-
       this.vueCanvas.moveTo(anchorX, anchorY);
       this.vueCanvas.lineTo(anchorX, anchorEndPoint );
       this.vueCanvas.lineWidth = 3
@@ -241,8 +259,6 @@ export default {
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 #canvas {
   border: 2px solid #136f63;
