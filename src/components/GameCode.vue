@@ -4,7 +4,7 @@
     <div class="col-12">
       <p class="text-center display-4">
         {{game.code}}
-        <i class="fas fa-share-alt"></i>
+        <font-awesome-icon icon="share-alt" />
       </p>
     </div>
   </div>

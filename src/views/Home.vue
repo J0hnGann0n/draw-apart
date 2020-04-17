@@ -3,7 +3,7 @@
     <!-- Instructions -->
     <div class="row justify-content-end">
       <div class="col-2 text-left align-content-end">
-        <i class="far fa-question-circle"></i>
+        <font-awesome-icon icon="question-circle" />
       </div>
     </div>
     <!-- titel -->

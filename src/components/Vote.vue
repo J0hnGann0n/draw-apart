@@ -1,11 +1,7 @@
 <template>
   <div class="container mt-3">
     <!-- Countdown -->
-    <div class="row justify-content-end">
-      <div class="col-2 text-left align-content-end">
-        <p>40</p>
-      </div>
-    </div>
+    <Countdown />
 
     <!-- titel -->
     <div class="row">
@@ -14,22 +10,16 @@
       </div>
     </div>
 
-    <Waiting v-if="voteSubmitted && voting" />
-    <DrawingPicker v-if="!voteSubmitted" />
-    <ShowWinner v-if="!voting" />
+    <DrawingPicker />
   </div>
 </template>
 
 <script>
 import DrawingPicker from "@/components/DrawingPicker.vue";
-import ShowWinner from "@/components/ShowWinner.vue";
-import Waiting from "@/components/Waiting.vue";
+import Countdown from "@/components/Countdown.vue";
 
 export default {
   name: "Vote",
-  props: {
-    msg: String
-  },
   data: function() {
     return {
       voting: false
@@ -37,17 +27,7 @@ export default {
   },
   components: {
     DrawingPicker,
-    ShowWinner,
-    Waiting
-  },
-  computed: {
-    voteSubmitted() {
-      if (this.$store.vote) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    Countdown
   }
 };
 </script>

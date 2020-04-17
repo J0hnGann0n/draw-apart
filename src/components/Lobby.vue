@@ -3,7 +3,7 @@
     <!-- Settings -->
     <div class="row justify-content-end">
       <div class="col-2 text-left align-content-end">
-        <i class="fas fa-sliders-h"></i>
+        <font-awesome-icon icon="sliders-h" />
       </div>
     </div>
     <!-- titel -->

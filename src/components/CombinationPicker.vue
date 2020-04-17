@@ -1,54 +1,65 @@
 <template>
-  <div class="container mt-3">
-    <!-- titel -->
-    <div class="row">
-      <div class="col">
-        <h1>Choose Combination</h1>
+  <div>
+    <Countdown />
+    <div class="container mt-3" v-if="!combinationPicked">
+      <!-- titel -->
+      <div class="row">
+        <div class="col">
+          <h1>Choose Combination</h1>
+        </div>
       </div>
-    </div>
 
-    <!-- drawing combination -->
-    <div class="row">
-      <div class="col-12">
-        <div
-          v-for="(bodyPart, index) in bodyParts"
-          :key="index"
-          class="row justify-content-around align-items-center"
-        >
-          <div @click="slideBack(bodyPart)" v-show="combination[bodyPart] > 0" class="col-2">
-            <i class="fas fa-arrow-left"></i>
-          </div>
-          <div class="col-6">
-            <img :src="getImageData(bodyPart)" width="100px" height="100px" />
-          </div>
+      <!-- drawing combination -->
+      <div class="row">
+        <div class="col-12">
           <div
-            @click="slideForward(bodyPart)"
-            v-show="combination[bodyPart] < game.drawings[bodyPart].length - 1"
-            class="col-2"
+            v-for="(bodyPart, index) in bodyParts"
+            :key="index"
+            class="row justify-content-around align-items-center"
           >
-            <i class="fas fa-arrow-right"></i>
+            <div
+              @click="slideBack(bodyPart)"
+              :style="{visibility: combination[bodyPart] > 0 ? 'visible' : 'hidden'}"
+              class="col-2"
+            >
+              <font-awesome-icon icon="arrow-left" />
+            </div>
+            <div class="col-6">
+              <img :src="getImageData(bodyPart)" width="100px" height="100px" />
+            </div>
+            <div
+              @click="slideForward(bodyPart)"
+              :style="{visibility: combination[bodyPart] < drawings[bodyPart].length - 1 ? 'visible' : 'hidden'}"
+              class="col-2"
+            >
+              <font-awesome-icon icon="arrow-right" />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <canvas id="canvas" class="d-none"></canvas>
+      <canvas id="canvas" class="d-none"></canvas>
 
-    <!-- finish combination -->
-    <div class="row justify-content-end">
-      <div class="col-2">
-        <button @click="submitCombination()" type="button" class="btn btn-primary">
-          <i class="fas fa-check"></i>
-        </button>
+      <!-- finish combination -->
+      <div class="row justify-content-end">
+        <div class="col-2">
+          <button @click="submitCombination()" type="button" class="btn btn-primary">
+            <i class="fas fa-check"></i>
+          </button>
+        </div>
       </div>
     </div>
+    <CombinationNameInput v-if="combinationPicked" />
   </div>
 </template>
 
 <script>
+import CombinationNameInput from "@/components/CombinationNameInput.vue";
+import Countdown from "@/components/Countdown.vue";
 export default {
   name: "CombinationPicker",
-  props: {
-    msg: String
+  components: {
+    CombinationNameInput,
+    Countdown
   },
   data: function() {
     return {
@@ -67,7 +78,7 @@ export default {
      */
     slideForward(bodyPart) {
       let currentChoosen = this.combination[bodyPart];
-      if (currentChoosen < this.game.drawings[bodyPart].length) {
+      if (currentChoosen < this.drawings[bodyPart].length) {
         this.combination[bodyPart] = currentChoosen + 1;
       }
     },
@@ -90,7 +101,8 @@ export default {
       //for each bodypart get the choosen image and push it into images array
       this.bodyParts.forEach(bodypart => {
         let img = new Image();
-        let drawings = this.game.drawings[bodypart];
+        let drawings = this.drawings[bodypart];
+        console.log();
         let key = Object.keys(drawings)[this.combination[bodypart]];
         img.src = drawings[key].imageData;
         images.push(img);
@@ -113,7 +125,7 @@ export default {
      * Gets the Image based on current choosen state
      */
     getImageData(bodyPart) {
-      let drawings = this.game.drawings[bodyPart];
+      let drawings = this.drawings[bodyPart];
       let key = Object.keys(drawings)[this.combination[bodyPart]];
       return drawings[key].imageData;
     }
@@ -121,6 +133,16 @@ export default {
   computed: {
     game() {
       return this.$store.getters.getGame;
+    },
+    drawings() {
+      return this.$store.getters.getDrawingsByBodyPart;
+    },
+    combinationPicked() {
+      if (this.$store.state.combination.image) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };

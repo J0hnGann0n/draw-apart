@@ -7,8 +7,7 @@
 <style scoped></style>
 
 <style lang="scss">
-
 body {
-  background-color: #EBF38B;
+  background-color: #e0ca3c;
 }
 </style>

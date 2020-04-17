@@ -24,17 +24,17 @@
     </div>
     <div class="col-12 d-flex">
       <button type="button" class="btn btn-secondary" @click="undo()">
-        <i class="fas fa-undo"></i>
+        <font-awesome-icon icon="undo" />
       </button>
       <button type="button" class="btn btn-secondary" @click="clearCanvas()">
-        <i class="fas fa-trash"></i>
+        <font-awesome-icon icon="trash" />
       </button>
       <button
         type="button"
         class="btn btn-primary ml-auto"
         @click="submitDrawing(bodyPart[drawingCount])"
       >
-        <i class="fas fa-check"></i>
+        <font-awesome-icon icon="check" />
       </button>
     </div>
   </div>
@@ -58,6 +58,7 @@ export default {
       canvasWidth: 0,
       canvasHeight: 0,
       drawingCount: 0,
+      drawings: [],
       bodyPart: ["head", "body", "legs", "feet"],
       mouse: {
         current: {
@@ -81,6 +82,9 @@ export default {
         x: this.mouse.current.x - rect.left,
         y: this.mouse.current.y - rect.top
       };
+    },
+    countdown() {
+      return this.$store.getters.getCountdown();
     }
   },
   methods: {
@@ -92,12 +96,12 @@ export default {
       let image = canvasDOM.toDataURL();
       let drawing = {
         imageData: image,
-        player: "john",
         bodyPart: bodyPart
       };
-      this.$store.dispatch("submitDrawing", drawing);
+      this.drawings.push(drawing);
       this.drawingCount++;
       if (this.drawingCount > 3) {
+        this.$store.dispatch("submitDrawings", this.drawings);
         this.$store.dispatch("updatePlayerState", "combination");
       }
       this.clearCanvas();
