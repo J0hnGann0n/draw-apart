@@ -6,8 +6,9 @@
         @click="startGame()"
         type="button"
         class="btn btn-primary"
-        :disabled="!this.player.host"
-      >{{ startGameText }}</button>
+        v-if="this.player.host"
+      >Start Game</button>
+      <h5>waiting for host...</h5>
     </div>
   </div>
 </template>
@@ -21,9 +22,6 @@ export default {
     }
   },
   computed: {
-    startGameText() {
-      return this.player.host ? "Start Game" : "Waiting for host";
-    },
     player() {
       return this.$store.getters.getPlayer;
     }
