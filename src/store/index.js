@@ -2,19 +2,19 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
-import router from '../router'
-import createPersistedState from 'vuex-persistedstate'
+import { removeEmptyLists } from '../helpers'
+//import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [createPersistedState({
-    storage: window.sessionStorage,
-  })],
+  //plugins: [createPersistedState({
+  //  storage: window.sessionStorage,
+  //})],
   state: {
     game: {
       code: "abcd",
-      state: "lobby",
+      state: "home",
       players: ["john"],
       drawings: {},
       countDown: {}
@@ -100,7 +100,6 @@ export default new Vuex.Store({
         firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
           context.commit('ADD_GAME', snapshot.val());
           context.commit('SET_PLAYER_HOST');
-          router.push("/game");
         })
       });
     },
@@ -137,7 +136,6 @@ export default new Vuex.Store({
           //get gamedata from firebase
           firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
             context.commit('ADD_GAME', snapshot.val());
-            router.push('/game')
           })
         }).catch(function () {
           return false
@@ -198,6 +196,7 @@ export default new Vuex.Store({
   getters: {
     getGame: state => state.game,
     getPlayer: state => state.player,
+    getCountDownFinished: state => state.countDownFinished,
     getDrawingsByBodyPart: state => {
       let drawings = {
         head: [],
@@ -207,10 +206,11 @@ export default new Vuex.Store({
       }
       for (let playerDrawings of Object.values(state.game.drawings)) {
         for (let drawing of Object.values(playerDrawings)) {
-          drawings[drawing.bodyPart].push(drawing)
+          if (drawing.imageData) drawings[drawing.bodyPart].push(drawing)
         }
       }
-      return drawings
+      let cleanedrawings = removeEmptyLists(drawings)
+      return cleanedrawings
     }
   }
 })

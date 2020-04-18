@@ -140,7 +140,6 @@ exports.setState = functions.database.ref('/games/{gameKey}')
       ref.child('games/' + gameKey).child("state").set("voting");
       ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
     }
-
     return true
   });
 

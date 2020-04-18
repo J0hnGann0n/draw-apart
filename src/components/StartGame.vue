@@ -24,7 +24,10 @@ export default {
   },
   methods: {
     startGame() {
-      if (Object.keys(this.game.players).length < 2) {
+      if (
+        Object.keys(this.game.players).length < 2 &&
+        !process.env.VUE_APP_DEBUG
+      ) {
         this.error = true;
         this.errorMessage = "You need at least another player";
       } else {

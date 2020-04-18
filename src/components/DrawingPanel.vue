@@ -96,27 +96,6 @@ export default {
       }
     };
   },
-  computed: {
-    currentMouse: function() {
-      var c = document.getElementById("canvas");
-      var rect = c.getBoundingClientRect();
-      var sx = c.scrollWidth / c.width;
-      var sy = c.scrollHeight / c.height;
-
-      return {
-        x: (this.mouse.current.x - rect.left) / sx,
-        y: (this.mouse.current.y - rect.top) / sy
-      };
-    },
-    countdown() {
-      return this.$store.getters.getCountdown();
-    },
-    bodyPartsList() {
-      let bodyPartsList = [];
-      this.bodyParts.forEach(bodyPart => bodyPartsList.push(bodyPart.name));
-      return bodyPartsList;
-    }
-  },
   methods: {
     /**
      * Get canvas image as base64 and send drawing object to store to be submitted.
@@ -241,6 +220,57 @@ export default {
       this.vueCanvas.lineTo(anchorX, anchorEndPoint);
       this.vueCanvas.lineWidth = 3;
       this.vueCanvas.stroke();
+    },
+    handleTimeout() {
+      if (!this.timeOver) return false;
+      this.bodyPartsList.forEach(bodyPart => {
+        if (this.drawings && !this.isDrawingComplete(bodyPart)) {
+          this.drawings.push({
+            imageData: null,
+            bodyPart: bodyPart
+          });
+        }
+      });
+      this.$store.dispatch("submitDrawings", this.drawings);
+      this.$store.dispatch("updatePlayerState", "combination");
+    },
+    isDrawingComplete(bodyPart) {
+      let drawingExists = false;
+      this.drawings.forEach(drawing => {
+        if (drawing.bodyPart === bodyPart) {
+          drawingExists = true;
+        }
+      });
+      return drawingExists;
+    }
+  },
+  computed: {
+    currentMouse: function() {
+      var c = document.getElementById("canvas");
+      var rect = c.getBoundingClientRect();
+      var sx = c.scrollWidth / c.width;
+      var sy = c.scrollHeight / c.height;
+
+      return {
+        x: (this.mouse.current.x - rect.left) / sx,
+        y: (this.mouse.current.y - rect.top) / sy
+      };
+    },
+    countdown() {
+      return this.$store.getters.getCountdown();
+    },
+    bodyPartsList() {
+      let bodyPartsList = [];
+      this.bodyParts.forEach(bodyPart => bodyPartsList.push(bodyPart.name));
+      return bodyPartsList;
+    },
+    timeOver() {
+      return this.$store.getters.getCountDownFinished;
+    }
+  },
+  watch: {
+    timeOver() {
+      this.handleTimeout();
     }
   },
   mounted() {
