@@ -19,12 +19,13 @@ export default {
   data() {
     return {
       error: false,
-      errorMessage: ""
+      errorMessage: "",
+      debug: true
     };
   },
   methods: {
     startGame() {
-      if (Object.keys(this.game.players).length < 2) {
+      if (!(Object.keys(this.game.players).length < 2)) {
         this.error = true;
         this.errorMessage = "You need at least another player";
       } else {
