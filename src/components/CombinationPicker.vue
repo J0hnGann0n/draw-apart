@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-12">
           <div
-            v-for="(bodyPart, index) in bodyParts"
+            v-for="(bodyPart, index) in Object.keys(drawings)"
             :key="index"
             class="row justify-content-around align-items-center"
           >
@@ -24,7 +24,11 @@
               <font-awesome-icon icon="arrow-left" />
             </div>
             <div class="col-6">
-              <img :src="getImageData(bodyPart)" width="100px" height="100px" />
+              <img
+                :src="drawings[bodyPart][combination[bodyPart]].imageData"
+                width="100px"
+                height="100px"
+              />
             </div>
             <div
               @click="slideForward(bodyPart)"
@@ -116,14 +120,6 @@ export default {
       //Save canvas as base64
       let combinationImage = canvas.toDataURL();
       this.$store.dispatch("addCombination", combinationImage);
-    },
-    /**
-     * Gets the Image based on current choosen state
-     */
-    getImageData(bodyPart) {
-      let drawings = this.drawings[bodyPart];
-      let key = Object.keys(drawings)[this.combination[bodyPart]];
-      return drawings[key].imageData;
     }
   },
   computed: {

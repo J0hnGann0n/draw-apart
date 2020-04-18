@@ -1,5 +1,3 @@
-
-
 import '@/styling/styles.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {

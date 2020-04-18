@@ -3,14 +3,15 @@ import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
 import router from '../router'
-import createPersistedState from 'vuex-persistedstate'
+import { removeEmptyLists } from '../helpers'
+//import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [createPersistedState({
-    storage: window.sessionStorage,
-  })],
+  //plugins: [createPersistedState({
+  //  storage: window.sessionStorage,
+  //})],
   state: {
     game: {
       code: "abcd",
@@ -198,6 +199,7 @@ export default new Vuex.Store({
   getters: {
     getGame: state => state.game,
     getPlayer: state => state.player,
+    getCountDownFinished: state => state.countDownFinished,
     getDrawingsByBodyPart: state => {
       let drawings = {
         head: [],
@@ -207,10 +209,11 @@ export default new Vuex.Store({
       }
       for (let playerDrawings of Object.values(state.game.drawings)) {
         for (let drawing of Object.values(playerDrawings)) {
-          drawings[drawing.bodyPart].push(drawing)
+          if (drawing.imageData) drawings[drawing.bodyPart].push(drawing)
         }
       }
-      return drawings
+      let cleanedrawings = removeEmptyLists(drawings)
+      return cleanedrawings
     }
   }
 })
