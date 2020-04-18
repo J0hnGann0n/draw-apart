@@ -82,7 +82,9 @@ export default {
         }, 
         {
           name: "feet",
-          anchors: [ {side: "top", points: [50, 100, 175, 225]}]
+          anchors: [
+            {side: "top", points: [50, 100, 175, 225]}
+          ]
         },
       ],
       mouse: {
@@ -97,28 +99,6 @@ export default {
         down: false
       }
     };
-  },
-  computed: {
-    currentMouse: function() {
-      var c = document.getElementById("canvas");
-      var rect = c.getBoundingClientRect();
-      var sx = c.scrollWidth / c.width;
-      var sy = c.scrollHeight / c.height;
-
-
-      return {
-        x: (this.mouse.current.x - rect.left) / sx,
-        y: (this.mouse.current.y - rect.top) / sy
-      };
-    },
-    countdown() {
-      return this.$store.getters.getCountdown();
-    },
-    bodyPartsList() {
-      let bodyPartsList = []
-      this.bodyParts.forEach(bodyPart => bodyPartsList.push(bodyPart.name));
-      return bodyPartsList
-    }
   },
   methods: {
     /**
@@ -244,7 +224,52 @@ export default {
       this.vueCanvas.lineTo(anchorX, anchorEndPoint );
       this.vueCanvas.lineWidth = 3
       this.vueCanvas.stroke();
+    },
+    handleTimeout() {
+      if (!this.timeOver) return false
+      const missingDrawings = this.bodyPartsList.length - this.drawingCount
+      for (var i = 0; i <= missingDrawings; i++) {
+        console.log("yup")
+        let currentBodyPart = this.bodyPartsList[this.drawingCount]
+        let blankDrawing = {
+          imageData: null,
+          bodyPart: currentBodyPart
+        };
+        this.drawings.push(blankDrawing)
+      }
+      this.$store.dispatch("submitDrawings", this.drawings);
+      this.$store.dispatch("updatePlayerState", "combination");
     }
+  },
+  computed: {
+    currentMouse: function() {
+      var c = document.getElementById("canvas");
+      var rect = c.getBoundingClientRect();
+      var sx = c.scrollWidth / c.width;
+      var sy = c.scrollHeight / c.height;
+
+
+      return {
+        x: (this.mouse.current.x - rect.left) / sx,
+        y: (this.mouse.current.y - rect.top) / sy
+      };
+    },
+    countdown() {
+      return this.$store.getters.getCountdown();
+    },
+    bodyPartsList() {
+      let bodyPartsList = []
+      this.bodyParts.forEach(bodyPart => bodyPartsList.push(bodyPart.name));
+      return bodyPartsList
+    },
+    timeOver() {
+      return this.$store.getters.getCountDownFinished;
+    }
+  },
+  watch: {
+    timeOver () {
+      this.handleTimeout()
+    } 
   },
   mounted() {
     let canvas = document.getElementById("canvas");
@@ -256,7 +281,7 @@ export default {
     this.vueCanvas = ctx;
     this.vueCanvas.strokeStyle = "#FFFFFF";
     this.drawAnchorPoints()
-  }
+  },
 };
 </script>
 <style scoped lang="scss">

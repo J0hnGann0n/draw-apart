@@ -198,6 +198,7 @@ export default new Vuex.Store({
   getters: {
     getGame: state => state.game,
     getPlayer: state => state.player,
+    getCountDownFinished: state => state.countDownFinished,
     getDrawingsByBodyPart: state => {
       let drawings = {
         head: [],
