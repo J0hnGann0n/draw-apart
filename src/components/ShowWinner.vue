@@ -1,22 +1,17 @@
 <template>
-  <div class="row">
+  <div class="container">
     <div class="row">
-      <div class="col-12">
-        <div class="col-6">
-          <img :src="game.winner.image" />
-        </div>
+      <div class="col-12 d-flex justify-content-center">
+        <img :src="game.winner.imageData" />
       </div>
       <div class="col-12">
-        <h2>{{game.winner.name}}</h2>
+        <h4 class="text-primary text-center">{{game.winner.name}}</h4>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-2">
-        <font-awesome-icon icon="share-alt" />
-      </div>
-      <div class="col-10">
-        <p>Combination von {{game.winner.player}}</p>
+      <div class="col-12">
+        <p class="text-right">Combination von {{game.winner.player}}</p>
       </div>
     </div>
   </div>

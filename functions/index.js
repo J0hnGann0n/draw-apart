@@ -36,6 +36,28 @@ async function codeExists(code) {
   return checkDB;
 }
 
+/**
+ * Compares two values
+ * @param {*} a 
+ * @param {*} b 
+ */
+function compare(a, b) {
+  let votesA = 0;
+  let votesB = 0;
+  if (a.votes) {
+    votesA = Object.keys(a.votes).length;
+  } else if (b.votes) {
+    votesB = Object.keys(b.votes).length;
+  }
+  let comparison = 0;
+  if (votesA > votesB) {
+    comparison = -1;
+  } else if (votesA < votesB) {
+    comparison = 1;
+  }
+  return comparison;
+}
+
 exports.createGame = functions.https.onRequest((request, response) => {
   /**
    * Wrap response in cors header
@@ -45,9 +67,9 @@ exports.createGame = functions.https.onRequest((request, response) => {
       code: "",
       state: "lobby",
       countDown: {
-        drawing: 10,
-        combination: 60,
-        voting: 60,
+        drawing: 90,
+        combination: 30,
+        voting: 30,
         startTime: ""
       },
       players: {},
@@ -117,9 +139,6 @@ exports.setState = functions.database.ref('/games/{gameKey}')
     } else if (game.state === "combination" && players === playersFinishedCombination) {
       ref.child('games/' + gameKey).child("state").set("voting");
       ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
-    } else if (game.state === "voting" && players === playersFinishedVoting) {
-      ref.child('games/' + gameKey).child("state").set("winner");
-      ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
     }
 
     return true
@@ -129,36 +148,45 @@ exports.setState = functions.database.ref('/games/{gameKey}')
 /**
  * Find the most voted combination and save it into winner object
  */
-exports.findWinner = functions.database.ref('/games/{gameKey}/combinations')
+exports.findWinner = functions.database.ref('/games/{gameKey}')
   .onUpdate((snapshot, context) => {
-    // Grab the current value of what was written to the Realtime Database.
-    let combinations = snapshot.after.val()
-    let gameKey = context.params.gameKey
+    let game = snapshot.after.val();
+    if (game.state ===
+      'voting') {
+      // Grab the current value of what was written to the Realtime Database.
+      let combinations = game.combinations
+      let gameKey = context.params.gameKey
 
-    var combinationArray = Object.values(combinations);
+      //converte object to array for sorting
+      let combinationArray = Object.values(combinations);
+      let votesTotal = 0;
+      let players = Object.keys(game.players).length
 
-    function compare(a, b) {
-      const votesA = Object.keys(a.votes);
-      const votesB = Object.keys(b.votes);
+      combinationArray.forEach(combination => {
+        if (combination.votes) {
+          votesTotal += Object.keys(combination.votes).length;
+        }
+      })
 
-      let comparison = 0;
-      if (votesA.length > votesB.length) {
-        comparison = 1;
-      } else if (votesA.length < votesB.length) {
-        comparison = -1;
+
+      if (votesTotal === players) {
+
+        //find the combination with the most votes
+        combinationArray.sort(compare);
+
+        let winner = {
+          player: combinationArray[0].player,
+          votes: combinationArray[0].votes,
+          imageData: combinationArray[0].image,
+          name: combinationArray[0].name
+        };
+        //Save winner object into game
+        ref.child('games/' + gameKey + '/winner').set(winner);
+
+
+        ref.child('games/' + gameKey).child("state").set("winner");
+        ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
       }
-      return comparison;
     }
-    //find the combination with the most votes
-    combinationArray.sort(compare);
-    let winner = {
-      player: combinationArray[0].player,
-      votes: combinationArray[0].votes,
-      imageData: combinationArray[0].image,
-      name: combinationArray[0].name
-    };
-
-    ref.child('games/' + gameKey + '/winner').set(winner);
-
     return true
   });
