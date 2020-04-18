@@ -62,30 +62,26 @@ export default {
       bodyParts: [
         {
           name: "head",
-          anchors: [
-            {side: "bottom", points: [100, 175]}
-          ]
-        }, 
+          anchors: [{ side: "bottom", points: [100, 175] }]
+        },
         {
           name: "body",
           anchors: [
-            {side: "top", points: [100, 175]},
-            {side: "bottom", points: [75, 200]}
+            { side: "top", points: [100, 175] },
+            { side: "bottom", points: [75, 200] }
           ]
         },
         {
           name: "legs",
           anchors: [
-            {side: "top", points: [75, 200]},
-            {side: "bottom", points: [50, 100, 175, 225]}
-          ]
-        }, 
-        {
-          name: "feet",
-          anchors: [
-            {side: "top", points: [50, 100, 175, 225]}
+            { side: "top", points: [75, 200] },
+            { side: "bottom", points: [50, 100, 175, 225] }
           ]
         },
+        {
+          name: "feet",
+          anchors: [{ side: "top", points: [50, 100, 175, 225] }]
+        }
       ],
       mouse: {
         current: {
@@ -118,7 +114,7 @@ export default {
         this.$store.dispatch("updatePlayerState", "combination");
       }
       this.clearCanvas();
-      this.drawAnchorPoints()
+      this.drawAnchorPoints();
     },
     /**
      * Clears or deletes everything on the canvas
@@ -201,15 +197,15 @@ export default {
      * Takes the anchor points for each bodypart and draws them on the canvas.
      */
     drawAnchorPoints() {
-      let currentBodyPart = this.bodyPartsList[this.drawingCount]
+      let currentBodyPart = this.bodyPartsList[this.drawingCount];
       // Loop through each anchor point of each bodypart and draw them on the canvas
       this.bodyParts.forEach(bodyPart => {
         if (bodyPart.name === currentBodyPart) {
           bodyPart.anchors.forEach(anchor => {
             anchor.points.forEach(point => {
-              this.drawAnchorPoint(anchor.side, point)
-            })
-          })
+              this.drawAnchorPoint(anchor.side, point);
+            });
+          });
         }
       });
     },
@@ -217,28 +213,32 @@ export default {
      * Draw a 5 pixel vertical line from the given side to the given x co-ordinate.
      */
     drawAnchorPoint(side, anchorX) {
-      let anchorY = (side === "top") ? 0 : this.canvasHeight
+      let anchorY = side === "top" ? 0 : this.canvasHeight;
       this.vueCanvas.beginPath();
-      let anchorEndPoint = (side === "top") ? anchorY + 5 : anchorY - 5
+      let anchorEndPoint = side === "top" ? anchorY + 5 : anchorY - 5;
       this.vueCanvas.moveTo(anchorX, anchorY);
-      this.vueCanvas.lineTo(anchorX, anchorEndPoint );
-      this.vueCanvas.lineWidth = 3
+      this.vueCanvas.lineTo(anchorX, anchorEndPoint);
+      this.vueCanvas.lineWidth = 3;
       this.vueCanvas.stroke();
     },
     handleTimeout() {
-      if (!this.timeOver) return false
-      const missingDrawings = this.bodyPartsList.length - this.drawingCount
-      for (var i = 0; i <= missingDrawings; i++) {
-        console.log("yup")
-        let currentBodyPart = this.bodyPartsList[this.drawingCount]
-        let blankDrawing = {
-          imageData: null,
-          bodyPart: currentBodyPart
-        };
-        this.drawings.push(blankDrawing)
-      }
+      if (!this.timeOver) return false;
+      this.bodyPartsList.forEach(bodyPart => {
+        if (!this.isDrawingComplete(bodyPart)) {
+          this.drawings.push({
+            imageData: null,
+            bodyPart: bodyPart
+          });
+        }
+      });
       this.$store.dispatch("submitDrawings", this.drawings);
       this.$store.dispatch("updatePlayerState", "combination");
+    },
+    isDrawingComplete(bodyPart) {
+      this.drawings.forEach(drawing => {
+        if (drawing.bodyPart === bodyPart) return true;
+      });
+      return false;
     }
   },
   computed: {
@@ -247,7 +247,6 @@ export default {
       var rect = c.getBoundingClientRect();
       var sx = c.scrollWidth / c.width;
       var sy = c.scrollHeight / c.height;
-
 
       return {
         x: (this.mouse.current.x - rect.left) / sx,
@@ -258,18 +257,18 @@ export default {
       return this.$store.getters.getCountdown();
     },
     bodyPartsList() {
-      let bodyPartsList = []
+      let bodyPartsList = [];
       this.bodyParts.forEach(bodyPart => bodyPartsList.push(bodyPart.name));
-      return bodyPartsList
+      return bodyPartsList;
     },
     timeOver() {
       return this.$store.getters.getCountDownFinished;
     }
   },
   watch: {
-    timeOver () {
-      this.handleTimeout()
-    } 
+    timeOver() {
+      this.handleTimeout();
+    }
   },
   mounted() {
     let canvas = document.getElementById("canvas");
@@ -280,8 +279,8 @@ export default {
     this.canvasHeight = canvas.height;
     this.vueCanvas = ctx;
     this.vueCanvas.strokeStyle = "#FFFFFF";
-    this.drawAnchorPoints()
-  },
+    this.drawAnchorPoints();
+  }
 };
 </script>
 <style scoped lang="scss">
