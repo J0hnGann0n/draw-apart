@@ -12,7 +12,7 @@
           </div>
           <div class="col-6">
             <img :src="imageSrc" />
-            <p>{{imageName }}</p>
+            <h5>{{imageName }}</h5>
           </div>
           <div
             @click="slideForward()"
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-end pr-3">
       <div class="col-2">
         <button @click="submitVote()" type="button" class="btn btn-primary">
           <font-awesome-icon icon="check" />

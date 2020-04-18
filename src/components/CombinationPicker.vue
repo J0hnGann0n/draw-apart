@@ -1,7 +1,6 @@
 <template>
   <div>
-    <Countdown />
-    <div class="container mt-3" v-if="!combinationPicked">
+    <div class="container mt-3 content" v-if="!combinationPicked">
       <!-- titel -->
       <div class="row">
         <div class="col">
@@ -40,10 +39,10 @@
       <canvas id="canvas" class="d-none"></canvas>
 
       <!-- finish combination -->
-      <div class="row justify-content-end">
+      <div class="row justify-content-end pr-3">
         <div class="col-2">
           <button @click="submitCombination()" type="button" class="btn btn-primary">
-            <i class="fas fa-check"></i>
+            <font-awesome-icon icon="check" />
           </button>
         </div>
       </div>
@@ -54,12 +53,10 @@
 
 <script>
 import CombinationNameInput from "@/components/CombinationNameInput.vue";
-import Countdown from "@/components/Countdown.vue";
 export default {
   name: "CombinationPicker",
   components: {
-    CombinationNameInput,
-    Countdown
+    CombinationNameInput
   },
   data: function() {
     return {
@@ -102,7 +99,6 @@ export default {
       this.bodyParts.forEach(bodypart => {
         let img = new Image();
         let drawings = this.drawings[bodypart];
-        console.log();
         let key = Object.keys(drawings)[this.combination[bodypart]];
         img.src = drawings[key].imageData;
         images.push(img);
@@ -125,8 +121,11 @@ export default {
      * Gets the Image based on current choosen state
      */
     getImageData(bodyPart) {
-      let drawings = this.drawings[bodyPart];
+      let drawings = this.drawings[bodyPart].filter(
+        drawing => drawing.imageData
+      );
       let key = Object.keys(drawings)[this.combination[bodyPart]];
+      console.log(drawings[key]);
       return drawings[key].imageData;
     }
   },
@@ -143,6 +142,14 @@ export default {
       } else {
         return false;
       }
+    },
+    bodyPartImages() {
+      let bodyPartImages = [];
+      bodyParts.forEach(bodyPart => {
+        let drawings = this.drawings[bodyPart].filter(
+          drawing => drawing.imageData
+        );
+      });
     }
   }
 };

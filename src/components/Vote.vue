@@ -1,8 +1,5 @@
 <template>
   <div class="container mt-3">
-    <!-- Countdown -->
-    <Countdown />
-
     <!-- titel -->
     <div class="row">
       <div class="col">
@@ -16,7 +13,6 @@
 
 <script>
 import DrawingPicker from "@/components/DrawingPicker.vue";
-import Countdown from "@/components/Countdown.vue";
 
 export default {
   name: "Vote",
@@ -26,8 +22,7 @@ export default {
     };
   },
   components: {
-    DrawingPicker,
-    Countdown
+    DrawingPicker
   }
 };
 </script>

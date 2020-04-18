@@ -3,14 +3,14 @@ import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
 import router from '../router'
-import createPersistedState from 'vuex-persistedstate'
+//import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [createPersistedState({
-    storage: window.sessionStorage,
-  })],
+  //plugins: [createPersistedState({
+  //  storage: window.sessionStorage,
+  //})],
   state: {
     game: {
       code: "abcd",
@@ -129,19 +129,19 @@ export default new Vuex.Store({
      */
     joinGame(context, payload) {
       axios.post('https://us-central1-drawapart-84b66.cloudfunctions.net/joinGame', payload)
-      .then(result => {
-        let gameKey = result.data;
+        .then(result => {
+          let gameKey = result.data;
 
-        //Add game object reference from firebase db to store
-        context.commit('ADD_GAMEKEY', gameKey);
-        //get gamedata from firebase
-        firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
-          context.commit('ADD_GAME', snapshot.val());
-          router.push('/game')
+          //Add game object reference from firebase db to store
+          context.commit('ADD_GAMEKEY', gameKey);
+          //get gamedata from firebase
+          firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
+            context.commit('ADD_GAME', snapshot.val());
+            router.push('/game')
+          })
+        }).catch(function () {
+          return false
         })
-      }).catch(function() {
-        return false
-      })
     },
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);

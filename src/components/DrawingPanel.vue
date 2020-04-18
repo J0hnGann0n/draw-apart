@@ -19,16 +19,16 @@
         ></canvas>
       </div>
     </div>
-    <div class="col-10">
-      <p>{{ drawingCount }}</p>
-    </div>
-    <div class="col-12 d-flex">
+    <div class="col-12 d-flex edit-buttons">
       <button type="button" class="btn btn-secondary" @click="undo()">
-        <font-awesome-icon icon="undo" />
+        <font-awesome-icon icon="undo" class="text-dark" />
       </button>
       <button type="button" class="btn btn-secondary" @click="clearCanvas()">
-        <font-awesome-icon icon="trash" />
+        <font-awesome-icon icon="trash" class="text-dark" />
       </button>
+    </div>
+    <div class="col-12 d-flex">
+      <h5 class="text-center w-100">{{ drawingCount + '/' + bodyPartsList.length }}</h5>
       <button
         type="button"
         class="btn btn-primary ml-auto"
@@ -224,7 +224,7 @@ export default {
     handleTimeout() {
       if (!this.timeOver) return false;
       this.bodyPartsList.forEach(bodyPart => {
-        if (!this.isDrawingComplete(bodyPart)) {
+        if (this.drawings && !this.isDrawingComplete(bodyPart)) {
           this.drawings.push({
             imageData: null,
             bodyPart: bodyPart
@@ -235,10 +235,13 @@ export default {
       this.$store.dispatch("updatePlayerState", "combination");
     },
     isDrawingComplete(bodyPart) {
+      let drawingExists = false;
       this.drawings.forEach(drawing => {
-        if (drawing.bodyPart === bodyPart) return true;
+        if (drawing.bodyPart === bodyPart) {
+          drawingExists = true;
+        }
       });
-      return false;
+      return drawingExists;
     }
   },
   computed: {
@@ -292,5 +295,8 @@ export default {
   border-bottom-left-radius: 0;
   width: 100%;
   height: 90%;
+}
+.edit-buttons {
+  margin-top: -30px;
 }
 </style>
