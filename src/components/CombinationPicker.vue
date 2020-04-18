@@ -100,7 +100,8 @@ export default {
       let images = [];
 
       //for each bodypart get the choosen image and push it into images array
-      this.bodyParts.forEach(bodypart => {
+      let bodyParts = Object.keys(this.drawings);
+      bodyParts.forEach(bodypart => {
         let img = new Image();
         let drawings = this.drawings[bodypart];
         let key = Object.keys(drawings)[this.combination[bodypart]];

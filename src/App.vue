@@ -13,6 +13,16 @@ export default {
   name: "App",
   components: {
     Header
+  },
+  watch: {
+    game(to, from) {
+      if (from.state === "home") this.$router.push("/game");
+    }
+  },
+  computed: {
+    game() {
+      return this.$store.getters.getGame;
+    }
   }
 };
 </script>

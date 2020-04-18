@@ -15,7 +15,7 @@ export default new Vuex.Store({
   state: {
     game: {
       code: "abcd",
-      state: "lobby",
+      state: "home",
       players: ["john"],
       drawings: {},
       countDown: {}
@@ -101,7 +101,6 @@ export default new Vuex.Store({
         firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
           context.commit('ADD_GAME', snapshot.val());
           context.commit('SET_PLAYER_HOST');
-          router.push("/game");
         })
       });
     },
