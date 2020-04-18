@@ -27,6 +27,9 @@ $input-btn-font-family: 'Rock Salt';
 html, body {
   max-width: 100%;
   overflow-x: hidden;
+  /* Disables pull-to-refresh and overscroll glow effect.
+  Still keeps swipe navigations. */
+  overscroll-behavior-y: none;
 }
 
 //Content
