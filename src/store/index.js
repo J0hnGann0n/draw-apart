@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
-import router from '../router'
 import { removeEmptyLists } from '../helpers'
 //import createPersistedState from 'vuex-persistedstate'
 
@@ -137,7 +136,6 @@ export default new Vuex.Store({
           //get gamedata from firebase
           firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
             context.commit('ADD_GAME', snapshot.val());
-            router.push('/game')
           })
         }).catch(function () {
           return false

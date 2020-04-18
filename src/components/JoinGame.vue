@@ -29,7 +29,6 @@ export default {
           player: this.$store.state.player.name
         };
         this.$store.dispatch("joinGame", payload);
-        this.$router.push("/game");
       } else if (!this.$store.state.player.name) {
         this.error = true;
         this.errorMessage = "You need to choose a username first";
