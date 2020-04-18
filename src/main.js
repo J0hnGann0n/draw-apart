@@ -26,7 +26,7 @@ library.add(
   faTrash,
   faShareAlt,
   faSlidersH,
-  faQuestionCircle,
+  faQuestionCircle
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -40,8 +40,11 @@ import axios from 'axios'
 import Vue2TouchEvents from "vue2-touch-events";
 
 Vue.prototype.$http = axios
+var SocialSharing = require('vue-social-sharing');
+
 Vue.config.productionTip = false
 Vue.use(Vue2TouchEvents);
+Vue.use(SocialSharing)
 
 new Vue({
   router,
