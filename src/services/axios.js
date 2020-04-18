@@ -12,9 +12,9 @@ axios.interceptors.response.use(
     if (error.response) {
       if (error.response.status == 500) { toast.error("The server just shat the bed!") }
       else if (error.response.status == 403) { toast.error("Thou shalt not pass!") }
-      else { toast.error(error.response.data.message) }
-    }
-
+      else if (error.response.data.errorCode == 4001) { toast.warning("No game found with this code") }
+      else { toast.error(error.response.data.errorText) }    }
+      return Promise.reject(error);
   }
 );
 

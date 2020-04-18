@@ -31,7 +31,7 @@ async function codeExists(code) {
       return false;
     }
   }).catch(error => {
-    return error
+    return false
   })
   return checkDB;
 }
@@ -79,14 +79,19 @@ exports.joinGame = functions.https.onRequest((request, response) => {
     let gameCode = request.body.gamecode
     let player = request.body.player
 
-    codeExists(gameCode).then(res => {
-      let gameKey = Object.keys(res)[0]
-      ref.child('games/' + gameKey + '/players').child(player).set({host: false});
-      response.send(gameKey)
-      return true
+    ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(res => {
+      let gameKey = Object.keys(res.val())[0]
+      if (gameKey) {
+        ref.child('games/' + gameKey + '/players').child(player).set({host: false});
+        response.send(gameKey)
+        return true
+      } else {
+        response.status(400).send({errorCode: 4001, errorText: "No game exists with this code"})
+        return false
+      }
     }).catch(error => {
-      response.send(error)
-      return error
+      response.status(400).send({errorCode: 4001, errorText: "No game exists with this code"})
+      return false
     })
   })
 })

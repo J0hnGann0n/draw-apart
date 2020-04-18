@@ -25,7 +25,6 @@ export default {
           player: this.$store.state.player.name
         };
         this.$store.dispatch("joinGame", payload);
-        this.$router.push("/game");
       }
     }
   }
