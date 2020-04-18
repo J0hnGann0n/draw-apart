@@ -99,7 +99,6 @@ export default {
       this.bodyParts.forEach(bodypart => {
         let img = new Image();
         let drawings = this.drawings[bodypart];
-        console.log();
         let key = Object.keys(drawings)[this.combination[bodypart]];
         img.src = drawings[key].imageData;
         images.push(img);
