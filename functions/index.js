@@ -149,12 +149,13 @@ exports.findWinner = functions.database.ref('/games/{gameKey}/combinations')
       }
       return comparison;
     }
-
+    //find the combination with the most votes
     combinationArray.sort(compare);
     let winner = {
       player: combinationArray[0].player,
       votes: combinationArray[0].votes,
       imageData: combinationArray[0].image,
+      name: combinationArray[0].name
     };
 
     ref.child('games/' + gameKey + '/winner').set(winner);
