@@ -15,6 +15,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "firebase": "^7.13.1",
+    "inobounce": "^0.2.0",
     "izitoast": "^1.4.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
