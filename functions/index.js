@@ -36,7 +36,6 @@ async function codeExists(code) {
   return checkDB;
 }
 
-<<<<<<< HEAD
 /**
  * Compares two values
  * @param {*} a 
@@ -58,7 +57,6 @@ function compare(a, b) {
   }
   return comparison;
 }
-=======
 exports.startGame = functions.https.onRequest((request, response) => {
   /**
    * Wrap response in cors header
@@ -71,7 +69,6 @@ exports.startGame = functions.https.onRequest((request, response) => {
     ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
   });
 })
->>>>>>> d77b2872909999188e9e9b5f4d45d6f5851c6fef
 
 exports.createGame = functions.https.onRequest((request, response) => {
   /**
@@ -150,12 +147,8 @@ exports.setState = functions.database.ref('/games/{gameKey}')
       ref.child('games/' + gameKey).child("state").set("combination");
     } else if (game.state === "combination" && players === playersFinishedCombination) {
       ref.child('games/' + gameKey).child("state").set("voting");
-<<<<<<< HEAD
-      ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
-=======
     } else if (game.state === "voting" && players === playersFinishedVoting) {
       ref.child('games/' + gameKey).child("state").set("winner");
->>>>>>> d77b2872909999188e9e9b5f4d45d6f5851c6fef
     }
     return true
   });
