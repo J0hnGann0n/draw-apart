@@ -13,7 +13,6 @@ import {
   faQuestionCircle
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import inobounce from inobounce
 
 library.add(
   faUser,
