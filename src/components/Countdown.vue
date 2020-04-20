@@ -1,8 +1,8 @@
 <template>
   <!-- Countdown -->
-  <div class="row justify-content-end">
+  <div class="row justify-content-center">
     <div class="col-2 text-left align-content-end">
-      <p>{{timeleft}}</p>
+      <h3>{{timeleft}}</h3>
     </div>
   </div>
 </template>
