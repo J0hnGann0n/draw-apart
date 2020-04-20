@@ -1,0 +1,1 @@
+export const firebaseFunctionsUrl = 'https://us-central1-drawapart-84b66.cloudfunctions.net/'
