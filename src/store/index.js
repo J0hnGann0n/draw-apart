@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from "../services/axios"
 import firebase from "../services/firebase";
 import { removeEmptyLists } from '../helpers'
+import { firebaseFunctionsUrl } from '../constants'
 //import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
@@ -59,9 +60,6 @@ export default new Vuex.Store({
       let drawing = payload;
       state.drawings.push(drawing)
     },
-    START_GAME(state) {
-      state.game.state = "drawing"
-    },
     UPDATE_PLAYER_STATE(state, payload) {
       state.player.state = payload
     },
@@ -79,7 +77,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-
     /**
      * Send request to server to create a new game with the given player name.
      * @param {} context 
@@ -89,7 +86,7 @@ export default new Vuex.Store({
       let player = { name: payload }
       axios({
         method: 'post',
-        url: 'https://us-central1-drawapart-84b66.cloudfunctions.net/createGame',
+        url: firebaseFunctionsUrl + 'createGame',
         data: player
       }).then(result => {
         //Store game key in firebase db
@@ -103,31 +100,13 @@ export default new Vuex.Store({
         })
       });
     },
-    updateCountdownState(context) {
-      context.commit('UPDATE_COUNTDOWN_STATE');
-    },
-    startCountdown(context) {
-      context.commit('START_COUNTDOWN');
-    },
-    stopCountdown(context) {
-      context.commit('STOP_COUNTDOWN');
-    },
-    startGame(context) {
-      firebase.database().ref('/games/' + this.state.gameKey + "/state/").set("drawing", function (error) {
-        if (error) {
-          // The write failed...
-        } else {
-          context.commit('START_GAME');
-        }
-      })
-    },
     /**
      * 
      * @param {*} context snapshot.val()
      * @param {*} payload 
      */
     joinGame(context, payload) {
-      axios.post('https://us-central1-drawapart-84b66.cloudfunctions.net/joinGame', payload)
+      axios.post(firebaseFunctionsUrl + 'joinGame', payload)
         .then(result => {
           let gameKey = result.data;
 
@@ -140,6 +119,24 @@ export default new Vuex.Store({
         }).catch(function () {
           return false
         })
+    },
+    startGame() {
+      axios.post(firebaseFunctionsUrl + 'startGame', { gameKey: this.state.gameKey })
+        .then(result => {
+          console.log(result)
+          return true
+        }).catch(function () {
+          return false
+        })
+    },
+    updateCountdownState(context) {
+      context.commit('UPDATE_COUNTDOWN_STATE');
+    },
+    startCountdown(context) {
+      context.commit('START_COUNTDOWN');
+    },
+    stopCountdown(context) {
+      context.commit('STOP_COUNTDOWN');
     },
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);

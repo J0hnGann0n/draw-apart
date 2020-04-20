@@ -36,6 +36,19 @@ async function codeExists(code) {
   return checkDB;
 }
 
+exports.startGame = functions.https.onRequest((request, response) => {
+  /**
+   * Wrap response in cors header
+   */
+  cors(request, response, () => {
+    let gameKey = request.body.gameKey
+    let date = new Date();
+    let startTime = date.getTime();
+    ref.child('games/' + gameKey).child('state').set('drawing')
+    ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
+  });
+})
+
 exports.createGame = functions.https.onRequest((request, response) => {
   /**
    * Wrap response in cors header
@@ -107,19 +120,14 @@ exports.setState = functions.database.ref('/games/{gameKey}')
     const playersFinishedCombination = game.combinations ? Object.keys(game.combinations).length : 0
     const playersFinishedVoting = game.votes ? Object.keys(game.votes).length : 0
     const players = Object.keys(game.players).length
-    let date = new Date();
-    let startTime = date.getTime();
     if (game.state === "drawing" && previousGameState === "lobby") {
       ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
     } else if (game.state === "drawing" && players === playersFinishedDrawing) {
       ref.child('games/' + gameKey).child("state").set("combination");
-      ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
     } else if (game.state === "combination" && players === playersFinishedCombination) {
       ref.child('games/' + gameKey).child("state").set("voting");
-      ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
     } else if (game.state === "voting" && players === playersFinishedVoting) {
       ref.child('games/' + gameKey).child("state").set("winner");
-      ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
     }
 
     return true
