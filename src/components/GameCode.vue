@@ -55,7 +55,6 @@ export default {
     },
     shareDescription() {
       let players = Object.keys(this.game.players);
-      console.log(players);
       let playerString = "";
       players.forEach((player, index) => {
         if (players.length === 1) {

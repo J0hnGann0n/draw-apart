@@ -152,7 +152,6 @@ exports.playAgain = functions.https.onRequest((request, response) => {
       let players = {}
 
       if (gameKey) {
-        console.log(game)
         if (!game.players) {
           players[player] = { host: true };
           ref.child('games/' + gameKey + '/players').child(player).set({ host: true });
