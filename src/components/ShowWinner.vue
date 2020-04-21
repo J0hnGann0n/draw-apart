@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import firebase from "../services/firebase";
 export default {
   name: "Play",
   props: ["game"],
@@ -30,6 +31,12 @@ export default {
     playAgain() {
       this.$store.dispatch("playAgain");
     }
+  },
+  created() {
+    firebase
+      .database()
+      .ref("/games/" + this.$store.state.gameKey)
+      .off();
   }
 };
 </script>

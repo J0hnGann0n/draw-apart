@@ -72,7 +72,7 @@ export default new Vuex.Store({
     RESET_GAME(state) {
       state.player.state = "lobby";
       state.combination.player = "";
-      state.combination.iamge = "";
+      state.combination.image = "";
     }
   },
   actions: {
@@ -155,6 +155,10 @@ export default new Vuex.Store({
     playAgain(context) {
       //Resets the local state
       context.commit("RESET_GAME");
+
+      firebase.database().ref('/games/' + this.state.gameKey).on('value', function (snapshot) {
+        context.commit('ADD_GAME', snapshot.val());
+      })
 
       axios.post(firebaseFunctionsUrl + 'playAgain', { gamecode: this.state.game.code, player: this.state.player.name })
         .then(result => {

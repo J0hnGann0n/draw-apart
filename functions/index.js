@@ -57,16 +57,25 @@ function compare(a, b) {
   }
   return comparison;
 }
+
+function resetGame(gameKey) {
+  ref.child('games/' + gameKey).child("combinations").remove();
+  ref.child('games/' + gameKey).child("drawings").remove();
+  ref.child('games/' + gameKey).child("winner").remove();
+}
+
 exports.startGame = functions.https.onRequest((request, response) => {
   /**
    * Wrap response in cors header
    */
   cors(request, response, () => {
     let gameKey = request.body.gameKey
+    resetGame(gameKey)
     let date = new Date();
     let startTime = date.getTime();
     ref.child('games/' + gameKey).child('state').set('drawing')
     ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
+    response.status(200).send()
   });
 })
 
@@ -101,7 +110,6 @@ exports.createGame = functions.https.onRequest((request, response) => {
     let createGameInDB = admin.database().ref('/games/').push(game)
     //return game object
     response.send(createGameInDB.key);
-
   });
 })
 
@@ -141,14 +149,11 @@ exports.playAgain = functions.https.onRequest((request, response) => {
     ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(res => {
       let gameKey = Object.keys(res.val())[0]
       let game = res.val();
+
       if (gameKey) {
-        if (!game.players) {
-          console.log(game.players)
-          ref.child('games/' + gameKey + '/players').child(player).set({ host: true });
-        } else {
-          console.log(game.players)
-          ref.child('games/' + gameKey + '/players').child(player).set({ host: false });
-        }
+        ref.child('games/' + gameKey + '/players').child(player).set({ host: !game.players });
+
+        //Set State to lobby
         ref.child('games/' + gameKey).child("state").set("lobby");
         response.send(gameKey)
         return true
@@ -232,7 +237,7 @@ exports.findWinner = functions.database.ref('/games/{gameKey}')
 
         ref.child('games/' + gameKey).child("state").set("winner");
         ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
-        ref.child('games/' + gameKey).child("players").set({});
+        ref.child('games/' + gameKey).child("players").remove();
       }
     }
     return true
