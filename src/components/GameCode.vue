@@ -70,7 +70,7 @@ export default {
           playerString += `${player}, `;
         }
       });
-      return `${playerString} would like to play Draw Apart with you`;
+      return `${playerString} would like to play Draw Apart with you! Click the link to join.`;
     }
   }
 };
