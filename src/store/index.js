@@ -63,8 +63,8 @@ export default new Vuex.Store({
     START_COUNTDOWN(state) {
       state.countDownFinished = false;
     },
-    SET_PLAYER_HOST(state) {
-      state.player.host = true
+    SET_PLAYER_HOST(state, payload) {
+      state.player.host = payload
     },
     ADD_VOTE(state, payload) {
       state.vote = payload;
@@ -95,7 +95,7 @@ export default new Vuex.Store({
         //get gamedata from firebase
         firebase.database().ref('/games/' + gameKey).on('value', function (snapshot) {
           context.commit('ADD_GAME', snapshot.val());
-          context.commit('SET_PLAYER_HOST');
+          context.commit('SET_PLAYER_HOST', true);
         })
       });
     },
@@ -163,15 +163,19 @@ export default new Vuex.Store({
       axios.post(firebaseFunctionsUrl + 'playAgain', { gamecode: this.state.game.code, player: this.state.player.name })
         .then(result => {
           let gameKey = result.data;
-
+          let name = this.state.player.name
+          console.log(this.state.game.players[name])
+          if (this.state.game.players[name].host) {
+            context.commit('SET_PLAYER_HOST', true);
+          } else {
+            context.commit('SET_PLAYER_HOST', false);
+          }
           //Add game object reference from firebase db to store
           context.commit('ADD_GAMEKEY', gameKey);
           return true
         }).catch(function () {
           return false
         })
-
-
     },
     /**
      * action adds combination to store

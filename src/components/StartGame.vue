@@ -3,13 +3,8 @@
   <div class="row">
     <div class="col">
       <p v-if="error">{{errorMessage}}</p>
-      <button
-        @click="startGame()"
-        type="button"
-        class="btn btn-primary"
-        v-if="this.player.host"
-      >Start Game</button>
-      <h5 v-if="!this.player.host">waiting for host...</h5>
+      <button @click="startGame()" type="button" class="btn btn-primary" v-if="isHost">Start Game</button>
+      <h5 v-if="!isHost">waiting for host...</h5>
     </div>
   </div>
 </template>
@@ -43,6 +38,17 @@ export default {
     },
     game() {
       return this.$store.getters.getGame;
+    },
+    isHost() {
+      if (
+        this.game &&
+        this.game.players &&
+        this.game.players[this.player.name]
+      ) {
+        return this.game.players[this.player.name].host;
+      } else {
+        return false;
+      }
     }
   }
 };
