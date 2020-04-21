@@ -28,7 +28,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Sentry.init({
   dsn: 'https://9a85c2e8b9af45bc9f38dcee787ed8be@o381283.ingest.sentry.io/5208398',
-  integrations: [new VueIntegration({ Vue, attachProps: true })],
+  integrations: [new VueIntegration({ Vue, attachProps: true, logErrors: true })],
 });
 
 library.add(
