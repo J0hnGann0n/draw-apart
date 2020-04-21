@@ -12,7 +12,7 @@ const routes = [
   },
   {
     path: '/join/:sharedGameCode',
-    name: 'Home',
+    name: 'joinGame',
     component: Home
   },
   {
