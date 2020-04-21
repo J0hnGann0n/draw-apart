@@ -70,7 +70,7 @@ export default new Vuex.Store({
       state.vote = payload;
     },
     RESET_GAME(state) {
-      state.player.state = "lobby";
+      state.player.state = "drawing";
       state.combination.player = "";
       state.combination.image = "";
     }
