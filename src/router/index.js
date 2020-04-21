@@ -11,6 +11,11 @@ const routes = [
     component: Home
   },
   {
+    path: '/join/:sharedGameCode',
+    name: 'Home',
+    component: Home
+  },
+  {
     path: '/game',
     name: 'Game',
     // route level code-splitting

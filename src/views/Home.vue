@@ -3,24 +3,11 @@
     <!-- titel -->
     <div class="row">
       <div class="col-12">
-        <h1>Lets Draw</h1>
+        <h1>{{ titleText }}</h1>
       </div>
     </div>
-
-    <div class="row mt-2">
-      <label class="col-12" for="username">Choose your player name*:</label>
-      <div class="input-group mb-1 col-12">
-        <input
-          type="text"
-          class="form-control"
-          id="username"
-          aria-describedby="emailHelp"
-          v-model="playername"
-        />
-      </div>
-    </div>
-    <JoinGame />
-    <CreateRoom />
+    <JoinGame :sharedGameCode="sharedGameCode" />
+    <CreateRoom v-show="!sharedGameCode" />
   </div>
 </template>
 
@@ -32,17 +19,20 @@ export default {
   name: "Home",
   data() {
     return {
-      game: {},
-      playername: ""
+      game: {}
     };
   },
   components: {
     JoinGame,
     CreateRoom
   },
-  watch: {
-    playername() {
-      this.$store.dispatch("addPlayerName", this.playername);
+  computed: {
+    sharedGameCode() {
+      return this.$route.params["sharedGameCode"];
+    },
+    titleText() {
+      if (this.sharedGameCode) return "Joining '" + this.sharedGameCode + "'";
+      return "Lets Draw";
     }
   }
 };
