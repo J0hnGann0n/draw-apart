@@ -49,7 +49,7 @@ export default {
       if (gameCode && this.$store.state.player.name) {
         this.error = false;
         let payload = {
-          gamecode: gameCode,
+          gamecode: gameCode.toLowerCase(),
           player: this.$store.state.player.name
         };
         this.$store.dispatch("joinGame", payload);
