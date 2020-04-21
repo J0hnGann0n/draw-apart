@@ -148,11 +148,17 @@ exports.playAgain = functions.https.onRequest((request, response) => {
 
     ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(res => {
       let gameKey = Object.keys(res.val())[0]
-      let game = res.val();
+      let game = res.val()[gameKey];
+      let players = {}
 
       if (gameKey) {
-        ref.child('games/' + gameKey + '/players').child(player).set({ host: !game.players });
-
+        console.log(game)
+        if (!game.players) {
+          players[player] = { host: true };
+          ref.child('games/' + gameKey + '/players').child(player).set({ host: true });
+        } else {
+          ref.child('games/' + gameKey + '/players').child(player).set({ host: false });
+        }
         //Set State to lobby
         ref.child('games/' + gameKey).child("state").set("lobby");
         response.send(gameKey)
@@ -219,7 +225,6 @@ exports.findWinner = functions.database.ref('/games/{gameKey}')
         }
       })
 
-
       if (votesTotal === players) {
 
         //find the combination with the most votes
@@ -236,8 +241,7 @@ exports.findWinner = functions.database.ref('/games/{gameKey}')
 
 
         ref.child('games/' + gameKey).child("state").set("winner");
-        ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
-        ref.child('games/' + gameKey).child("players").remove();
+        ref.child('games/' + gameKey + '/players').removeValues();
       }
     }
     return true
