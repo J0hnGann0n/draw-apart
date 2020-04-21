@@ -20,11 +20,6 @@ export default new Vuex.Store({
       drawings: {},
       countDown: {}
     },
-    winner: {
-      image: '',
-      name: '',
-      player: ''
-    },
     countDownFinished: false,
     gameKey: '',
     player: {
@@ -36,8 +31,7 @@ export default new Vuex.Store({
       player: '',
       image: ''
     },
-    drawings: [],
-    vote: ''
+    drawings: []
   },
   mutations: {
     ADD_GAME(state, payload) {
@@ -74,6 +68,11 @@ export default new Vuex.Store({
     },
     ADD_VOTE(state, payload) {
       state.vote = payload;
+    },
+    RESET_GAME(state) {
+      state.player.state = "lobby";
+      state.combination.player = "";
+      state.combination.iamge = "";
     }
   },
   actions: {
@@ -148,6 +147,27 @@ export default new Vuex.Store({
           context.commit('ADD_DRAWINGS', payload);
         }
       })
+    },
+    /**
+     * Resets the state to lobby and starts firebase function PlayAgain
+     * @param {*} context 
+     */
+    playAgain(context) {
+      //Resets the local state
+      context.commit("RESET_GAME");
+
+      axios.post(firebaseFunctionsUrl + 'playAgain', { gamecode: this.state.game.code, player: this.state.player.name })
+        .then(result => {
+          let gameKey = result.data;
+
+          //Add game object reference from firebase db to store
+          context.commit('ADD_GAMEKEY', gameKey);
+          return true
+        }).catch(function () {
+          return false
+        })
+
+
     },
     /**
      * action adds combination to store

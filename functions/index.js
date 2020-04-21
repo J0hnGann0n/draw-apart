@@ -130,6 +130,39 @@ exports.joinGame = functions.https.onRequest((request, response) => {
   })
 })
 
+exports.playAgain = functions.https.onRequest((request, response) => {
+  /**
+   * Wrap response in cors header
+   */
+  cors(request, response, () => {
+    let gameCode = request.body.gamecode
+    let player = request.body.player
+
+    ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(res => {
+      let gameKey = Object.keys(res.val())[0]
+      let game = res.val();
+      if (gameKey) {
+        if (!game.players) {
+          console.log(game.players)
+          ref.child('games/' + gameKey + '/players').child(player).set({ host: true });
+        } else {
+          console.log(game.players)
+          ref.child('games/' + gameKey + '/players').child(player).set({ host: false });
+        }
+        ref.child('games/' + gameKey).child("state").set("lobby");
+        response.send(gameKey)
+        return true
+      } else {
+        response.status(400).send({ errorCode: 4001, errorText: "No game exists with this code" })
+        return false
+      }
+    }).catch(error => {
+      response.status(400).send({ errorCode: 4001, errorText: "No game exists with this code" })
+      return false
+    })
+  })
+})
+
 
 exports.setState = functions.database.ref('/games/{gameKey}')
   .onUpdate((snapshot, context) => {
@@ -199,6 +232,7 @@ exports.findWinner = functions.database.ref('/games/{gameKey}')
 
         ref.child('games/' + gameKey).child("state").set("winner");
         ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
+        ref.child('games/' + gameKey).child("players").set({});
       }
     }
     return true

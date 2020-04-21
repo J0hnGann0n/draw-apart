@@ -14,13 +14,23 @@
         <p class="text-right">Combination von {{game.winner.player}}</p>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12">
+        <button @click="playAgain()" type="button" class="btn btn-primary">Play Again</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "Play",
-  props: ["game"]
+  props: ["game"],
+  methods: {
+    playAgain() {
+      this.$store.dispatch("playAgain");
+    }
+  }
 };
 </script>
 
