@@ -67,6 +67,7 @@ exports.startGame = functions.https.onRequest((request, response) => {
     let startTime = date.getTime();
     ref.child('games/' + gameKey).child('state').set('drawing')
     ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
+    response.status(200).send()
   });
 })
 
