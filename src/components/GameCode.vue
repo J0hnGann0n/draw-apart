@@ -3,15 +3,15 @@
   <div class="row w-100 justify-content-center game-code">
     <div class="col-12">
       <p class="text-center">
-        {{game.code}}
+        {{ game.code }}
         <span @click="toggleShareButtons()">
           <font-awesome-icon icon="share-alt" />
         </span>
         <social-sharing
-          url="https://draw-apart.surelookatusnow.ch"
+          :url="shareLink"
           title="Play Draw Apart with me"
-          :description="game.code"
-          quote="Vue is a progressive framework for building user interfaces."
+          :description="shareDescription"
+          quote="Draw Apart, the digital version of the paper classic"
           hashtags="play, game, draw apart"
           inline-template
           v-if="showShareButtons"
@@ -47,6 +47,30 @@ export default {
   methods: {
     toggleShareButtons() {
       this.showShareButtons = !this.showShareButtons;
+    }
+  },
+  computed: {
+    shareLink() {
+      return `${window.location.origin}/join/${this.game.code}`;
+    },
+    shareDescription() {
+      let players = Object.keys(this.game.players);
+      console.log(players);
+      let playerString = "";
+      players.forEach((player, index) => {
+        if (players.length === 1) {
+          playerString = `${player} `;
+          return true;
+        } else if (players.length == 2) {
+          playerString = `${players[0]} and ${players[1]} `;
+          return true;
+        } else if (index === players.length - 1) {
+          playerString += `and ${player}`;
+        } else {
+          playerString += `${player}, `;
+        }
+      });
+      return `${playerString} would like to play Draw Apart with you`;
     }
   }
 };
