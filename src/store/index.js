@@ -122,8 +122,7 @@ export default new Vuex.Store({
     },
     startGame() {
       axios.post(firebaseFunctionsUrl + 'startGame', { gameKey: this.state.gameKey })
-        .then(result => {
-          console.log(result)
+        .then(() => {
           return true
         }).catch(function () {
           return false
