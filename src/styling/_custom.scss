@@ -21,9 +21,6 @@ $input-group-addon-color: $secondary;
 $input-font-family: $font-family-sans-serif;
 $input-bg: transparent;
 
-//variable
-$headerandbottomheight: 300px;
-
 //Buttons
 $input-btn-font-family: 'Rock Salt';
 
@@ -43,5 +40,5 @@ html, body {
 
 //Calc Image Height
 .responsive-height {
-  height: calc(100vh - $headerandbottomheight);
+  height: calc(100vh - 350px);
 }

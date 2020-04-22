@@ -326,7 +326,7 @@ export default {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   width: 100%;
-  height: calc(100vh - 300px);
+  height: calc(100vh - 350px);
 }
 .edit-buttons {
   margin-top: 5px;
