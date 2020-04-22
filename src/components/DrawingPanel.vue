@@ -306,8 +306,7 @@ export default {
   mounted() {
     let canvas = document.getElementById("canvas");
     let ctx = canvas.getContext("2d");
-    let heightRatio = 1.2; // Adjust this to change height of canvas
-    canvas.height = canvas.width * heightRatio;
+
     this.canvasWidth = canvas.width;
     this.canvasHeight = canvas.height;
     this.vueCanvas = ctx;
@@ -327,9 +326,9 @@ export default {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   width: 100%;
-  height: 90%;
+  height: calc(100vh - 300px);
 }
 .edit-buttons {
-  margin-top: -30px;
+  margin-top: 5px;
 }
 </style>
