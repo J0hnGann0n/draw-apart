@@ -88,7 +88,7 @@ exports.createGame = functions.https.onRequest((request, response) => {
       code: "",
       state: "lobby",
       countDown: {
-        drawing: 90,
+        drawing: 120,
         combination: 30,
         voting: 30,
         startTime: ""
@@ -240,7 +240,7 @@ exports.findWinner = functions.database.ref('/games/{gameKey}')
 
 
         ref.child('games/' + gameKey).child("state").set("winner");
-        ref.child('games/' + gameKey + '/players').removeValues();
+        ref.child('games/' + gameKey + '/players').remove();
       }
     }
     return true
