@@ -25,9 +25,8 @@
             </div>
             <div class="col-6">
               <img
+                class="combination-image"
                 :src="drawings[bodyPart][combination[bodyPart]].imageData"
-                width="100px"
-                height="100px"
               />
             </div>
             <div
@@ -151,4 +150,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.combination-image {
+  height: calc((100vh - 300px) / 4);
+  width: calc((100vh - 300px) / 4);
+}
 </style>

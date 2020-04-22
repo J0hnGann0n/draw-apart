@@ -41,9 +41,6 @@ export default {
 .color {
   width: 100%;
 }
-.btn-group-vertical {
-  height: 90%;
-}
 .color-picker {
   width: 100%;
   border: 1px solid red;

@@ -11,7 +11,7 @@
             <font-awesome-icon icon="arrow-left" />
           </div>
           <div class="col-6">
-            <img :src="imageSrc" />
+            <img class="responsive-height" :src="imageSrc" />
             <h5>{{imageName }}</h5>
           </div>
           <div

@@ -10,7 +10,7 @@
     <!-- show combination -->
     <div class="row">
       <div class="col-12 d-flex">
-        <img :src="combinationImage" />
+        <img class="responsive-height" :src="combinationImage" />
       </div>
       <div class="input-group mb-3 col">
         <input
