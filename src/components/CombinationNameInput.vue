@@ -46,17 +46,25 @@ export default {
   computed: {
     combinationImage() {
       return this.$store.state.combination.image;
+    },
+    timeOver() {
+      return this.$store.getters.getCountDownFinished;
     }
   },
   methods: {
-    submitCombination() {
+    submitCombination(name) {
+      let combinationName = name ? name : this.name;
       this.$store.dispatch("updatePlayerState", "voting");
-      this.$store.dispatch("submitCombination", this.name);
+      this.$store.dispatch("submitCombination", combinationName);
     }
+  },
+  created() {
+    // If countdown reached zero on the combination picking stage then we submit the name immediatly.
+    if (this.timeOver) this.submitCombination("Hurrr... Where's my keyboard?");
   }
 };
 </script>
-
+1
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 </style>

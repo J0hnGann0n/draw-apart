@@ -59,6 +59,14 @@ export default {
     },
     numberOfCombinations() {
       return Object.keys(this.game.combinations).length;
+    },
+    timeOver() {
+      return this.$store.getters.getCountDownFinished;
+    }
+  },
+  watch: {
+    timeOver() {
+      this.submitVote();
     }
   },
   methods: {

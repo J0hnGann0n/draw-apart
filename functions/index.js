@@ -58,10 +58,31 @@ function compare(a, b) {
   return comparison;
 }
 
+/**
+ * Deletes the main game object to allow a new game to be played with the same code
+ * @param {The unique key for the game to be reset} gameKey 
+ */
 function resetGame(gameKey) {
   ref.child('games/' + gameKey).child("combinations").remove();
   ref.child('games/' + gameKey).child("drawings").remove();
   ref.child('games/' + gameKey).child("winner").remove();
+}
+
+/**
+ * Checks if given name is in given player list and generates a unique name if it is.
+ * @param {*} playerName 
+ */
+function getUniqueName(playerName, players) {
+  let potentialName = playerName
+  nameModifier = 2
+  while (players.includes(potentialName)) {
+    matchedName = players.find(name => name === potentialName)
+    if (matchedName.split('(')[1]) nameModifier = parseInt(matchedName.split('(')[1][0]) + 1
+    potentialName = `${potentialName.split('(')[0]} (${nameModifier})`
+    nameModifier++
+  }
+
+  return potentialName
 }
 
 exports.startGame = functions.https.onRequest((request, response) => {
@@ -119,12 +140,14 @@ exports.joinGame = functions.https.onRequest((request, response) => {
    */
   cors(request, response, () => {
     let gameCode = request.body.gamecode
-    let player = request.body.player
+    let playerName = request.body.player
 
     ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(res => {
       let gameKey = Object.keys(res.val())[0]
+      let players = Object.keys(res.val()[gameKey].players)
+      playerName = getUniqueName(playerName, players)
       if (gameKey) {
-        ref.child('games/' + gameKey + '/players').child(player).set({ host: false });
+        ref.child('games/' + gameKey + '/players').child(playerName).set({ host: false });
         response.send(gameKey)
         return true
       } else {
