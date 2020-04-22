@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-    <CombinationNameInput v-if="combinationPicked" />
+    <CombinationNameInput v-if="combinationPicked" ref="nameInput" />
   </div>
 </template>
 
@@ -123,6 +123,11 @@ export default {
       this.$store.dispatch("addCombination", combinationImage);
     }
   },
+  watch: {
+    timeOver() {
+      this.submitCombination();
+    }
+  },
   computed: {
     game() {
       return this.$store.getters.getGame;
@@ -136,6 +141,9 @@ export default {
       } else {
         return false;
       }
+    },
+    timeOver() {
+      return this.$store.getters.getCountDownFinished;
     }
   }
 };
