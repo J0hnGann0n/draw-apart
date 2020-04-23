@@ -2,7 +2,17 @@ var async = require('async');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({ origin: true });
-admin.initializeApp();
+
+if (process.env.FUNCTIONS_ENV === "development") {
+  var serviceAccount = require(process.env.FUNCTIONS_SERVICE_FILE); // Add path to your service account credentials
+  // Initialize Firebase for development
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseUrl: process.env.FUNCTIONS_DATABASE_URL
+  });
+} else {
+  admin.initializeApp();
+}
 
 let ref = admin.database().ref('/');
 

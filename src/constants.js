@@ -1,1 +1,1 @@
-export const firebaseFunctionsUrl = 'https://us-central1-drawapart-84b66.cloudfunctions.net/'
+export const firebaseFunctionsUrl = process.env.VUE_APP_FIREBASE_FUNCTIONS_URL

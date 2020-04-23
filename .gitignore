@@ -10,6 +10,13 @@ node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+database-debug.log
+functions/database-debug.log
+functions/pubsub-debug.log
+pubsub-debug.log
+../drawapart-84b66-firebase-adminsdk-wq5pu-518e4e491f.json
+../firebase-debug.log
+
 
 # Editor directories and files
 .idea

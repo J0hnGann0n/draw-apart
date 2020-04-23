@@ -14,5 +14,4 @@ var credentials = {
 };
 
 firebase.initializeApp(credentials);
-
 export default firebase;
