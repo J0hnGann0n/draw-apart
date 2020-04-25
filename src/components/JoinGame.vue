@@ -10,7 +10,12 @@
         v-model="playername"
       />
       <div class="input-group-append" v-if="sharedGameCode">
-        <button @click="joinGame()" class="input-group-text" id="basic-addon2">Join</button>
+        <button
+          @click="joinGame()"
+          :disabled="joinDisabled"
+          class="input-group-text"
+          id="basic-addon2"
+        >Join</button>
       </div>
     </div>
     <label class="col-12">{{ joinGameText }}</label>
@@ -23,7 +28,12 @@
         v-model="gamecode"
       />
       <div class="input-group-append" v-if="!sharedGameCode">
-        <button @click="joinGame()" class="input-group-text" id="basic-addon2">Join</button>
+        <button
+          @click="joinGame()"
+          :disabled="joinDisabled"
+          class="input-group-text"
+          id="basic-addon2"
+        >Join</button>
       </div>
     </div>
     <small class="form-text text-muted col-12 mb-3" v-if="error">{{errorMessage}}</small>
@@ -40,11 +50,13 @@ export default {
       gamecode: "",
       error: false,
       errorMessage: "",
-      playername: ""
+      playername: "",
+      joinDisabled: false
     };
   },
   methods: {
     joinGame() {
+      this.joinDisabled = true;
       let gameCode = this.gamecode ? this.gamecode : this.sharedGameCode;
       if (gameCode && this.$store.state.player.name) {
         this.error = false;
@@ -55,9 +67,11 @@ export default {
         this.$store.dispatch("joinGame", payload);
       } else if (!this.$store.state.player.name) {
         this.error = true;
+        this.joinDisabled = false;
         this.errorMessage = "You need to choose a username first";
       } else if (!gameCode) {
         this.error = true;
+        this.joinDisabled = false;
         this.errorMessage = "You need fill in the game code to join";
       }
     }
