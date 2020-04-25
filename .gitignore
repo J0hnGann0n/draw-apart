@@ -16,7 +16,10 @@ functions/pubsub-debug.log
 pubsub-debug.log
 ../drawapart-84b66-firebase-adminsdk-wq5pu-518e4e491f.json
 ../firebase-debug.log
-
+.runtimeconfig.json
+drawapart-84b66-firebase-adminsdk-wq5pu-518e4e491f.json
+firebase-debug.log
+functions/.runtimeconfig.json
 
 # Editor directories and files
 .idea
