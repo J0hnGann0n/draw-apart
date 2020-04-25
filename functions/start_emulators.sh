@@ -1,6 +1,15 @@
 #!/bin/bash
-export FUNCTIONS_ENV="development"
-export FUNCTIONS_DATABASE_URL="http://localhost:9000?ns=drawapart-84b66"
-export FUNCTIONS_SERVICE_FILE="../drawapart-84b66-firebase-adminsdk-wq5pu-518e4e491f.json"
-# export DATABASE_URL="http://localhost:9000?ns=drawapart-84b66"
+envVariables=()
+config=()
+
+# Read vue app .env file and populate new array with the keys prefixed with vue., in lower case and with qoutes removed.
+while read line || [ -n "$line" ]; do envVariables+=( "$line" ); done < "../.env.development.local"
+for u in "${envVariables[@]}"
+do
+    trimmed=$(echo "$u" | tr -d '"') # Remove inverted commas
+    config+=(vue.${trimmed,,})
+done
+# Load parsed configs from vue .env file into firebase functions config
+firebase functions:config:set "${config[@]}"
+firebase functions:config:get > .runtimeconfig.json 
 firebase emulators:start

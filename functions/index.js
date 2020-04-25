@@ -2,13 +2,13 @@ var async = require('async');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({ origin: true });
+let serviceAccountFile = require("../drawapart-84b66-firebase-adminsdk-wq5pu-518e4e491f.json")
 
-if (process.env.FUNCTIONS_ENV === "development") {
-  var serviceAccount = require(process.env.FUNCTIONS_SERVICE_FILE); // Add path to your service account credentials
-  // Initialize Firebase for development
+if (functions.config().vue.vue_app_debug) {
+  // Initialize Firebase Admin SDK for connection to local realtime database emulator
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseUrl: process.env.FUNCTIONS_DATABASE_URL
+    credential: admin.credential.cert(serviceAccountFile),
+    databaseUrl: functions.config().vue.vue_app_firebase_database_url
   });
 } else {
   admin.initializeApp();
