@@ -1,7 +1,10 @@
 # draw-apart
-This project and this readme are a work in progress and is currently not built or intended to be reproduced easily. Full testing tools and mock backends will be included before completion.
+This project and this readme are a work in progress.
 
-A VueJS game with a firebase backend based on a paper game sometimes known as "The combination man". The traditional "combination man" paper game, players take turns drawing one part of the human body, starting with the head. When finished drawing their part the player folds the page back so that the next player can't see whats already been drawn. In our web based version each player draws ech part once. After drawing, each player gets the chance to create a combination of all parts. Finally, all players vote on their favourite.
+A VueJS game with a firebase backend.   
+
+This game is a variation of a paper game sometimes known as "The combination man". In the traditional "combination man" paper game, players take turns drawing one part of the human body, starting with the head. When finished drawing their part the player folds the page back so that the next player can't see whats already been drawn. In our web based version each player draws each part once. After drawing, each player gets the chance to create a combination of all parts. Finally, all players vote on their favourite.
+
 ## Project Requirements
 * NodeJS v12.16.2 - https://nodejs.org/en/
 * Firebase CLI - https://firebase.google.com/docs/cli
@@ -37,7 +40,7 @@ VUE_APP_FIREBASE_MESSAGING_SENDER_ID=""
 VUE_APP_FIREBASE_APP_ID=""
 VUE_APP_FIREBASE_MEASUREMENT_ID=""
 ```
-#### 3. Create firebase acount   
+#### 3. Create firebase account   
 This app uses a firebase realtime database and cloud functions as its backend. You will need to create an account and set these up first.
 
 Populate the production and deveopment .env file with the details from your firebase project. Note that the development uses local urls. These wil point to our firebase emulators.
