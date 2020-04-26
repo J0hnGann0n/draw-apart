@@ -5,6 +5,7 @@ A VueJS game with a firebase backend based on a paper game sometimes known as "T
 ## Project Requirements
 * NodeJS v12.16.2 - https://nodejs.org/en/
 * Firebase CLI - https://firebase.google.com/docs/cli
+* Java 8 (For firebase emulators) - https://www.java.com/en/download/
 * yarn or npm
 
 ## Project setup
@@ -15,8 +16,8 @@ Create two files in the root of the project .env.development.local and .env.prod
 ```
 VUE_APP_FIREBASE_API_KEY=""
 VUE_APP_FIREBASE_AUTH_DOMAIN=""
-VUE_APP_FIREBASE_DATABASE_URL=""
-VUE_APP_FIREBASE_FUNCTIONS_URL=""
+VUE_APP_FIREBASE_DATABASE_URL="http://localhost:9000?ns=<PROJECT-ID>"
+VUE_APP_FIREBASE_FUNCTIONS_URL="http://localhost:5001/<PROJECT-ID>/<FUNCTIONS-DATACENTER-NAME>/"
 VUE_APP_FIREBASE_PROJECT_ID=""
 VUE_APP_FIREBASE_STORAGE_BUCKET=""
 VUE_APP_FIREBASE_MESSAGING_SENDER_ID=""
@@ -39,19 +40,29 @@ VUE_APP_FIREBASE_MEASUREMENT_ID=""
 #### 3. Create firebase acount   
 This app uses a firebase realtime database and cloud functions as its backend. You will need to create an account and set these up first.
 
-Populate the production .env file with the details from your firebase project.
+Populate the production and deveopment .env file with the details from your firebase project. Note that the development uses local urls. These wil point to our firebase emulators.
 
 #### 4. Download a service account credentials json file.   
 Go to service accounts in firebase and download the credentials json file and place it in the root of your project. This will be used to configure the local firebase emulators.
 
-#### 5. Configure firebase for local emulation   
+#### 5. Edit functions/index.js
+Change the following line to include the path to your credentials file
+```
+let serviceAccountFile = require(<CREDENTIALS_FILE_PATH>)
+```
+
+#### 6. Install firebase dependancies
+Run the following in the functions folder
 
 ```
-yarn install
+npm install
 ```
 
-### Firebase backend
-This project currently requires a firebase backend. A miragejs mock backend will be included.
+#### 6. Install project dependancies
+Run the following in the root folder
+```
+yarn
+```
 
 ### Compiles and hot-reloads for development
 ```
