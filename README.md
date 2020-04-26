@@ -55,13 +55,13 @@ let serviceAccountFile = require(<CREDENTIALS_FILE_PATH>)
 Run the following in the functions folder
 
 ```
-yarn install
+npm install
 ```
 
 #### 6. Install project dependancies
 Run the following in the root folder
 ```
-yarn install
+yarn
 ```
 
 ### Compiles and hot-reloads for development
