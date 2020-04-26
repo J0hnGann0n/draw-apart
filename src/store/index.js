@@ -164,7 +164,6 @@ export default new Vuex.Store({
         .then(result => {
           let gameKey = result.data;
           let name = this.state.player.name
-          console.log(this.state.game.players[name])
           if (this.state.game.players[name].host) {
             context.commit('SET_PLAYER_HOST', true);
           } else {
