@@ -1,9 +1,10 @@
 #!/bin/bash
 envVariables=()
 config=()
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Read vue app .env file and populate new array with the keys prefixed with vue., in lower case and with qoutes removed.
-while read line || [ -n "$line" ]; do envVariables+=( "$line" ); done < "../.env.development.local"
+while read line || [ -n "$line" ]; do envVariables+=( "$line" ); done < "${DIR}/../.env.development.local"
 for u in "${envVariables[@]}"
 do
     trimmed=$(echo "$u" | tr -d '"') # Remove inverted commas
