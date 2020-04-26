@@ -7,8 +7,8 @@ A VueJS game with a firebase backend based on a paper game sometimes known as "T
 * yarn or npm
 
 ## Project setup
-1. Clone the repo.
-2. Create .env files
+1. Clone the repo.   
+2. Create .env files   
 Create two files in the root of the project .env.development.local and .env.production.local as follows:
 #### .env.development.local
 ```
@@ -35,15 +35,15 @@ VUE_APP_FIREBASE_MESSAGING_SENDER_ID=""
 VUE_APP_FIREBASE_APP_ID=""
 VUE_APP_FIREBASE_MEASUREMENT_ID=""
 ```
-3. Create firebase acount
+3. Create firebase acount   
 This app uses a firebase realtime database and cloud functions as its backend. You will need to create an account and set these up first.
 
 Populate the production .env file with the details from your firebase project.
 
-4. Download a service account credentials json file.
+4. Download a service account credentials json file.   
 Go to service accounts in firebase and download the credentials json file and place it in the root of your project. This will be used to configure the local firebase emulators.
 
-5. Configure firebase for local emulation
+5. Configure firebase for local emulation   
 
 ```
 yarn install
