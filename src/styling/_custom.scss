@@ -28,6 +28,7 @@ $input-btn-font-family: 'Rock Salt';
 html, body {
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: hidden;
   /* Disables pull-to-refresh and overscroll glow effect.
   Still keeps swipe navigations. */
   overscroll-behavior-y: none;
@@ -36,6 +37,11 @@ html, body {
 //Content
 .content {
   margin-top: 30px;
+}
+
+#app {
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 //Calc Image Height
