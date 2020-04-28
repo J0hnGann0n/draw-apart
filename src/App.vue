@@ -16,7 +16,10 @@ export default {
   },
   watch: {
     game(to, from) {
-      if (from.state === "home") this.$router.push("/game");
+      if (from.state === "home") {
+        this.$router.push("/game");
+        this.$store.dispatch("toggleGame");
+      }
     }
   },
   computed: {

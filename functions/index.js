@@ -2,7 +2,7 @@ var async = require('async');
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({ origin: true });
-let serviceAccountFile = require("../drawapart-84b66-firebase-adminsdk-wq5pu-518e4e491f.json")
+let serviceAccountFile = require("../drawapart-84b66-firebase-adminsdk-wq5pu-8179982216.json")
 
 if (functions.config().vue.vue_app_debug) {
   // Initialize Firebase Admin SDK for connection to local realtime database emulator

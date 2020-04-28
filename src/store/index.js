@@ -13,6 +13,7 @@ export default new Vuex.Store({
   //  storage: window.sessionStorage,
   //})],
   state: {
+    spinner: false,
     game: {
       code: "abcd",
       state: "home",
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     ADD_GAMEKEY(state, payload) {
       let newGameKey = payload;
       state.gameKey = newGameKey;
+    },
+    TOGGLE_SPINNER(state) {
+      state.spinner = !state.spinner;
     },
     ADD_COMBINATION(state, payload) {
       let newCombination = payload;
@@ -97,6 +101,9 @@ export default new Vuex.Store({
           context.commit('ADD_GAME', snapshot.val());
           context.commit('SET_PLAYER_HOST', true);
         })
+      }).catch(function () {
+        //remove spinner and show login mask again
+        context.commit('TOGGLE_SPINNER')
       });
     },
     /**
@@ -116,6 +123,8 @@ export default new Vuex.Store({
             context.commit('ADD_GAME', snapshot.val());
           })
         }).catch(function () {
+          //remove spinner and show login mask again
+          context.commit('TOGGLE_SPINNER')
           return false
         })
     },
@@ -195,6 +204,13 @@ export default new Vuex.Store({
         })
     },
     /**
+     * toggles spinner
+     * @param {*} context 
+     */
+    toggleSpinner(context) {
+      context.commit('TOGGLE_SPINNER')
+    },
+    /**
      * Add combination object to store
      * @param {} context 
      * @param {*} payload 
@@ -244,6 +260,7 @@ export default new Vuex.Store({
   getters: {
     getGame: state => state.game,
     getPlayer: state => state.player,
+    getSpinner: state => state.spinner,
     getCountDownFinished: state => state.countDownFinished,
     getDrawingsByBodyPart: state => {
       let drawings = {
