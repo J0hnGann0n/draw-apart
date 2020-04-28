@@ -203,9 +203,6 @@ export default new Vuex.Store({
 
       // writes combination into firebase
       firebase.database().ref('/games/' + this.state.gameKey + "/combinations/").push(combinationObject)
-
-      // JUST FOR DEV
-      this.state.game.state = 'vote'
     },
     submitVote(context, payload) {
       context.commit('ADD_VOTE', payload);
