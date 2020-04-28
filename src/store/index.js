@@ -130,15 +130,33 @@ export default new Vuex.Store({
     updateCountdownState(context) {
       context.commit('UPDATE_COUNTDOWN_STATE');
     },
+    /**
+     * Set game.countDownFinished to false
+     * @param {*} context 
+     */
     startCountdown(context) {
       context.commit('START_COUNTDOWN');
     },
+    /**
+     * Set game.countDownFinished to true
+     * @param {*} context 
+     */
     stopCountdown(context) {
       context.commit('STOP_COUNTDOWN');
     },
+    /**
+     * Commit players name to the store
+     * @param {*} context 
+     * @param {*} payload 
+     */
     addPlayerName(context, payload) {
       context.commit('ADD_PLAYERNAME', payload);
     },
+    /**
+     * Upload player's drawings to firebase.
+     * @param {*} context 
+     * @param {*} payload 
+     */
     submitDrawings(context, payload) {
       firebase.database().ref('/games/' + this.state.gameKey + "/drawings/").child(this.state.player.name).set(payload, function (error) {
         if (error) {
@@ -149,7 +167,7 @@ export default new Vuex.Store({
       })
     },
     /**
-     * Resets the state to lobby and starts firebase function PlayAgain
+     * Reset game.state to lobby and trigger firebase cloud function PlayAgain
      * @param {*} context 
      */
     playAgain(context) {
@@ -177,7 +195,7 @@ export default new Vuex.Store({
         })
     },
     /**
-     * action adds combination to store
+     * Add combination object to store
      * @param {} context 
      * @param {*} payload 
      */
@@ -188,11 +206,16 @@ export default new Vuex.Store({
       }
       context.commit('ADD_COMBINATION', combinationObject)
     },
+    /**
+     * Set player state to given value
+     * @param {*} context 
+     * @param {*} payload 
+     */
     updatePlayerState(context, payload) {
       context.commit("UPDATE_PLAYER_STATE", payload)
     },
     /**
-     * submits combination to firebase
+     * submits user selected combination to firebase
      * @param {} context 
      * @param {*} payload 
      */
@@ -204,6 +227,11 @@ export default new Vuex.Store({
       // writes combination into firebase
       firebase.database().ref('/games/' + this.state.gameKey + "/combinations/").push(combinationObject)
     },
+    /**
+     * Submit players vote to the combination object on firebase
+     * @param {*} context 
+     * @param {*} payload 
+     */
     submitVote(context, payload) {
       context.commit('ADD_VOTE', payload);
 
