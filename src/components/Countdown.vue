@@ -12,7 +12,8 @@ export default {
   name: "Countdown",
   data() {
     return {
-      timeleft: null
+      timeleft: null,
+      countdownCalculation: null
     };
   },
   computed: {
@@ -25,6 +26,7 @@ export default {
   },
   watch: {
     startTime(newStartTime) {
+      clearInterval(this.countdownCalculation);
       this.startCountdown(newStartTime);
     }
   },
@@ -35,15 +37,15 @@ export default {
 
       // Every second calclate time left until countdown time for the current game state.
       // Set game.countDownFinished to true when countdown is finished.
-      let countdownCalculation = setInterval(() => {
+      this.countdownCalculation = setInterval(() => {
         if (this.timeleft > 0) {
-          let now = +new Date();
+          let now = new Date();
           let countdownTime = this.game.countDown[this.game.state];
           let timePassed = now - startTime;
           this.timeleft = Math.floor(countdownTime - timePassed / 1000);
         } else {
           this.$store.dispatch("stopCountdown");
-          clearInterval(countdownCalculation);
+          clearInterval(this.countdownCalculation);
         }
       }, 1000);
     }
