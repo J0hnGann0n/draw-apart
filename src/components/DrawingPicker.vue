@@ -86,6 +86,9 @@ export default {
         this.currentChoosen--;
       }
     },
+    /**
+     * Send vote object to store with ID of selected combination.
+     */
     submitVote() {
       let voteId = Object.keys(this.game.combinations)[this.currentChoosen];
       let vote = {
