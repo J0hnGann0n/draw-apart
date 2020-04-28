@@ -30,6 +30,10 @@ export default {
     };
   },
   methods: {
+    /**
+     * Emit select-color event with mesage containing hex value of color.
+     * This is picked up by the drawing panel to set the drawing color,
+     */
     selectColor(color) {
       this.$emit("select-color", color);
     }

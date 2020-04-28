@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     /**
-     * update combination object with active image when sliding forward
+     * Update combination object with active image when sliding forward
      */
     slideForward(bodyPart) {
       let currentChoosen = this.combination[bodyPart];
@@ -83,7 +83,7 @@ export default {
       }
     },
     /**
-     * update combination object with active image when sliding back
+     * Update combination object with active image when sliding back
      */
     slideBack(bodyPart) {
       let currentChoosen = this.combination[bodyPart];
@@ -91,6 +91,9 @@ export default {
         this.combination[bodyPart] = currentChoosen - 1;
       }
     },
+    /**
+     * Create one image from the selected combination and commit it to the store.
+     */
     submitCombination() {
       //get canvas
       let canvas = document.getElementById("canvas");
@@ -123,7 +126,7 @@ export default {
     }
   },
   watch: {
-    timeOver() {
+    countDownFinished() {
       this.submitCombination();
     }
   },
@@ -141,14 +144,13 @@ export default {
         return false;
       }
     },
-    timeOver() {
+    countDownFinished() {
       return this.$store.getters.getCountDownFinished;
     }
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .combination-image {
   height: calc((100vh - 300px) / 4);

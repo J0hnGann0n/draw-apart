@@ -23,6 +23,9 @@ export default {
   created() {
     this.$store.dispatch("startCountdown");
     this.timeleft = this.game.countDown[this.game.state];
+
+    // Every second calclate time left until countdown time for the current game state.
+    // Set game.countDownFinished to true when countdown is finished.
     let countdownCalculation = setInterval(() => {
       if (this.timeleft > 0) {
         let now = +new Date();

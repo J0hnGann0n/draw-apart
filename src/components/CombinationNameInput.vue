@@ -47,7 +47,7 @@ export default {
     combinationImage() {
       return this.$store.state.combination.image;
     },
-    timeOver() {
+    countDownFinished() {
       return this.$store.getters.getCountDownFinished;
     }
   },
@@ -59,8 +59,9 @@ export default {
     }
   },
   created() {
-    // If countdown reached zero on the combination picking stage then we submit the name immediatly.
-    if (this.timeOver) this.submitCombination("Hurrr... Where's my keyboard?");
+    // If countdown reaches zero, submit the combination with default name.
+    if (this.countDownFinished)
+      this.submitCombination("Hurrr... Where's my keyboard?");
   }
 };
 </script>

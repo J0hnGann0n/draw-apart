@@ -25,7 +25,7 @@ export default {
         this.$store.dispatch("createGame", this.$store.state.player.name);
       } else {
         this.error = true;
-        this.errorMessage = "choose a username first";
+        this.errorMessage = "Choose a name first";
       }
     }
   }
