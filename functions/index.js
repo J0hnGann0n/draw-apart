@@ -154,18 +154,22 @@ exports.joinGame = functions.https.onRequest((request, response) => {
 
     ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(res => {
       let gameKey = Object.keys(res.val())[0]
-      let players = Object.keys(res.val()[gameKey].players)
+      let game = res.val()[gameKey]
+      let players = Object.keys(game.players)
       playerName = getUniqueName(playerName, players)
+      if (game.state !== "lobby") {
+        response.status(400).send({ errorCode: 4002 })
+      }
       if (gameKey) {
         ref.child('games/' + gameKey + '/players').child(playerName).set({ host: false });
         response.send(gameKey)
         return true
       } else {
-        response.status(400).send({ errorCode: 4001, errorText: "No game exists with this code" })
+        response.status(400).send({ errorCode: 4001 })
         return false
       }
     }).catch(error => {
-      response.status(400).send({ errorCode: 4001, errorText: "No game exists with this code" })
+      response.status(400).send({ errorCode: 4001 })
       return false
     })
   })
