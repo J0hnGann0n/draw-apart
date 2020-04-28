@@ -33,11 +33,10 @@ export default {
         const gifNumber = Math.floor(Math.random() * Math.floor(25));
         this.src = response.data.data[gifNumber].images.downsized_medium.url;
         // handle success
-        console.log(response);
       })
       .catch(function(error) {
         // handle error
-        console.log(error);
+        return error;
       })
       .then(function() {
         // always executed
