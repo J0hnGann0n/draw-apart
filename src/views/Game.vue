@@ -39,11 +39,12 @@ export default {
       return this.$store.getters.getPlayer;
     },
     waiting() {
-      if (this.game.state != this.player.state) {
-        return true;
-      } else {
-        return false;
-      }
+      return true;
+      //if (this.game.state != this.player.state) {
+      //return true;
+      //} else {
+      //return false;
+      //}
     }
   }
 };
