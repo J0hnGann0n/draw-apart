@@ -18,25 +18,35 @@ export default {
   computed: {
     game() {
       return this.$store.getters.getGame;
+    },
+    startTime() {
+      return this.game.countDown.startTime;
     }
   },
-  created() {
-    this.$store.dispatch("startCountdown");
-    this.timeleft = this.game.countDown[this.game.state];
+  watch: {
+    startTime(newStartTime) {
+      this.startCountdown(newStartTime);
+    }
+  },
+  methods: {
+    startCountdown(startTime) {
+      this.$store.dispatch("startCountdown");
+      this.timeleft = this.game.countDown[this.game.state];
 
-    // Every second calclate time left until countdown time for the current game state.
-    // Set game.countDownFinished to true when countdown is finished.
-    let countdownCalculation = setInterval(() => {
-      if (this.timeleft > 0) {
-        let now = +new Date();
-        let countdownTime = this.game.countDown[this.game.state];
-        let timePassed = now - this.game.countDown.startTime;
-        this.timeleft = Math.floor(countdownTime - timePassed / 1000);
-      } else {
-        this.$store.dispatch("stopCountdown");
-        clearInterval(countdownCalculation);
-      }
-    }, 1000);
+      // Every second calclate time left until countdown time for the current game state.
+      // Set game.countDownFinished to true when countdown is finished.
+      let countdownCalculation = setInterval(() => {
+        if (this.timeleft > 0) {
+          let now = +new Date();
+          let countdownTime = this.game.countDown[this.game.state];
+          let timePassed = now - startTime;
+          this.timeleft = Math.floor(countdownTime - timePassed / 1000);
+        } else {
+          this.$store.dispatch("stopCountdown");
+          clearInterval(countdownCalculation);
+        }
+      }, 1000);
+    }
   }
 };
 </script>

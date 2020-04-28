@@ -119,9 +119,9 @@ exports.createGame = functions.https.onRequest((request, response) => {
       code: "",
       state: "lobby",
       countDown: {
-        drawing: 120,
-        combination: 30,
-        voting: 30,
+        drawing: 5,
+        combination: 5,
+        voting: 5,
         startTime: ""
       },
       players: {},

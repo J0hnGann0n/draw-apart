@@ -266,6 +266,7 @@ export default {
       });
       this.$store.dispatch("submitDrawings", this.drawings);
       this.$store.dispatch("updatePlayerState", "combination");
+      this.$store.dispatch("startCountdown");
     },
     /**
      * Check if the drawing for the given body part is already complete.
