@@ -84,12 +84,6 @@ export default {
         }
       ],
       mouse: {
-        skip1: false,
-        skip2: false,
-        cp1x: 0,
-        cp1y: 0,
-        cp2x: 0,
-        cp2y: 0,
         current: {
           x: 0,
           y: 0
@@ -151,50 +145,26 @@ export default {
      * Draw a line from the point at which mouse down was pressed to the current position.
      */
     draw: function() {
-      if (!this.mouse.down) {
-        this.vueCanvas.beginPath();
-        this.vueCanvas.moveTo(this.currentMouse.x, this.currentMouse.y);
-        this.mouse.down = true;
-        this.mouse.skip1 = true;
-        this.mouse.skip2 = false;
-      } else {
-        if (this.mouse.skip1) {
-          this.mouse.cp1x = this.currentMouse.x;
-          this.mouse.cp1y = this.currentMouse.y;
-          this.mouse.skip1 = false;
-          this.mouse.skip2 = true;
-        }
-        if (this.mouse.skip2) {
-          this.mouse.cp2x = this.currentMouse.x;
-          this.mouse.cp2y = this.currentMouse.y;
-          this.mouse.skip1 = false;
-          this.mouse.skip2 = false;
-        } else {
-          this.vueCanvas.bezierCurveTo(
-            this.mouse.cp1x,
-            this.mouse.cp1y,
-            this.mouse.cp2x,
-            this.mouse.cp2y,
-            this.currentMouse.x,
-            this.currentMouse.y
-          );
-          this.mouse.skip1 = true;
-          this.mouse.skip2 = false;
-        }
+      if (this.mouse.down) {
+        this.vueCanvas.lineWidth = 0.5;
+        this.vueCanvas.lineTo(this.currentMouse.x, this.currentMouse.y);
+        this.vueCanvas.stroke();
       }
-      this.vueCanvas.stroke();
     },
     /**
      * Set mouse.down to true (start drawing), move the canvas poiter to the current location and
      * store the current location.
      */
     handleMouseDown: function(event) {
+      this.mouse.down = true;
       let pageX = event.touches ? event.touches[0].pageX : event.pageX;
       let pageY = event.touches ? event.touches[0].pageY : event.pageY;
       this.mouse.current = {
         x: pageX,
         y: pageY
       };
+      this.vueCanvas.moveTo(this.currentMouse.x, this.currentMouse.y);
+      this.vueCanvas.beginPath();
     },
     /**
      * Set mouse.down to false (stop drawing) and store the current canvas to the canvas history.
@@ -324,9 +294,7 @@ export default {
     this.canvasHeight = canvas.height;
     this.vueCanvas = ctx;
     this.vueCanvas.strokeStyle = "#FFFFFF";
-    this.vueCanvas.lineCap = "round";
-    this.vueCanvas.lineJoin = "round";
-    this.vueCanvas.lineWidth = 2;
+    this.vueCanvas.lineWidth = 0.5;
     this.drawAnchorPoints();
   }
 };

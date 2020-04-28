@@ -13,7 +13,7 @@ axios.interceptors.response.use(
       if (error.response.status == 500) { toast.error("The server just shat the bed!") }
       else if (error.response.status == 403) { toast.error("Thou shalt not pass!") }
       else if (error.response.data.errorCode == 4001) { toast.warning("No game found with this code") }
-      else if (error.response.data.errorCode == 4002) { toast.warning("Game already started. Real freinds would have waited for you") }
+      else if (error.response.data.errorCode == 4002) { toast.warning("Game already started. Real friends would have waited for you") }
       else { toast.error(error.response.data.errorText) }
     }
     return Promise.reject(error);
