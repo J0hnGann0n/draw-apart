@@ -281,6 +281,9 @@ export default {
     }
   },
   computed: {
+    /**
+     * Calculate current mouse position on the canvas.
+     */
     currentMouse: function() {
       var c = document.getElementById("canvas");
       var rect = c.getBoundingClientRect();
@@ -292,13 +295,16 @@ export default {
         y: (this.mouse.current.y - rect.top) / sy
       };
     },
-    countdown() {
-      return this.$store.getters.getCountdown();
-    },
+    /**
+     * Return a list of body part names.
+     */
     bodyPartsList() {
       let bodyPartsList = [];
       this.bodyParts.forEach(bodyPart => bodyPartsList.push(bodyPart.name));
       return bodyPartsList;
+    },
+    countdown() {
+      return this.$store.getters.getCountdown();
     },
     timeOver() {
       return this.$store.getters.getCountDownFinished;
