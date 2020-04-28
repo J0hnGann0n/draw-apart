@@ -101,6 +101,9 @@ export default new Vuex.Store({
           context.commit('ADD_GAME', snapshot.val());
           context.commit('SET_PLAYER_HOST', true);
         })
+      }).catch(function () {
+        //remove spinner and show login mask again
+        context.commit('TOGGLE_SPINNER')
       });
     },
     /**
@@ -120,6 +123,8 @@ export default new Vuex.Store({
             context.commit('ADD_GAME', snapshot.val());
           })
         }).catch(function () {
+          //remove spinner and show login mask again
+          context.commit('TOGGLE_SPINNER')
           return false
         })
     },
