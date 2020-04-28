@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     joinGame() {
+      this.$store.dispatch("toggleSpinner");
       this.joinDisabled = true;
       let gameCode = this.gamecode ? this.gamecode : this.sharedGameCode;
       if (gameCode && this.$store.state.player.name) {

@@ -22,6 +22,7 @@ export default {
     createGame() {
       if (this.$store.state.player.name) {
         this.error = false;
+        this.$store.dispatch("toggleSpinner");
         this.$store.dispatch("createGame", this.$store.state.player.name);
       } else {
         this.error = true;
