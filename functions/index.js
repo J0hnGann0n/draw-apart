@@ -216,7 +216,7 @@ exports.setState = functions.database.ref('/games/{gameKey}')
     const playersFinishedDrawing = game.drawings ? Object.keys(game.drawings).length : 0
     const playersFinishedCombination = game.combinations ? Object.keys(game.combinations).length : 0
     const playersFinishedVoting = game.votes ? Object.keys(game.votes).length : 0
-    const players = Object.keys(game.players).length
+    const players = game.players ? Object.keys(game.players).length : 0
     let date = new Date();
     let startTime = date.getTime();
 
