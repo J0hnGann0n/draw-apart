@@ -251,6 +251,9 @@ export default {
       this.vueCanvas.lineWidth = 3;
       this.vueCanvas.stroke();
     },
+    /**
+     * Submit empty drawings if the countdown hits 0.
+     */
     handleTimeout() {
       if (!this.timeOver) return false;
       this.bodyPartsList.forEach(bodyPart => {
@@ -264,6 +267,9 @@ export default {
       this.$store.dispatch("submitDrawings", this.drawings);
       this.$store.dispatch("updatePlayerState", "combination");
     },
+    /**
+     * Check if the drawing for the given body part is already complete.
+     */
     isDrawingComplete(bodyPart) {
       let drawingExists = false;
       this.drawings.forEach(drawing => {
