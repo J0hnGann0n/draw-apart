@@ -56,12 +56,20 @@ export default {
       let combinationName = name ? name : this.name;
       this.$store.dispatch("updatePlayerState", "voting");
       this.$store.dispatch("submitCombination", combinationName);
+    },
+    handleTimeout() {
+      this.submitCombination("Hurrr... Where's my keyboard?");
+      this.$store.dispatch("startCountdown");
+    }
+  },
+  watch: {
+    countDownFinished() {
+      this.handleTimeout();
     }
   },
   created() {
     // If countdown reaches zero, submit the combination with default name.
-    if (this.countDownFinished)
-      this.submitCombination("Hurrr... Where's my keyboard?");
+    if (this.countDownFinished) this.handleTimeout();
   }
 };
 </script>

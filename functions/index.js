@@ -119,9 +119,9 @@ exports.createGame = functions.https.onRequest((request, response) => {
       code: "",
       state: "lobby",
       countDown: {
-        drawing: 120,
-        combination: 30,
-        voting: 30,
+        drawing: 5,
+        combination: 5,
+        voting: 5,
         startTime: ""
       },
       players: {},
@@ -154,18 +154,22 @@ exports.joinGame = functions.https.onRequest((request, response) => {
 
     ref.child('games').orderByChild('code').equalTo(gameCode).once('value').then(res => {
       let gameKey = Object.keys(res.val())[0]
-      let players = Object.keys(res.val()[gameKey].players)
+      let game = res.val()[gameKey]
+      let players = Object.keys(game.players)
       playerName = getUniqueName(playerName, players)
+      if (game.state !== "lobby") {
+        response.status(400).send({ errorCode: 4002 })
+      }
       if (gameKey) {
         ref.child('games/' + gameKey + '/players').child(playerName).set({ host: false });
         response.send(gameKey)
         return true
       } else {
-        response.status(400).send({ errorCode: 4001, errorText: "No game exists with this code" })
+        response.status(400).send({ errorCode: 4001 })
         return false
       }
     }).catch(error => {
-      response.status(400).send({ errorCode: 4001, errorText: "No game exists with this code" })
+      response.status(400).send({ errorCode: 4001 })
       return false
     })
   })
@@ -216,7 +220,7 @@ exports.setState = functions.database.ref('/games/{gameKey}')
     const playersFinishedDrawing = game.drawings ? Object.keys(game.drawings).length : 0
     const playersFinishedCombination = game.combinations ? Object.keys(game.combinations).length : 0
     const playersFinishedVoting = game.votes ? Object.keys(game.votes).length : 0
-    const players = Object.keys(game.players).length
+    const players = game.players ? Object.keys(game.players).length : 0
     let date = new Date();
     let startTime = date.getTime();
 

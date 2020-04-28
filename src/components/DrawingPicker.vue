@@ -67,6 +67,7 @@ export default {
   watch: {
     timeOver() {
       this.submitVote();
+      this.$store.dispatch("startCountdown");
     }
   },
   methods: {
