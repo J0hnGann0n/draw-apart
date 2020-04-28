@@ -100,7 +100,7 @@ export default new Vuex.Store({
       });
     },
     /**
-     * 
+     * Trigger firebase function joinGame, add the gameKey to the store and subscribe to the game object on firebase.
      * @param {*} context snapshot.val()
      * @param {*} payload 
      */
@@ -119,6 +119,9 @@ export default new Vuex.Store({
           return false
         })
     },
+    /**
+     * Trigger firebase function startGame.
+     */
     startGame() {
       axios.post(firebaseFunctionsUrl + 'startGame', { gameKey: this.state.gameKey })
         .then(() => {
@@ -126,9 +129,6 @@ export default new Vuex.Store({
         }).catch(function () {
           return false
         })
-    },
-    updateCountdownState(context) {
-      context.commit('UPDATE_COUNTDOWN_STATE');
     },
     /**
      * Set game.countDownFinished to false
