@@ -2,7 +2,7 @@
   <div class="w-100">
     <Lobby v-if="game.state == 'lobby'" :game="game" />
     <Vote v-if="game.state == 'voting' && !waiting" />
-    <Drawing v-if="game.state == 'drawing' && !waiting" :game="game" />
+    <DrawingPanel v-if="game.state == 'drawing' && !waiting" :game="game" />
     <CombinationPicker v-if="game.state == 'combination' && !waiting" :game="game" />
     <ShowWinner v-if="game.state == 'winner' && !waiting" :game="game" />
     <Waiting v-if="waiting && !(game.state == 'lobby')" />
@@ -11,7 +11,7 @@
 <script>
 import Lobby from "@/components/Lobby.vue";
 import Vote from "@/components/Vote.vue";
-import Drawing from "@/components/Drawing.vue";
+import DrawingPanel from "@/components/DrawingPanel.vue";
 import CombinationPicker from "@/components/CombinationPicker.vue";
 import ShowWinner from "@/components/ShowWinner.vue";
 import Waiting from "@/components/Waiting.vue";
@@ -22,7 +22,7 @@ export default {
     Lobby,
     Vote,
     CombinationPicker,
-    Drawing,
+    DrawingPanel,
     Waiting,
     ShowWinner
   },

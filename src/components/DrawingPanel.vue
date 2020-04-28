@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container content">
     <div class="row">
       <div class="col">
         <h5>Draw the {{ bodyPartsList[drawingCount] }}</h5>
