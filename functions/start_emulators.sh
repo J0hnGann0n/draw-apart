@@ -12,5 +12,5 @@ do
 done
 # Load parsed configs from vue .env file into firebase functions config
 firebase functions:config:set "${config[@]}"
-firebase functions:config:get > .runtimeconfig.json 
+firebase functions:config:get > "${DIR}/.runtimeconfig.json"
 firebase emulators:start

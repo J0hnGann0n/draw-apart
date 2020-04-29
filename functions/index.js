@@ -4,8 +4,8 @@ const admin = require('firebase-admin');
 const cors = require('cors')({ origin: true });
 
 if (functions.config().vue && functions.config().vue.vue_app_debug) {
-  let serviceAccountFile = require("../drawapart-84b66-firebase-adminsdk-wq5pu-518e4e491f.json")
   // Initialize Firebase Admin SDK for connection to local realtime database emulator
+  let serviceAccountFile = require("../firebase-credentials.json")
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccountFile),
     databaseUrl: functions.config().vue.vue_app_firebase_database_url
