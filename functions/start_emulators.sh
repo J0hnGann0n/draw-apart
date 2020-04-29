@@ -14,3 +14,8 @@ done
 firebase functions:config:set "${config[@]}"
 firebase functions:config:get > "${DIR}/.runtimeconfig.json"
 firebase emulators:start
+
+function finish {
+  firebase functions:config:unset vue
+}
+trap finish EXIT
