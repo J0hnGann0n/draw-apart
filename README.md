@@ -46,7 +46,7 @@ This app uses a firebase realtime database and cloud functions as its backend. Y
 Populate the production and deveopment .env file with the details from your firebase project. Note that the development uses local urls. These wil point to our firebase emulators.
 
 #### 4. Download a service account credentials json file.   
-Go to service accounts in firebase and download the credentials json file and place it in the root of your project. This will be used to configure the local firebase emulators.
+Go to service accounts in firebase and download the credentials json file and place it in the root of your project. Rename the file to firebase-credentials.json
 
 #### 5. Edit functions/index.js
 Change the following line to include the path to your credentials file
