@@ -26,3 +26,14 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: build # will run `yarn build` command
+      - name: FTP Deploy
+      - uses: SamKirkland/FTP-Deploy-Action@3.0.0
+        with:
+          # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
+          ftp-server: ftp.surelookatusnow.ch
+          # FTP account username
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          # FTP account password
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          # The local folder to copy, defaults to root project folder
+          local-dir: dist/*
