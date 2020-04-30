@@ -17,11 +17,17 @@ describe('CombinationNameInput.vue', () => {
     mockStore = {
       dispatch: jest.fn(),
       getters: {
-        getCountDownFinished: () => true,
+        getCountDownFinished: () => false,
         getCombinationImage: () => ""
       }
     }
+
     wrapper = mount(CombinationNameInput, {
+      computed: {
+        countDownFinished() {
+          return false;
+        }
+      },
       mocks: {
         $store: mockStore
       }
@@ -29,6 +35,7 @@ describe('CombinationNameInput.vue', () => {
   })
 
   it('dispatches updatePlayerState with "voting" string', async () => {
+
     const button = wrapper.find('button')
     button.trigger('click')
     await wrapper.vm.$nextTick()
@@ -39,6 +46,7 @@ describe('CombinationNameInput.vue', () => {
   })
 
   it('dispatches submitCombination with the this.name', async () => {
+
     wrapper.setData({ name: 'name' })
     const button = wrapper.find('button')
     button.trigger('click')
@@ -49,11 +57,29 @@ describe('CombinationNameInput.vue', () => {
   })
 
   it('dispatches submitCombination with the default value as no name is set and countdown finished', async () => {
-    const button = wrapper.find('button')
-    button.trigger('click')
+
+    wrapper = mount(CombinationNameInput, {
+      data() {
+        return {
+          defaultName: 'default'
+        }
+      },
+      computed: {
+        countDownFinished() {
+          return true;
+        }
+      },
+      mocks: {
+        $store: mockStore
+      }
+    })
     await wrapper.vm.$nextTick()
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(
-      "submitCombination", 'name')
+      "updatePlayerState", "voting")
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "submitCombination", 'default')
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "startCountdown")
   })
 })
