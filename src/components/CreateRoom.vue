@@ -1,6 +1,6 @@
 <template>
   <div class="row mt-2">
-    <p class="form-text text-muted col-12 mb-3" v-if="error">{{errorMessage}}</p>
+    <p class="form-text text-muted col-12 mb-3 error" v-if="error">{{errorMessage}}</p>
     <div class="col">
       <button type="button" class="btn btn-primary" @click="createGame()">Create a game</button>
     </div>
@@ -28,7 +28,7 @@ export default {
       if (this.player) {
         this.error = false;
         this.$store.dispatch("toggleSpinner");
-        this.$store.dispatch("createGame", this.player);
+        this.$store.dispatch("createGame", this.player.name);
       } else {
         this.error = true;
         this.errorMessage = "Choose a name first";

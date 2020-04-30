@@ -7,33 +7,19 @@ describe('createRoom.vue', () => {
   let wrapper;
   beforeEach(() => {
     mockStore = {
-      state: {
-        player: {
-          name: 'playerName'
-        }
-      },
-      dispatch: jest.fn(),
-      getters: {}
+      dispatch: jest.fn()
     }
 
     wrapper = mount(createRoom, {
-      computed: {},
+      computed: {
+        player() {
+          return { name: 'playerName' }
+        }
+      },
       mocks: {
         $store: mockStore
       }
     })
-  })
-
-  it('dispatches createGame with player name from store state. if there is no playername it gives an error', async () => {
-
-    const button = wrapper.find('button')
-    button.trigger('click')
-
-    expect(mockStore.dispatch).toHaveBeenCalledWith(
-      "toggleSpinner")
-    expect(mockStore.dispatch).toHaveBeenCalledWith(
-      "createGame", "playerName")
-
   })
 
   it('dispatches createGame with player name from store state', async () => {
