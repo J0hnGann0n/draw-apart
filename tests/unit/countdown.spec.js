@@ -1,10 +1,6 @@
-import Vuex from "vuex"
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Countdown from '@/components/Countdown.vue'
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
 describe('Countdown.vue', () => {
   it('dispatches startCountDown when startCountDOwn method is run', async () => {
     const mockStore = {
