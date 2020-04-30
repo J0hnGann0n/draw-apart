@@ -1,4 +1,6 @@
 # draw-apart
+<img src="./coverage/badge-lines.svg">
+
 This project and this readme are a work in progress.
 
 A VueJS game with a firebase backend.   
