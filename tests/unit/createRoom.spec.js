@@ -24,11 +24,25 @@ describe('createRoom.vue', () => {
     })
   })
 
+  it('dispatches createGame with player name from store state. if there is no playername it gives an error', async () => {
+
+    const button = wrapper.find('button')
+    button.trigger('click')
+
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "toggleSpinner")
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "createGame", "playerName")
+
+  })
+
   it('dispatches createGame with player name from store state', async () => {
 
     const button = wrapper.find('button')
     button.trigger('click')
 
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "toggleSpinner")
     expect(mockStore.dispatch).toHaveBeenCalledWith(
       "createGame", "playerName")
 

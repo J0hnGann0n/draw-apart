@@ -15,15 +15,20 @@ export default {
       errorMessage: ""
     };
   },
+  computed: {
+    player() {
+      return this.$store.getters.getPlayer;
+    }
+  },
   methods: {
     /**
      * Dispatch action to store to create a new game.
      */
     createGame() {
-      if (this.$store.state.player.name) {
+      if (this.player) {
         this.error = false;
         this.$store.dispatch("toggleSpinner");
-        this.$store.dispatch("createGame", this.$store.state.player.name);
+        this.$store.dispatch("createGame", this.player);
       } else {
         this.error = true;
         this.errorMessage = "Choose a name first";
