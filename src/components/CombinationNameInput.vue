@@ -40,25 +40,26 @@ export default {
   name: "CombinationNameInput",
   data() {
     return {
-      name: ""
+      name: "",
+      defaultName: "Hurrr... Where's my keyboard?"
     };
   },
   computed: {
     combinationImage() {
-      return this.$store.state.combination.image;
+      return this.$store.getters.getCombinationImage;
     },
     countDownFinished() {
       return this.$store.getters.getCountDownFinished;
     }
   },
   methods: {
-    submitCombination(name) {
-      let combinationName = name ? name : this.name;
+    submitCombination() {
+      let combinationName = this.name ? this.name : this.defaultName;
       this.$store.dispatch("updatePlayerState", "voting");
       this.$store.dispatch("submitCombination", combinationName);
     },
     handleTimeout() {
-      this.submitCombination("Hurrr... Where's my keyboard?");
+      this.submitCombination();
       this.$store.dispatch("startCountdown");
     }
   },

@@ -18,7 +18,6 @@ export default {
     game(to, from) {
       if (from.state === "home") {
         this.$router.push("/game");
-        this.$store.dispatch("toggleSpinner");
       }
     }
   },

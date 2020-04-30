@@ -258,6 +258,7 @@ export default new Vuex.Store({
     getGame: state => state.game,
     getPlayer: state => state.player,
     getSpinner: state => state.spinner,
+    getCombinationImage: state => state.combination.image,
     getCountDownFinished: state => state.countDownFinished,
     getDrawingsByBodyPart: state => {
       let drawings = {
