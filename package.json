@@ -19,6 +19,7 @@
     "firebase": "^7.13.1",
     "inobounce": "^0.2.0",
     "izitoast": "^1.4.0",
+    "jest-coverage-badges": "^1.1.2",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
