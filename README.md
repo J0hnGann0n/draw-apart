@@ -1,5 +1,5 @@
 # draw-apart
-<img src="./coverage/badge-lines.svg">
+<img src="./coverage/badge-lines.svg"><img src="./coverage/badge-functions.svg"><img src="./coverage/badge-statements.svg">
 
 This project and this readme are a work in progress.
 
