@@ -34,7 +34,7 @@ describe('Countdown.vue', () => {
 
     expect(mockStore.dispatch).toHaveBeenCalledWith("startCountdown")
     expect(wrapper.vm.timeleft).toEqual(2)
-    jest.runOnlyPendingTimers() // Allow jests fake timer to pass time and then test the setInterval function
+    jest.runOnlyPendingTimers() // Allow jests fake timer to pass time and then test the setInterval function in startCountdown
     expect(wrapper.vm.timeleft).toEqual(1)
   })
 })
