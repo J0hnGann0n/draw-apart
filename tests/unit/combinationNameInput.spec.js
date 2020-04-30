@@ -38,12 +38,13 @@ describe('CombinationNameInput.vue', () => {
 
   })
 
-  it('dispatches submitCombination with a string', async () => {
+  it('dispatches submitCombination with the this.name', async () => {
+    wrapper.setData({ name: 'name' })
     const button = wrapper.find('button')
     button.trigger('click')
     await wrapper.vm.$nextTick()
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(
-      "submitCombination", expect.any(String))
+      "submitCombination", 'name')
   })
 })
