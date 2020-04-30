@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     combinationImage() {
-      return this.$store.state.combination.image;
+      return this.$store.getters.getCombinationImage;
     },
     countDownFinished() {
       return this.$store.getters.getCountDownFinished;

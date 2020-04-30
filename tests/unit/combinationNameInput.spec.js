@@ -16,13 +16,9 @@ describe('CombinationNameInput.vue', () => {
   beforeEach(() => {
     mockStore = {
       dispatch: jest.fn(),
-      state: {
-        combination: {
-          image: ""
-        }
-      },
       getters: {
-        getCountDownFinished: () => true
+        getCountDownFinished: () => true,
+        getCombinationImage: () => ""
       }
     }
     wrapper = mount(CombinationNameInput, {
@@ -49,6 +45,5 @@ describe('CombinationNameInput.vue', () => {
 
     expect(mockStore.dispatch).toHaveBeenCalledWith(
       "submitCombination", expect.any(String))
-
   })
 })
