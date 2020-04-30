@@ -47,4 +47,13 @@ describe('CombinationNameInput.vue', () => {
     expect(mockStore.dispatch).toHaveBeenCalledWith(
       "submitCombination", 'name')
   })
+
+  it('dispatches submitCombination with the default value as no name is set and countdown finished', async () => {
+    const button = wrapper.find('button')
+    button.trigger('click')
+    await wrapper.vm.$nextTick()
+
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "submitCombination", 'name')
+  })
 })

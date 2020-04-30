@@ -40,7 +40,8 @@ export default {
   name: "CombinationNameInput",
   data() {
     return {
-      name: ""
+      name: "",
+      defaultName: "Hurrr... Where's my keyboard?"
     };
   },
   computed: {
@@ -52,13 +53,13 @@ export default {
     }
   },
   methods: {
-    submitCombination(name) {
-      let combinationName = name ? name : this.name;
+    submitCombination() {
+      let combinationName = this.name ? this.name : this.defaultName;
       this.$store.dispatch("updatePlayerState", "voting");
       this.$store.dispatch("submitCombination", combinationName);
     },
     handleTimeout() {
-      this.submitCombination("Hurrr... Where's my keyboard?");
+      this.submitCombination();
       this.$store.dispatch("startCountdown");
     }
   },
