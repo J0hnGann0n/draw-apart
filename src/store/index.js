@@ -58,14 +58,11 @@ export default new Vuex.Store({
       let drawing = payload;
       state.drawings.push(drawing)
     },
-    UPDATE_PLAYER_STATE(state, payload) {
+    SET_PLAYER_STATE(state, payload) {
       state.player.state = payload
     },
-    STOP_COUNTDOWN(state) {
-      state.countDownFinished = true;
-    },
-    START_COUNTDOWN(state) {
-      state.countDownFinished = false;
+    SET_COUNTDOWN(state, payload) {
+      state.countDownFinished = payload;
     },
     SET_PLAYER_HOST(state, payload) {
       state.player.host = payload
@@ -144,14 +141,14 @@ export default new Vuex.Store({
      * @param {*} context 
      */
     startCountdown(context) {
-      context.commit('START_COUNTDOWN');
+      context.commit('SET_COUNTDOWN', false);
     },
     /**
      * Set game.countDownFinished to true
      * @param {*} context 
      */
     stopCountdown(context) {
-      context.commit('STOP_COUNTDOWN');
+      context.commit('SET_COUNTDOWN', true);
     },
     /**
      * Commit players name to the store
@@ -211,6 +208,14 @@ export default new Vuex.Store({
       context.commit('TOGGLE_SPINNER')
     },
     /**
+     * Set player state to given value
+     * @param {*} context 
+     * @param {*} payload 
+     */
+    updatePlayerState(context, payload) {
+      context.commit("SET_PLAYER_STATE", payload)
+    },
+    /**
      * Add combination object to store
      * @param {} context 
      * @param {*} payload 
@@ -221,14 +226,6 @@ export default new Vuex.Store({
         image: payload
       }
       context.commit('ADD_COMBINATION', combinationObject)
-    },
-    /**
-     * Set player state to given value
-     * @param {*} context 
-     * @param {*} payload 
-     */
-    updatePlayerState(context, payload) {
-      context.commit("UPDATE_PLAYER_STATE", payload)
     },
     /**
      * submits user selected combination to firebase
