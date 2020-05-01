@@ -4,7 +4,7 @@
     <div class="col-12">
       <p class="text-center">
         {{ game.code }}
-        <span @click="toggleShareButtons()">
+        <span id="share-button" @click="toggleShareButtons()">
           <font-awesome-icon icon="share-alt" />
         </span>
         <social-sharing

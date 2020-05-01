@@ -21,6 +21,24 @@ pubsub-debug.log
 drawapart-84b66-firebase-adminsdk-wq5pu-518e4e491f.json
 firebase-debug.log
 functions/.runtimeconfig.json
+coverage/App.vue.html
+coverage/base.css
+coverage/block-navigation.js
+coverage/clover.xml
+coverage/constants.js.html
+coverage/coverage-final.json
+coverage/coverage-summary.json
+coverage/draw-apart/
+coverage/helpers.js.html
+coverage/index.html
+coverage/lcov-report/
+coverage/lcov.info
+coverage/main.js.html
+coverage/prettify.css
+coverage/prettify.js
+coverage/registerServiceWorker.js.html
+coverage/sort-arrow-sprite.png
+coverage/sorter.js
 
 # Editor directories and files
 .idea
