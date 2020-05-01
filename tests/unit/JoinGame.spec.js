@@ -13,7 +13,8 @@ describe('JoinGame.vue', () => {
     wrapper = mount(JoinGame, {
       data() {
         return {
-          joinDisabled: false
+          joinDisabled: false,
+          playername: ""
         }
       },
       computed: {
@@ -25,6 +26,17 @@ describe('JoinGame.vue', () => {
         $store: mockStore
       }
     })
+  })
+
+  it('it dispatches addPlayerName when playername has changed', async () => {
+    wrapper.setData({ playername: "newPlayerName" })
+
+    await wrapper.vm.$nextTick()
+
+    //Dispatches JoinGame when username and gamecode exist
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "addPlayerName", "newPlayerName")
+
   })
 
   it('it dispaches toggleSpinner & joinGame and disables button when join button is clicked with username and gamecode', async () => {

@@ -18,7 +18,7 @@
         >Join</button>
       </div>
     </div>
-    <label class="col-12">{{ joinGameText }}</label>
+    <label class="col-12 joinGameCode">{{ joinGameText }}</label>
     <div class="input-group col">
       <input
         v-show="!sharedGameCode"
