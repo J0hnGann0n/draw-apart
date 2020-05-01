@@ -27,7 +27,7 @@ describe('JoinGame.vue', () => {
     })
   })
 
-  it('fills in a gamecode and username and clicks join, spinner loads and dispatches joinGame in the store', async () => {
+  it('it dispaches toggleSpinner & joinGame and disables button when join button is clicked with username and gamecode', async () => {
     const button = wrapper.find('#joinGame')
 
     //set a gamecode
@@ -48,7 +48,35 @@ describe('JoinGame.vue', () => {
 
   })
 
-  it('fills in a username but no gamecode and clicks join and it shows an error message that code is missing', async () => {
+  it('shows only username input and join button when sharedGameCode is true and dispatches toggleSpinner & joinGame', async () => {
+
+    //set a gamecode
+    wrapper.setData({ gamecode: 'xxxx' })
+    //set sharedGameCode to true
+    wrapper.setProps({ sharedGameCode: true })
+
+    await wrapper.vm.$nextTick()
+
+    const button = wrapper.find('#joinGameWithSharedCode')
+
+    //gamecode input shouldnt be shown
+    expect(wrapper.find('#gamecode').isVisible()).toBe(false)
+
+    await button.trigger('click')
+    //check if button is diabled
+    expect(button.attributes('disabled')).toBeTruthy()
+
+    //Spinner should be called
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "toggleSpinner")
+
+    //Dispatches JoinGame when username and gamecode exist
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "joinGame", { gamecode: 'xxxx', player: 'playerName' })
+
+  })
+
+  it('it shows an error message that gamecode is missing', async () => {
     const button = wrapper.find('#joinGame')
 
     await button.trigger('click')
@@ -58,7 +86,7 @@ describe('JoinGame.vue', () => {
 
   })
 
-  it('fills in a gamecode but no username and clicks join and it shows an error message that username is missing', async () => {
+  it('it shows an error message that username is missing', async () => {
     //set wrapper with no player
     wrapper = mount(JoinGame, {
       computed: {

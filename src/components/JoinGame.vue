@@ -22,6 +22,7 @@
     <div class="input-group col">
       <input
         v-show="!sharedGameCode"
+        id="gamecode"
         type="text"
         class="form-control"
         aria-describedby="joinGame"
