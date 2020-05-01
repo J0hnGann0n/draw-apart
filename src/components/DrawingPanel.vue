@@ -45,9 +45,6 @@ import ColorPicker from "./ColorPicker";
 
 export default {
   name: "DrawingPanel",
-  props: {
-    msg: String
-  },
   components: {
     ColorPicker
   },
@@ -249,6 +246,17 @@ export default {
         }
       });
       return drawingExists;
+    },
+    setupCanvas() {
+      let canvas = document.getElementById("canvas");
+      let ctx = canvas.getContext("2d");
+
+      this.canvasWidth = canvas.width;
+      this.canvasHeight = canvas.height;
+      this.vueCanvas = ctx;
+      this.vueCanvas.strokeStyle = "#FFFFFF";
+      this.vueCanvas.lineWidth = 0.5;
+      this.drawAnchorPoints();
     }
   },
   computed: {
@@ -284,15 +292,7 @@ export default {
     }
   },
   mounted() {
-    let canvas = document.getElementById("canvas");
-    let ctx = canvas.getContext("2d");
-
-    this.canvasWidth = canvas.width;
-    this.canvasHeight = canvas.height;
-    this.vueCanvas = ctx;
-    this.vueCanvas.strokeStyle = "#FFFFFF";
-    this.vueCanvas.lineWidth = 0.5;
-    this.drawAnchorPoints();
+    this.setupCanvas();
   }
 };
 </script>
