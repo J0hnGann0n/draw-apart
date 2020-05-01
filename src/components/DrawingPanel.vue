@@ -274,9 +274,6 @@ export default {
       this.bodyParts.forEach(bodyPart => bodyPartsList.push(bodyPart.name));
       return bodyPartsList;
     },
-    countdown() {
-      return this.$store.getters.getCountdown();
-    },
     timeOver() {
       return this.$store.getters.getCountDownFinished;
     }

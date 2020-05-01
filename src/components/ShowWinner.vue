@@ -25,18 +25,24 @@
 <script>
 import firebase from "../services/firebase";
 export default {
-  name: "Play",
+  name: "ShowWinner",
   props: ["game"],
   methods: {
     playAgain() {
       this.$store.dispatch("playAgain");
+    },
+    /**
+     * Turn off the connection to firebase game object
+     */
+    unsubscribeGameObject() {
+      firebase
+        .database()
+        .ref("/games/" + this.$store.state.gameKey)
+        .off();
     }
   },
   created() {
-    firebase
-      .database()
-      .ref("/games/" + this.$store.state.gameKey)
-      .off();
+    this.unsubscribeGameObject();
   }
 };
 </script>

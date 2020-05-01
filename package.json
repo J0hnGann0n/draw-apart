@@ -28,6 +28,21 @@
     "vuex": "^3.1.2",
     "vuex-persistedstate": "^3.0.1"
   },
+  "jest": {
+    "setupFiles": [
+      "jest-canvas-mock"
+    ],
+    "preset": "@vue/cli-plugin-unit-jest",
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "src/components/**/*.vue"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ]
+  },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@vue/cli-plugin-babel": "~4.2.0",
@@ -44,11 +59,17 @@
     "eslint-plugin-vue": "^6.1.2",
     "firebase-admin": "^8.10.0",
     "firebase-functions": "^3.6.0",
+    "jest-canvas-mock": "^2.2.0",
+    "jsdom": "^16.2.2",
+    "jsdom-global": "^3.0.2",
     "lint-staged": "^9.5.0",
     "miragejs": "^0.1.35",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
+  },
+  "peerDependencies": {
+    "canvas": "^2.6.1"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

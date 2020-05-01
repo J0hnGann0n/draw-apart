@@ -1,6 +1,16 @@
-import { mount } from "@vue/test-utils"
+import { mount, createLocalVue } from "@vue/test-utils"
 import JoinGame from '@/components/JoinGame.vue'
+const localVue = createLocalVue();
 
+const msg = "from mock";
+let mixin = {
+  // change hook to "later" one to  make it work
+  created() {
+    return true
+  }
+}
+
+localVue.mixin(mixin);
 
 describe('JoinGame.vue', () => {
   let mockStore;
@@ -11,6 +21,7 @@ describe('JoinGame.vue', () => {
     }
 
     wrapper = mount(JoinGame, {
+      localVue,
       data() {
         return {
           joinDisabled: false,
