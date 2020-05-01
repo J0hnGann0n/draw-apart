@@ -7,12 +7,12 @@ describe('StartGame.vue', () => {
   let wrapper;
   beforeEach(() => {
 
-    process.env = Object.assign(process.env, { VUE_APP_DEBUG: false });
-
     mockStore = {
       dispatch: jest.fn()
     }
+  })
 
+  it('dispatches startGame && updatePlayerState when host clicks start and minimum two players joined', async () => {
     wrapper = mount(StartGame, {
       computed: {
         game() {
@@ -31,9 +31,7 @@ describe('StartGame.vue', () => {
         $store: mockStore
       }
     })
-  })
 
-  it('dispatches startGame && updatePlayerState when host clicks start and minimum two players joined', async () => {
     const button = wrapper.find('button');
     await button.trigger('click');
 
@@ -44,6 +42,33 @@ describe('StartGame.vue', () => {
     //dispatch startGame
     expect(mockStore.dispatch).toHaveBeenCalledWith(
       "startGame")
+
+  })
+
+  it('shows error when there are less than two players and host tries to start game', async () => {
+    wrapper = mount(StartGame, {
+      computed: {
+        game() {
+          return {
+            players: {
+              sdfsf: true
+            }
+          }
+        },
+        isHost() {
+          return true
+        }
+      },
+      mocks: {
+        $store: mockStore
+      }
+    })
+
+    const button = wrapper.find('button');
+    await button.trigger('click');
+
+    expect(wrapper.vm.error).toBe(true);
+    expect(wrapper.vm.errorMessage).toBe("You need at least another player");
 
   })
 })

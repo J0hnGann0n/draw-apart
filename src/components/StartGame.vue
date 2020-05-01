@@ -2,7 +2,7 @@
   <!-- start game -->
   <div class="row">
     <div class="col">
-      <p v-if="error">{{errorMessage}}</p>
+      <p v-if="error" class="error">{{errorMessage}}</p>
       <button @click="startGame()" type="button" class="btn btn-primary" v-if="isHost">Start Game</button>
       <h5 v-if="!isHost">waiting for host...</h5>
     </div>
