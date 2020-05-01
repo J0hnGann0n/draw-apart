@@ -11,6 +11,11 @@ describe('JoinGame.vue', () => {
     }
 
     wrapper = mount(JoinGame, {
+      data() {
+        return {
+          joinDisabled: false
+        }
+      },
       computed: {
         player() {
           return { name: 'playerName' }
@@ -30,6 +35,8 @@ describe('JoinGame.vue', () => {
     await wrapper.vm.$nextTick()
 
     await button.trigger('click')
+    //check if button is diabled
+    expect(button.attributes('disabled')).toBeTruthy()
 
     //Spinner should be called
     expect(mockStore.dispatch).toHaveBeenCalledWith(
