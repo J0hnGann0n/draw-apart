@@ -247,8 +247,11 @@ export default {
       });
       return drawingExists;
     },
+    getCanvasDOM() {
+      return document.getElementById("canvas");
+    },
     setupCanvas() {
-      let canvas = document.getElementById("canvas");
+      let canvas = this.getCanvasDOM();
       let ctx = canvas.getContext("2d");
 
       this.canvasWidth = canvas.width;
