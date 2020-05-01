@@ -1,8 +1,8 @@
 import { mount } from "@vue/test-utils"
-import createRoom from '@/components/createRoom.vue'
+import createRoom from '@/components/CreateRoom.vue'
 
 
-describe('createRoom.vue', () => {
+describe('CreateRoom.vue', () => {
   let mockStore;
   let wrapper;
   beforeEach(() => {
@@ -31,6 +31,27 @@ describe('createRoom.vue', () => {
       "toggleSpinner")
     expect(mockStore.dispatch).toHaveBeenCalledWith(
       "createGame", "playerName")
+
+  })
+
+  it('tries to create a game but no username is permitted so an error shows up and createGame is not dispatched to the store', async () => {
+
+    wrapper = mount(createRoom, {
+      computed: {
+        player() {
+          return { name: '' }
+        }
+      },
+      mocks: {
+        $store: mockStore
+      }
+    })
+
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    expect(wrapper.find('.error').exists()).toBeTruthy()
+    expect(wrapper.find('.error').text()).toBe('Choose a name first')
 
   })
 })

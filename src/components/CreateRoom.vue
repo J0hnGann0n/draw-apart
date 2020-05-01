@@ -25,7 +25,7 @@ export default {
      * Dispatch action to store to create a new game.
      */
     createGame() {
-      if (this.player) {
+      if (this.player.name) {
         this.error = false;
         this.$store.dispatch("toggleSpinner");
         this.$store.dispatch("createGame", this.player.name);
