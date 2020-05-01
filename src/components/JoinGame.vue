@@ -14,17 +14,18 @@
           @click="joinGame()"
           :disabled="joinDisabled"
           class="input-group-text"
-          id="basic-addon2"
+          id="joinGameWithSharedCode"
         >Join</button>
       </div>
     </div>
-    <label class="col-12">{{ joinGameText }}</label>
+    <label class="col-12 joinGameCode">{{ joinGameText }}</label>
     <div class="input-group col">
       <input
         v-show="!sharedGameCode"
+        id="gamecode"
         type="text"
         class="form-control"
-        aria-describedby="basic-addon2"
+        aria-describedby="joinGame"
         v-model="gamecode"
       />
       <div class="input-group-append" v-if="!sharedGameCode">
@@ -32,11 +33,11 @@
           @click="joinGame()"
           :disabled="joinDisabled"
           class="input-group-text"
-          id="basic-addon2"
+          id="joinGame"
         >Join</button>
       </div>
     </div>
-    <small class="form-text text-muted col-12 mb-3" v-if="error">{{errorMessage}}</small>
+    <small class="form-text text-muted col-12 mb-3 error" v-if="error">{{errorMessage}}</small>
   </div>
 </template>
 <script>
@@ -56,17 +57,17 @@ export default {
   },
   methods: {
     joinGame() {
-      this.$store.dispatch("toggleSpinner");
       this.joinDisabled = true;
       let gameCode = this.gamecode ? this.gamecode : this.sharedGameCode;
-      if (gameCode && this.$store.state.player.name) {
+      if (gameCode && this.player.name) {
+        this.$store.dispatch("toggleSpinner");
         this.error = false;
         let payload = {
           gamecode: gameCode.toLowerCase(),
-          player: this.$store.state.player.name
+          player: this.player.name
         };
         this.$store.dispatch("joinGame", payload);
-      } else if (!this.$store.state.player.name) {
+      } else if (!this.player.name) {
         this.error = true;
         this.joinDisabled = false;
         this.errorMessage = "You need to choose a username first";
@@ -86,6 +87,9 @@ export default {
     joinGameText() {
       if (this.sharedGameCode) return "";
       return "Enter a code to join a game:";
+    },
+    player() {
+      return this.$store.getters.getPlayer;
     }
   }
 };

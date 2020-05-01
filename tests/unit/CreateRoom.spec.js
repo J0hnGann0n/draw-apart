@@ -33,4 +33,25 @@ describe('CreateRoom.vue', () => {
       "createGame", "playerName")
 
   })
+
+  it('tries to create a game but no username is permitted so an error shows up and createGame is not dispatched to the store', async () => {
+
+    wrapper = mount(CreateRoom, {
+      computed: {
+        player() {
+          return { name: '' }
+        }
+      },
+      mocks: {
+        $store: mockStore
+      }
+    })
+
+    const button = wrapper.find('button')
+    await button.trigger('click')
+
+    expect(wrapper.find('.error').exists()).toBeTruthy()
+    expect(wrapper.find('.error').text()).toBe('Choose a name first')
+
+  })
 })
