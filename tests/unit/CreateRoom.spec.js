@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils"
-import createRoom from '@/components/CreateRoom.vue'
+import CreateRoom from '@/components/CreateRoom.vue'
 
 
 describe('CreateRoom.vue', () => {
@@ -10,7 +10,7 @@ describe('CreateRoom.vue', () => {
       dispatch: jest.fn()
     }
 
-    wrapper = mount(createRoom, {
+    wrapper = mount(CreateRoom, {
       computed: {
         player() {
           return { name: 'playerName' }
@@ -36,7 +36,7 @@ describe('CreateRoom.vue', () => {
 
   it('tries to create a game but no username is permitted so an error shows up and createGame is not dispatched to the store', async () => {
 
-    wrapper = mount(createRoom, {
+    wrapper = mount(CreateRoom, {
       computed: {
         player() {
           return { name: '' }
