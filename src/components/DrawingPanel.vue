@@ -21,7 +21,7 @@
     </div>
     <div class="col-12 d-flex edit-buttons">
       <button type="button" class="btn btn-secondary" @click="undo()">
-        <font-awesome-icon icon="undo" class="text-dark" />
+        <font-awesome-icon icon="undo" class="text-dark undo" />
       </button>
       <button type="button" class="btn btn-secondary" @click="clearCanvas()">
         <font-awesome-icon icon="trash" class="text-dark" />
@@ -31,7 +31,7 @@
       <h5 class="text-center w-100">{{ drawingCount + '/' + bodyPartsList.length }}</h5>
       <button
         type="button"
-        class="btn btn-primary ml-auto"
+        class="btn btn-primary ml-auto submit-drawing"
         @click="submitDrawing(bodyPartsList[drawingCount])"
       >
         <font-awesome-icon icon="check" />
@@ -98,7 +98,7 @@ export default {
      * Get canvas image as base64 and send drawing object to store to be submitted.
      */
     submitDrawing(bodyPart) {
-      let canvasDOM = document.getElementById("canvas");
+      let canvasDOM = this.getCanvasDOM();
       let image = canvasDOM.toDataURL();
       let drawing = {
         imageData: image,
