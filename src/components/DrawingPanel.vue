@@ -249,17 +249,6 @@ export default {
     },
     getCanvasDOM() {
       return document.getElementById("canvas");
-    },
-    setupCanvas() {
-      let canvas = this.getCanvasDOM();
-      let ctx = canvas.getContext("2d");
-
-      this.canvasWidth = canvas.width;
-      this.canvasHeight = canvas.height;
-      this.vueCanvas = ctx;
-      this.vueCanvas.strokeStyle = "#FFFFFF";
-      this.vueCanvas.lineWidth = 0.5;
-      this.drawAnchorPoints();
     }
   },
   computed: {
@@ -295,7 +284,15 @@ export default {
     }
   },
   mounted() {
-    this.setupCanvas();
+    let canvas = this.getCanvasDOM();
+    let ctx = canvas.getContext("2d");
+
+    this.canvasWidth = canvas.width;
+    this.canvasHeight = canvas.height;
+    this.vueCanvas = ctx;
+    this.vueCanvas.strokeStyle = "#FFFFFF";
+    this.vueCanvas.lineWidth = 0.5;
+    this.drawAnchorPoints();
   }
 };
 </script>
