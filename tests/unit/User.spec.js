@@ -8,7 +8,7 @@ library.add(faCheck, faUndo, faTrash)
 const localVue = createLocalVue();
 localVue.component('font-awesome-icon', FontAwesomeIcon)
 
-describe('Spinner.vue', () => {
+describe('User.vue', () => {
   it('contains the correct elements', async () => {
     const wrapper = shallowMount(User, {
       localVue
