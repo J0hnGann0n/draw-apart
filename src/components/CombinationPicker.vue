@@ -92,11 +92,17 @@ export default {
       }
     },
     /**
+     * Get Canvas from DOM
+     */
+    getCanvasDOM() {
+      return document.getElementById("canvas");
+    },
+    /**
      * Create one image from the selected combination and commit it to the store.
      */
     submitCombination() {
       //get canvas
-      let canvas = document.getElementById("canvas");
+      let canvas = this.getCanvasDOM();
       //get context object to draw images
       let context = canvas.getContext("2d");
       let images = [];
