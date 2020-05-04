@@ -71,7 +71,7 @@ describe('CombinationPicker.vue', () => {
 
   })
 
-  it('submits a combination', async () => {
+  it('dispatches addCombination to the store when submitButton is clicked', async () => {
     const submitButton = wrapper.find('button');
     await submitButton.trigger('click');
 
