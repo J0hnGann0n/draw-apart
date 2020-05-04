@@ -35,6 +35,8 @@ describe('StartGame.vue', () => {
     const button = wrapper.find('button');
     await button.trigger('click');
 
+    expect(wrapper.vm.error).toBe(false);
+
     //dispatch updatePlayerState
     expect(mockStore.dispatch).toHaveBeenCalledWith(
       "updatePlayerState", "drawing")
