@@ -14,12 +14,13 @@
           <div
             v-for="(bodyPart, index) in Object.keys(drawings)"
             :key="index"
+            :ref="'bodypart-slider-'+index"
             class="row justify-content-around align-items-center"
           >
             <div
               @click="slideBack(bodyPart)"
               :style="{visibility: combination[bodyPart] > 0 ? 'visible' : 'hidden'}"
-              class="col-2"
+              class="col-2 slideBack"
             >
               <font-awesome-icon icon="arrow-left" />
             </div>
@@ -32,7 +33,7 @@
             <div
               @click="slideForward(bodyPart)"
               :style="{visibility: combination[bodyPart] < drawings[bodyPart].length - 1 ? 'visible' : 'hidden'}"
-              class="col-2"
+              class="col-2 slideForward"
             >
               <font-awesome-icon icon="arrow-right" />
             </div>
@@ -92,11 +93,17 @@ export default {
       }
     },
     /**
+     * Get Canvas from DOM
+     */
+    getCanvasDOM() {
+      return document.getElementById("canvas");
+    },
+    /**
      * Create one image from the selected combination and commit it to the store.
      */
     submitCombination() {
       //get canvas
-      let canvas = document.getElementById("canvas");
+      let canvas = this.getCanvasDOM();
       //get context object to draw images
       let context = canvas.getContext("2d");
       let images = [];

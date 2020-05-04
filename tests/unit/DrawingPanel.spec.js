@@ -1,6 +1,7 @@
 import { mount, createLocalVue } from "@vue/test-utils"
 import DrawingPanel from '@/components/DrawingPanel.vue'
 import Vue2TouchEvents from "vue2-touch-events";
+import { canvasMock } from './common/canvas'
 //Import fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -10,22 +11,6 @@ library.add(faCheck, faUndo, faTrash)
 const localVue = createLocalVue();
 localVue.use(Vue2TouchEvents);
 localVue.component('font-awesome-icon', FontAwesomeIcon)
-let canvasMock = {
-  getContext: () => {
-    return {
-      moveTo: () => { },
-      lineTo: () => { },
-      beginPath: () => { },
-      clearRect: () => { },
-      stroke: () => { },
-      strokeStyle: "",
-      lineWidth: "",
-    }
-  },
-  toDataURL: () => { },
-  width: 600,
-  height: 400
-}
 
 describe('DrawingPanel.vue', () => {
   let mockStore;
