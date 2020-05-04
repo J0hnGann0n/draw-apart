@@ -14,6 +14,7 @@
           <div
             v-for="(bodyPart, index) in Object.keys(drawings)"
             :key="index"
+            :ref="'bodypart-slider-'+index"
             class="row justify-content-around align-items-center"
           >
             <div
@@ -32,7 +33,7 @@
             <div
               @click="slideForward(bodyPart)"
               :style="{visibility: combination[bodyPart] < drawings[bodyPart].length - 1 ? 'visible' : 'hidden'}"
-              class="col-2"
+              class="col-2 slideForward"
             >
               <font-awesome-icon icon="arrow-right" />
             </div>

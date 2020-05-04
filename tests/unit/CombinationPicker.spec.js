@@ -44,26 +44,10 @@ describe('CombinationPicker.vue', () => {
         },
         drawings() {
           return {
-            head: [
-              {
-                imageData: ''
-              }
-            ],
-            body: [
-              {
-                imageData: ''
-              }
-            ],
-            legs: [
-              {
-                imageData: ''
-              }
-            ],
-            feet: [
-              {
-                imageData: ''
-              }
-            ],
+            head: [{ imageData: '' }, { imageData: '' }],
+            body: [{ imageData: '' }, { imageData: '' }],
+            legs: [{ imageData: '' }, { imageData: '' }],
+            feet: [{ imageData: '' }, { imageData: '' }],
           }
         }
       },
@@ -74,7 +58,11 @@ describe('CombinationPicker.vue', () => {
 
   })
 
-  it('has a div element', async () => {
-    expect(wrapper.contains('div')).toBe(true)
+  it('changes combination[bodypart] to next one up (+1) when more than one combination for bodypart', async () => {
+    const headElement = wrapper.find({ ref: 'bodypart-slider-0' })
+    const button = headElement.find('.slideForward')
+    const oldPickedHeadCombination = wrapper.vm.combination['head']
+    await button.trigger("click")
+    expect(wrapper.vm.combination['head']).toBe(oldPickedHeadCombination + 1)
   })
 })
