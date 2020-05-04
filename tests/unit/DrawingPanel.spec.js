@@ -12,6 +12,17 @@ const localVue = createLocalVue();
 localVue.use(Vue2TouchEvents);
 localVue.component('font-awesome-icon', FontAwesomeIcon)
 
+let mockMouseEvent = {
+  pageX: 30,
+  pageY: 30,
+  touches: {
+    0: {
+      pageX: 30,
+      pageY: 30
+    }
+  }
+}
+
 describe('DrawingPanel.vue', () => {
   let mockStore;
   let wrapper;
@@ -61,5 +72,21 @@ describe('DrawingPanel.vue', () => {
     await undoButton.trigger('click')
 
     expect(wrapper.vm.canvasHistory.length).toBe(0)
+  })
+  it('it returns true on calling clearCanvas', async () => {
+    expect(wrapper.vm.clearCanvas).toBeTruthy
+  })
+  it('it handles mouse down or touch events properly', async () => {
+    wrapper.vm.handleMouseDown(mockMouseEvent)
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.mouse.down).toBeTruthy
+    expect(wrapper.vm.currentMouse.x).toBe(Infinity)
+  })
+  it('it handles mouse up or touch events properly', async () => {
+    expect(wrapper.vm.canvasHistory.length).toBe(0)
+    wrapper.vm.handleMouseUp(mockMouseEvent)
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.mouse.down).toBeFalsy
+    expect(wrapper.vm.canvasHistory.length).toBe(1)
   })
 })

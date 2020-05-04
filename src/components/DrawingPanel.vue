@@ -119,6 +119,7 @@ export default {
     clearCanvas() {
       this.vueCanvas.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
       this.vueCanvas.beginPath();
+      return true;
     },
     /**
      * Set the stroke color to the selected color
@@ -149,8 +150,7 @@ export default {
       }
     },
     /**
-     * Set mouse.down to true (start drawing), move the canvas poiter to the current location and
-     * store the current location.
+     * Set mouse.down to true (start drawing) and move the canvas poiter to the current location.
      */
     handleMouseDown: function(event) {
       this.mouse.down = true;
@@ -256,7 +256,7 @@ export default {
      * Calculate current mouse position on the canvas.
      */
     currentMouse: function() {
-      var c = document.getElementById("canvas");
+      var c = this.getCanvasDOM();
       var rect = c.getBoundingClientRect();
       var sx = c.scrollWidth / c.width;
       var sy = c.scrollHeight / c.height;
