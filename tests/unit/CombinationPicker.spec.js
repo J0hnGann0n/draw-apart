@@ -58,11 +58,16 @@ describe('CombinationPicker.vue', () => {
 
   })
 
-  it('changes combination[bodypart] to next one up (+1) when more than one combination for bodypart', async () => {
+  it('changes combination[bodypart] to next one up (+1) when more than one combination for bodypart and slides back again', async () => {
     const headElement = wrapper.find({ ref: 'bodypart-slider-0' })
-    const button = headElement.find('.slideForward')
+    const slideForward = headElement.find('.slideForward')
     const oldPickedHeadCombination = wrapper.vm.combination['head']
-    await button.trigger("click")
+    await slideForward.trigger("click")
     expect(wrapper.vm.combination['head']).toBe(oldPickedHeadCombination + 1)
+
+    const slideBack = headElement.find('.slideBack')
+    await slideBack.trigger("click")
+    expect(wrapper.vm.combination['head']).toBe(oldPickedHeadCombination)
+
   })
 })

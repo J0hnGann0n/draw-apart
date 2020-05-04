@@ -20,7 +20,7 @@
             <div
               @click="slideBack(bodyPart)"
               :style="{visibility: combination[bodyPart] > 0 ? 'visible' : 'hidden'}"
-              class="col-2"
+              class="col-2 slideBack"
             >
               <font-awesome-icon icon="arrow-left" />
             </div>
