@@ -6,11 +6,12 @@ export const canvasMock = {
       beginPath: () => { },
       clearRect: () => { },
       stroke: () => { },
+      drawImage: () => { },
       strokeStyle: "",
       lineWidth: "",
     }
   },
-  toDataURL: () => { },
+  toDataURL: () => { return {} },
   width: 600,
   height: 400
 }

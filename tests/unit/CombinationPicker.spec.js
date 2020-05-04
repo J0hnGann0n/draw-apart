@@ -70,4 +70,15 @@ describe('CombinationPicker.vue', () => {
     expect(wrapper.vm.combination['head']).toBe(oldPickedHeadCombination)
 
   })
+
+  it('submits a combination', async () => {
+    const submitButton = wrapper.find('button');
+    await submitButton.trigger('click');
+
+    //dispatch addCombination
+    expect(mockStore.dispatch).toHaveBeenCalledWith(
+      "addCombination", {})
+
+  })
+
 })
