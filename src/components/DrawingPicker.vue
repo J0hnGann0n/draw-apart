@@ -6,7 +6,7 @@
           <div
             @click="slideBack()"
             :style="{visibility: currentChoosen > 0 ? 'visible' : 'hidden'}"
-            class="col-2"
+            class="col-2 slide-back"
           >
             <font-awesome-icon icon="arrow-left" />
           </div>
@@ -17,7 +17,7 @@
           <div
             @click="slideForward()"
             :style="{visibility: currentChoosen < numberOfCombinations - 1 ? 'visible' : 'hidden'}"
-            class="col-2"
+            class="col-2 slide-forward"
           >
             <font-awesome-icon icon="arrow-right" />
           </div>
