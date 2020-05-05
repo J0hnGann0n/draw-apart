@@ -18,13 +18,15 @@ describe('StartGame.vue', () => {
         game() {
           return {
             players: {
-              sdfsf: true,
-              klj: true
+              hostUser: { host: true },
+              testUser: { host: false }
             }
           }
         },
-        isHost() {
-          return true
+        player() {
+          return {
+            name: 'hostUser'
+          }
         }
       },
       mocks: {
