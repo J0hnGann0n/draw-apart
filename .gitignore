@@ -26,13 +26,9 @@ coverage/base.css
 coverage/block-navigation.js
 coverage/clover.xml
 coverage/constants.js.html
-coverage/coverage-final.json
-coverage/coverage-summary.json
 coverage/draw-apart/
 coverage/helpers.js.html
 coverage/index.html
-coverage/lcov-report/
-coverage/lcov.info
 coverage/main.js.html
 coverage/prettify.css
 coverage/prettify.js
