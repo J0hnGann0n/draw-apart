@@ -24,7 +24,7 @@ export default {
       return this.$store.getters.getGame;
     },
     showCountdown() {
-      if (!this.game) return false
+      if (!this.game) return false;
       if (this.game.state == "lobby" || this.game.state == "winner") {
         return false;
       } else {

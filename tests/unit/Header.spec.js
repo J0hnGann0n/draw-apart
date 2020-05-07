@@ -17,7 +17,7 @@ describe('Header.vue', () => {
     })
     expect(wrapper.contains('h4')).toBe(true)
   })
-  it('sets showCountdown to correct value', async () => {
+  it('sets showCountdown to false if game state is lobby', async () => {
     let wrapper = shallowMount(Header, {
       computed: {
         game() {
@@ -31,7 +31,7 @@ describe('Header.vue', () => {
     })
     expect(wrapper.vm.showCountdown).toBeFalsy
   })
-  it('sets showCountdown to correct value', async () => {
+  it('sets showCountdown to true if game state is drawing', async () => {
     let wrapper = shallowMount(Header, {
       computed: {
         game() {
