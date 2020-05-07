@@ -16,7 +16,10 @@ export default new Vuex.Store({
     spinner: false,
     game: {
       code: "abcd",
-      state: "home",
+      state: {
+        name: "home",
+        startTime: null
+      },
       players: ["john"],
       drawings: {},
       countDown: {}
@@ -256,6 +259,7 @@ export default new Vuex.Store({
   },
   getters: {
     getGame: state => state.game,
+    getStartTime: state => state.game.state.startTime,
     getPlayer: state => state.player,
     getSpinner: state => state.spinner,
     getCombinationImage: state => state.combination.image,

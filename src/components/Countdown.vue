@@ -21,7 +21,7 @@ export default {
       return this.$store.getters.getGame;
     },
     startTime() {
-      return this.game.countDown.startTime;
+      return this.$store.getters.getStartTime;
     }
   },
   watch: {
@@ -33,14 +33,14 @@ export default {
   methods: {
     startCountdown(startTime) {
       this.$store.dispatch("startCountdown");
-      this.timeleft = this.game.countDown[this.game.state];
+      this.timeleft = this.game.countDown[this.game.state.name];
 
       // Every second calclate time left until countdown time for the current game state.
       // Set game.countDownFinished to true when countdown is finished.
       this.countdownCalculation = setInterval(() => {
         if (this.timeleft > 0) {
           let now = new Date();
-          let countdownTime = this.game.countDown[this.game.state];
+          let countdownTime = this.game.countDown[this.game.state.name];
           let timePassed = now - startTime;
           this.timeleft = Math.floor(countdownTime - timePassed / 1000);
         } else {

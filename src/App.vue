@@ -16,7 +16,7 @@ export default {
   },
   watch: {
     game(to, from) {
-      if (from.state === "home") {
+      if (from.state.name === "home") {
         this.$router.push("/game");
       }
     }

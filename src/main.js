@@ -31,6 +31,11 @@ if (!process.env.VUE_APP_DEBUG) {
     dsn: 'https://9a85c2e8b9af45bc9f38dcee787ed8be@o381283.ingest.sentry.io/5208398',
     integrations: [new VueIntegration({ Vue, attachProps: true, logErrors: true })],
   });
+} else {
+  Sentry.init({
+    dsn: 'https://03f8f0bfc1564dbf913d4e148801769c@o381283.ingest.sentry.io/5226935',
+    integrations: [new VueIntegration({ Vue, attachProps: true, logErrors: true })],
+  });
 }
 
 

@@ -5,7 +5,7 @@
         <h4 class="mb-0">Draw Apart</h4>
       </div>
       <div class="col-3">
-        <Countdown v-if="showCountdown" />
+        <Countdown />
       </div>
     </div>
   </div>
@@ -18,19 +18,6 @@ export default {
   name: "Header",
   components: {
     Countdown
-  },
-  computed: {
-    game() {
-      return this.$store.getters.getGame;
-    },
-    showCountdown() {
-      if (!this.game) return false;
-      if (this.game.state == "lobby" || this.game.state == "winner") {
-        return false;
-      } else {
-        return true;
-      }
-    }
   }
 };
 </script>

@@ -13,7 +13,7 @@ describe('Countdown.vue', () => {
         },
         game() {
           return {
-            state: "drawing",
+            state: { name: "drawing" },
             countDown: {
               drawing: 2,
               combination: 40,

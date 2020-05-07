@@ -104,8 +104,7 @@ exports.startGame = functions.https.onRequest((request, response) => {
     resetGame(gameKey)
     let date = new Date();
     let startTime = date.getTime();
-    ref.child('games/' + gameKey).child('state').set('drawing')
-    ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
+    ref.child('games/' + gameKey).child('state').set({ name: 'drawing', startTime: startTime })
     response.status(200).send()
   });
 })
@@ -117,12 +116,14 @@ exports.createGame = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     let game = {
       code: "",
-      state: "lobby",
+      state: {
+        name: "lobby",
+        startTime: null
+      },
       countDown: {
-        drawing: 70000,
-        combination: 40,
-        voting: 30,
-        startTime: ""
+        drawing: 4,
+        combination: 4,
+        voting: 4,
       },
       players: {},
       drawings: {
@@ -157,7 +158,7 @@ exports.joinGame = functions.https.onRequest((request, response) => {
       let game = res.val()[gameKey]
       let players = Object.keys(game.players)
       playerName = getUniqueName(playerName, players)
-      if (game.state !== "lobby") {
+      if (game.state.name !== "lobby") {
         response.status(400).send({ errorCode: 4002 })
       }
       if (gameKey) {
@@ -196,7 +197,7 @@ exports.playAgain = functions.https.onRequest((request, response) => {
           ref.child('games/' + gameKey + '/players').child(player).set({ host: false });
         }
         //Set State to lobby
-        ref.child('games/' + gameKey).child("state").set("lobby");
+        ref.child('games/' + gameKey).child("state").set({ name: "lobby", startTime: null });
         response.send(gameKey)
         return true
       } else {
@@ -215,7 +216,6 @@ exports.setState = functions.database.ref('/games/{gameKey}')
   .onUpdate((snapshot, context) => {
     // Grab the current value of what was written to the Realtime Database.
     let game = snapshot.after.val()
-    let previousGameState = snapshot.before.val().state
     let gameKey = context.params.gameKey
     const playersFinishedDrawing = game.drawings ? Object.keys(game.drawings).length : 0
     const playersFinishedCombination = game.combinations ? Object.keys(game.combinations).length : 0
@@ -224,15 +224,12 @@ exports.setState = functions.database.ref('/games/{gameKey}')
     let date = new Date();
     let startTime = date.getTime();
 
-    if (game.state === "drawing" && players === playersFinishedDrawing) {
-      ref.child('games/' + gameKey).child("state").set("combination");
-      ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
-    } else if (game.state === "combination" && players === playersFinishedCombination) {
-      ref.child('games/' + gameKey).child("state").set("voting");
-      ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
-    } else if (game.state === "voting" && players === playersFinishedVoting) {
-      ref.child('games/' + gameKey).child("state").set("winner");
-      ref.child('games/' + gameKey + '/countDown/startTime').set(startTime);
+    if (game.state.name === "drawing" && players === playersFinishedDrawing) {
+      ref.child('games/' + gameKey).child("state").set({ name: "combination", startTime: startTime });
+    } else if (game.state.name === "combination" && players === playersFinishedCombination) {
+      ref.child('games/' + gameKey).child("state").set({ name: "voting", startTime: startTime });
+    } else if (game.state.name === "voting" && players === playersFinishedVoting) {
+      ref.child('games/' + gameKey).child("state").set({ name: "winner", startTime: startTime });
     }
     return true
   });
@@ -244,8 +241,7 @@ exports.setState = functions.database.ref('/games/{gameKey}')
 exports.findWinner = functions.database.ref('/games/{gameKey}')
   .onUpdate((snapshot, context) => {
     let game = snapshot.after.val();
-    if (game.state ===
-      'voting') {
+    if (game.state.name === 'voting') {
       // Grab the current value of what was written to the Realtime Database.
       let combinations = game.combinations
       let gameKey = context.params.gameKey
@@ -276,7 +272,7 @@ exports.findWinner = functions.database.ref('/games/{gameKey}')
         ref.child('games/' + gameKey + '/winner').set(winner);
 
 
-        ref.child('games/' + gameKey).child("state").set("winner");
+        ref.child('games/' + gameKey).child("state").set({ name: "winner", startTime: null });
         ref.child('games/' + gameKey + '/players').remove();
       }
     }
